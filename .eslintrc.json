@@ -1,0 +1,30 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next",
+    "next/core-web/vitals",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": "off", // do not use
+    "prettier/prettier": "warn",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off", // 함수 자료형 검사
+    "@typescript-eslint/no-empty-interface": "off", // 빈 인터페이스 검사
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-explicit-any": "off", // any 타입 검사
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ], // 미사용 변수
+    "@typescript-eslint/no-var-requires": "off"
+  }
+}

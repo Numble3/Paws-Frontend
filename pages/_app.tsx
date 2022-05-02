@@ -1,6 +1,7 @@
-import "styles/globals.css";
-import type { AppProps } from "next/app";
+import LayoutContiner from "components/layout";
 import { DefaultSeo } from "next-seo";
+import { AppProps } from "next/app";
+import "styles/globals.css";
 
 const DEFAULT_SEO = {
   title: "Paws🐾",
@@ -12,10 +13,34 @@ const DEFAULT_SEO = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const noHeader =
+    Component.defaultProps &&
+    (Component.defaultProps as { noHeader?: boolean }).noHeader
+      ? false
+      : true;
+  const noNav =
+    Component.defaultProps &&
+    (Component.defaultProps as { noNav?: boolean }).noNav
+      ? false
+      : true;
+
   return (
     <>
       <DefaultSeo {...DEFAULT_SEO} />
-      <Component {...pageProps} />
+      <LayoutContiner {...{ noHeader, noNav }}>
+        <Component {...pageProps} />
+      </LayoutContiner>
+
+      <style jsx global>
+        {`
+          #__next {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+          }
+        `}
+      </style>
     </>
   );
 }

@@ -6,10 +6,9 @@ const Home: NextPage = () => {
     <div>
       <main>
         <h1>Paws</h1>
-        <Tab />
       </main>
     </div>
   );
 };
-
+// Home.defaultProps = { noHeader: true };
 export default Home;

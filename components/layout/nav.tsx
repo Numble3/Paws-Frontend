@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Tab() {
+export default function Nav() {
   return (
     <ul>
       <li>

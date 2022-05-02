@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 
-type Layout = {
-  header?: boolean;
-  nav?: boolean;
+type LayoutHeader = {
+  title: string;
+  isBack?: boolean;
 };
 
 type NextPageWithLayout = NextPage & {
-  layoutProps: Layout;
-  header?: boolean;
+  header?: LayoutHeader;
+  noNav?: boolean;
 };
 
 type AppPropsWithLayout = AppProps & {

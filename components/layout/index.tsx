@@ -1,23 +1,23 @@
 import { ReactNode } from "react";
-import { Layout } from "types/common";
 import Header from "./header";
-import Tab from "./tab";
+import Nav from "./nav";
 import styles from "styles/layout.module.css";
+import { LayoutHeader } from "types/common";
 
 export default function LayoutContiner({
   children,
-  noHeader,
+  layoutHeader,
   noNav,
 }: {
   children: ReactNode;
-  noHeader?: boolean;
+  layoutHeader?: LayoutHeader;
   noNav?: boolean;
 }) {
   return (
     <div className={styles.wrapper}>
-      {noHeader && <Header />}
+      {layoutHeader && <Header {...layoutHeader} />}
       {children}
-      {noNav && <Tab />}
+      {!noNav && <Nav />}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import LayoutContiner from "components/layout";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import "styles/globals.css";
+import { AppPropsWithLayout } from "types/common";
 
 const DEFAULT_SEO = {
   title: "Paws🐾",
@@ -12,22 +13,19 @@ const DEFAULT_SEO = {
   },
 };
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const noHeader =
-    Component.defaultProps &&
-    (Component.defaultProps as { noHeader?: boolean }).noHeader
-      ? false
-      : true;
-  const noNav =
-    Component.defaultProps &&
-    (Component.defaultProps as { noNav?: boolean }).noNav
-      ? false
-      : true;
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const layoutHeader = Component.header;
+  const noNav = Component.noNav;
 
   return (
     <>
       <DefaultSeo {...DEFAULT_SEO} />
-      <LayoutContiner {...{ noHeader, noNav }}>
+      <LayoutContiner
+        {...{
+          layoutHeader,
+          noNav,
+        }}
+      >
         <Component {...pageProps} />
       </LayoutContiner>
 

@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
-import Tab from "components/layout/tab";
+import Tab from "components/layout/nav";
+import { NextPageWithLayout } from "types/common";
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   return (
     <div>
       <main>
@@ -10,5 +11,6 @@ const Home: NextPage = () => {
     </div>
   );
 };
-// Home.defaultProps = { noHeader: true };
+
+Home.header = { title: "메인 페이지" };
 export default Home;

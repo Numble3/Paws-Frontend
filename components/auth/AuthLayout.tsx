@@ -8,7 +8,7 @@ const AuthLayout = ({children}: {children: ReactNode}) => {
       <section className={style.imgSection}>
         <div className={style.logo}>Logo</div>
       </section>
-      <section className={style.fromSection}>
+      <section className={style.formSection}>
         {children}
       </section>
     </div>

@@ -1,0 +1,54 @@
+.input {
+  width: 343px;
+  height: 52px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background: #e3e3e3;
+  border: 1px solid darkgrey;
+}
+.input:focus {
+  outline: none;
+}
+
+.button {
+  width: 343px;
+  height: 52px;
+  margin-top: 24px;
+  background: #F2BA3E;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.Oauth {
+  text-align: center;
+  margin-top: 60px;
+
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 36px 0px;
+}
+
+.logo {
+  width: 72px;
+  height: 48px;
+  background-color: darkgray;
+  line-height: 48px;
+}
+
+.signUp {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.signUpSection {
+  width: 100%;
+  text-align: center;
+  margin: 48px 0px;
+}
+

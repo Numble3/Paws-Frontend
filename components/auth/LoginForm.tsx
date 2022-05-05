@@ -1,23 +1,31 @@
-import Link from 'next/link';
+import CustomInput from "components/customInput";
+import useInput from "hooks/useInput";
+import Link from "next/link";
 import React from "react";
 import style from "styles/loginform.module.css";
 
 const LoginForm = () => {
+  const [email, onChangeEmail] = useInput("");
+  const [password, onChangePassword] = useInput("");
   return (
     <>
       <form>
         <section>
-          <input
-            className={style.input}
-            placeholder="이메일 입력"
-            type="text"
+          <CustomInput
+            width={343}
+            height={52}
+            inputType="email"
+            value={email}
+            onChange={onChangeEmail}
           />
         </section>
         <section>
-          <input
-            className={style.input}
-            placeholder="비밀번호 입력"
-            type="password"
+          <CustomInput
+            width={343}
+            height={52}
+            inputType="password"
+            value={password}
+            onChange={onChangePassword}
           />
         </section>
         <button className={style.button} type="submit">
@@ -35,7 +43,7 @@ const LoginForm = () => {
       <section className={style.signUpSection}>
         <span>회원이 아니신가요? </span>
         <Link href="/signUp">
-          <a className={style.signUp} >회원가입</a>
+          <a className={style.signUp}>회원가입</a>
         </Link>
       </section>
     </>

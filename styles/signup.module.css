@@ -14,10 +14,18 @@
   width: 343px;
   height: 52px;
   margin-top: 24px;
-  background: #F2BA3E;
   border-radius: 8px;
   color: white;
   border: none;
   font-size: 1.1em;
+  
+}
+
+.button.color {
+  background: #ECA354;
   cursor: pointer;
+}
+
+.button.grey {
+  background: #DADADA;
 }

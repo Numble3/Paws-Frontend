@@ -20,62 +20,78 @@ const Search = () => {
         <p className={styles.title}>카테고리로 찾기</p>
         <div className={styles.cate_container}>
           <Link href="/search/whole">
-            <div className={`${styles.cate} ${styles.cate_whole}`}>
-              <span className={styles.cate_name}>전체</span>
-            </div>
+            <a>
+              <div className={`${styles.cate} ${styles.cate_whole}`}>
+                <span className={styles.cate_name}>전체</span>
+              </div>
+            </a>
           </Link>
           <Link href="/search/dog">
-            <div className={`${styles.cate} ${styles.cate_dog}`}>
-              <div>
-                <Image width={80} height={60} src={IMAGES.DOG} />
+            <a>
+              <div className={`${styles.cate} ${styles.cate_dog}`}>
+                <div>
+                  <Image width={80} height={60} src={IMAGES.DOG} />
+                </div>
+                <span className={styles.cate_name}>강아지</span>
               </div>
-              <span className={styles.cate_name}>강아지</span>
-            </div>
+            </a>
           </Link>
           <Link href="/search/cat">
-            <div className={`${styles.cate} ${styles.cate_cat}`}>
-              <div>
-                <Image width={55} height={70} src={IMAGES.CAT} />
+            <a>
+              <div className={`${styles.cate} ${styles.cate_cat}`}>
+                <div>
+                  <Image width={55} height={70} src={IMAGES.CAT} />
+                </div>
+                <span className={styles.cate_name}>고양이</span>
               </div>
-              <span className={styles.cate_name}>고양이</span>
-            </div>
+            </a>
           </Link>
           <Link href="/search/lizard">
-            <div className={`${styles.cate} ${styles.cate_lizard}`}>
-              <div>
-                <Image width={90} height={60} src={IMAGES.LIZARD} />
+            <a>
+              <div className={`${styles.cate} ${styles.cate_lizard}`}>
+                <div>
+                  <Image width={90} height={60} src={IMAGES.LIZARD} />
+                </div>
+                <span className={styles.cate_name}>도마뱀</span>
               </div>
-              <span className={styles.cate_name}>도마뱀</span>
-            </div>
+            </a>
           </Link>
           <Link href="/search/bird">
-            <div className={`${styles.cate} ${styles.cate_bird}`}>
-              <div>
-                <Image width={60} height={70} src={IMAGES.BIRD} />
+            <a>
+              <div className={`${styles.cate} ${styles.cate_bird}`}>
+                <div>
+                  <Image width={60} height={70} src={IMAGES.BIRD} />
+                </div>
+                <span className={styles.cate_name}>새</span>
               </div>
-              <span className={styles.cate_name}>새</span>
-            </div>
+            </a>
           </Link>
           <Link href="/search/rabbit">
-            <div className={`${styles.cate} ${styles.cate_rabbit}`}>
-              <div>
-                <Image width={65} height={80} src={IMAGES.RABBIT} />
+            <a>
+              <div className={`${styles.cate} ${styles.cate_rabbit}`}>
+                <div>
+                  <Image width={65} height={80} src={IMAGES.RABBIT} />
+                </div>
+                <span className={styles.cate_name}>토끼</span>
               </div>
-              <span className={styles.cate_name}>토끼</span>
-            </div>
+            </a>
           </Link>
           <Link href="/search/hamster">
-            <div className={`${styles.cate} ${styles.cate_hamster}`}>
-              <div>
-                <Image width={60} height={60} src={IMAGES.HAMSTER} />
+            <a>
+              <div className={`${styles.cate} ${styles.cate_hamster}`}>
+                <div>
+                  <Image width={60} height={60} src={IMAGES.HAMSTER} />
+                </div>
+                <span className={styles.cate_name}>햄스터</span>
               </div>
-              <span className={styles.cate_name}>햄스터</span>
-            </div>
+            </a>
           </Link>
           <Link href="/search/etc">
-            <div className={`${styles.cate} ${styles.cate_whole}`}>
-              <span className={styles.cate_name}>기타</span>
-            </div>
+            <a>
+              <div className={`${styles.cate} ${styles.cate_whole}`}>
+                <span className={styles.cate_name}>기타</span>
+              </div>
+            </a>
           </Link>
         </div>
       </div>

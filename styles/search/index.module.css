@@ -95,6 +95,7 @@
 }
 
 .cate_bird {
+  overflow: hidden;
   background-color: cateBird;
 }
 .cate_bird > div {

@@ -9,6 +9,8 @@ export const ICONS = {
   UPLOAD: getIconPath("upload.svg"),
   SEARCH: getIconPath("search.svg"),
   BACK: getIconPath("back.svg"),
+  EMPTY_HEART: getIconPath("empty_heart.svg"),
+  FULL_HEART: getIconPath("full_heart.svg"),
 };
 
 export const IMAGES: ImagesType = {

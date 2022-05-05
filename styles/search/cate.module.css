@@ -1,7 +1,12 @@
 @value cateWhole, cateDog, cateCat, cateLizard, cateBird, cateRabbit, cateHamster, cateETC from 'styles/variables.css';
+.wrap {
+  background: #fbfbfb;
+  height: 100%;
+  width: 100%;
+}
 
 .header {
-  position: absolute;
+  position: relative;
   overflow: hidden;
   display: flex;
   padding: 15px 10px;
@@ -81,4 +86,30 @@
   position: absolute;
   right: 40px;
   bottom: -4px;
+}
+
+/*select box*/
+.select_container {
+  padding: 0px 15px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.select {
+  padding: 8px 20px 8px 8px;
+  font-size: 10px;
+  font-family: pretendard;
+  color: #828385;
+  border: 0.5px solid #dadada;
+  box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
+  border-radius: 4px;
+  margin: 12px 0;
+}
+
+/*thumbnail*/
+.thumbnail_row {
+  margin: 0;
+  margin-bottom: 30px;
+  padding: 0;
+  height: 470px;
+  overflow: auto;
 }

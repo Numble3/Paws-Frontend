@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo } from "react";
 import Image from "next/image";
 import { ICONS, IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
+import Thumbnail from "components/search/thumbnail";
 
 const Category = () => {
   const router = useRouter();
@@ -76,7 +77,7 @@ const Category = () => {
   }, [cate]);
 
   return (
-    <>
+    <div className={styles.wrap}>
       <header className={`${styles[`cate_${cate}`]} ${styles.header}`}>
         <div>
           <Image
@@ -99,7 +100,27 @@ const Category = () => {
         )}
         <span className={styles.cate_name}>{cateObj.name}</span>
       </header>
-    </>
+      <div className={styles.padding}>
+        <div className={styles.select_container}>
+          <div></div>
+          <select name="sort" className={styles.select}>
+            <option className={styles.option} value="recent">
+              최신순
+            </option>
+            <option className={styles.option} value="popular">
+              인기순
+            </option>
+          </select>
+        </div>
+        {/* 썸네일 임시 대체 */}
+        <ul className={styles.thumbnail_row}>
+          <Thumbnail />
+          <Thumbnail />
+          <Thumbnail />
+          <Thumbnail />
+        </ul>
+      </div>
+    </div>
   );
 };
 

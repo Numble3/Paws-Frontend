@@ -1,4 +1,4 @@
-const getIconPath = (path: string) => `public/icons/${path}`;
+const getIconPath = (path: string) => `/icons/${path}`;
 
 export const ICONS = {
   HOME: getIconPath("home.svg"),

@@ -5,12 +5,20 @@ import styles from "styles/search/index.module.css";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import Thumbnail from "components/search/thumbnail";
+import NoResult from "components/search/noResult";
+
+type video = {
+  // 나중에 수정할 임시 타입
+  id: number;
+  name: string;
+};
 const Search = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [focusTimer, setFocusTimer] = useState<NodeJS.Timeout>();
   const [blurTimer, setBlurTimer] = useState<NodeJS.Timeout>();
   const [queryTimer, setQueryTimer] = useState<NodeJS.Timeout>();
   const [query, setQuery] = useState("");
+  const [data, setData] = useState<video[]>([]);
   const handleFocus = () => {
     if (focusTimer) {
       clearTimeout(focusTimer);
@@ -40,6 +48,16 @@ const Search = () => {
   };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.currentTarget.value);
+    setData([
+      {
+        id: 1,
+        name: "고양이~",
+      },
+      {
+        id: 2,
+        name: "강아지~",
+      },
+    ]);
     console.log(query);
   };
   return (
@@ -64,12 +82,16 @@ const Search = () => {
           />
         </div>
         {query !== "" ? (
-          <ul style={{ marginTop: "20px" }} className={styles.thumbnail_row}>
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-          </ul>
+          data ? (
+            <ul style={{ marginTop: "20px" }} className={styles.thumbnail_row}>
+              <Thumbnail />
+              <Thumbnail />
+              <Thumbnail />
+              <Thumbnail />
+            </ul>
+          ) : (
+            <NoResult />
+          )
         ) : (
           <></>
         )}

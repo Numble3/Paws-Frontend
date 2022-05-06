@@ -1,3 +1,4 @@
+
 import AuthLayout from 'components/auth/AuthLayout';
 import SignUpForm from 'components/auth/SignUpForm';
 import { NextPageWithLayout } from 'types/common';

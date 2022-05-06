@@ -1,30 +1,31 @@
 import { ICONS } from 'lib/assets';
-import { getInputData } from "lib/customInput";
 import Image from 'next/image';
-import { useMemo } from "react";
+import { ChangeEvent, useMemo } from "react";
 import style from 'styles/customInput.module.css';
 
 interface Props {
   inputType: string;
   value: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   isError?: boolean;
   isSuccess?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  errorMessage?: string;
+  placeHolderMessage?: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CustomInput = ({
   inputType,
   value,
-  width,
-  height,
+  width=343,
+  height=52,
   isError,
   isSuccess,
+  errorMessage,
+  placeHolderMessage,
   onChange
 }: Props) => {
-  const { errorMessage, placeHolderMessage, customType } =
-    getInputData(inputType);
 
   const iconPosition = useMemo(
     () => ({
@@ -40,7 +41,7 @@ const CustomInput = ({
         style={{ width: width, height: height }}
         placeholder={placeHolderMessage}
         className={`${style.input} ${isError ? style.err : ""}`}
-        type={customType}
+        type={inputType}
         value={value}
         onChange={onChange}
       />

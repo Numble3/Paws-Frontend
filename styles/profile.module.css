@@ -2,7 +2,7 @@
   margin: 0px 16px;
 }
 
-.profileSection {
+.profile_section {
   text-align: center;
   padding-top: 33px;
   padding-bottom: 24px;
@@ -36,11 +36,11 @@
   cursor: pointer;
 }
 
-.videoSection {
+.video_section {
   padding-top: 26px;
 }
 
-.titleContainer {
+.title_container {
   display: flex;
   justify-content: space-between;
   margin-bottom: 18px;
@@ -51,7 +51,7 @@
   color: #373737;
 }
 
-.videoContainer {
+.video_container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;

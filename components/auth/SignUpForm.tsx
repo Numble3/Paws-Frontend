@@ -1,6 +1,11 @@
 import CustomInput from "components/customInput";
 import useInput from "hooks/useInput";
-import React, { useCallback, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  MouseEvent,
+  useCallback,
+  useState,
+} from "react";
 import style from "styles/signup.module.css";
 
 const SignUpForm = () => {
@@ -10,92 +15,75 @@ const SignUpForm = () => {
 
   const [passwordChk, setPasswordChk] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [passwordSuccess, setPasswordSuccess] = useState(false);
-
-  const [buttonColor, setButtonColor] = useState(false);
 
   const onChangePasswordChk = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       setPasswordChk(e.target.value);
       setPasswordError(e.target.value !== password);
-      setPasswordSuccess(e.target.value === password);
+      if (e.target.value === "") {
+        setPasswordError(false);
+      }
     },
-    []
+    [passwordChk]
   );
+
   const onSubmit = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      console.log('회원가입 클릭');
+    (e: MouseEvent<HTMLButtonElement>) => {
+      console.log("회원가입 클릭");
       e.preventDefault();
     },
     [email, password, nickname]
   );
 
-  useEffect(() => {
-    if (passwordChk !== "" && password === passwordChk) {
-      setPasswordError(false);
-      setPasswordSuccess(true);
-    } else if (passwordChk === "") {
-      setPasswordError(false);
-      setPasswordSuccess(false);
-    }
-  }, [password, passwordChk]);
-
-  useEffect(() => {
-    if (passwordSuccess && nickname !== "" && email !== "") {
-      setButtonColor(true);
-    } else {
-      setButtonColor(false);
-    }
-  }, [passwordSuccess, nickname, email]);
-
   return (
     <>
       <form>
-        <div>
-          <CustomInput
-            width={343}
-            height={52}
-            inputType="email"
-            value={email}
-            onChange={onChangeEmail}
-          />
-        </div>
-        <div>
-          <CustomInput
-            width={343}
-            height={52}
-            inputType="password"
-            value={password}
-            onChange={onChangePassword}
-          />
-        </div>
-        <div>
-          <CustomInput
-            width={343}
-            height={52}
-            inputType="passwordChk"
-            value={passwordChk}
-            onChange={onChangePasswordChk}
-            isError={passwordError}
-            isSuccess={passwordSuccess}
-          />
-        </div>
-        <div>
-          <CustomInput
-            width={343}
-            height={52}
-            inputType="nickname"
-            value={nickname}
-            onChange={onChangeNickname}
-          />
-        </div>
+        <CustomInput
+          inputType="text"
+          value={email}
+          onChange={onChangeEmail}
+          placeHolderMessage="이메일 입력"
+          errorMessage="중복된 이메일 입니다."
+        />
+        <CustomInput
+          inputType="password"
+          value={password}
+          onChange={onChangePassword}
+          placeHolderMessage="비밀 번호 입력"
+        />
+        <CustomInput
+          inputType="password"
+          value={passwordChk}
+          onChange={onChangePasswordChk}
+          isError={passwordError}
+          isSuccess={!passwordError && passwordChk !== ""}
+          placeHolderMessage="비밀 번호 확인"
+          errorMessage="비밀 번호가 일치하지 않습니다."
+        />
+        <CustomInput
+          inputType="text"
+          value={nickname}
+          onChange={onChangeNickname}
+          errorMessage="중복된 닉네임 입니다."
+          placeHolderMessage="닉네임 입력"
+        />
         <button
           className={`${style.button} ${
-            buttonColor ? style.color : style.grey
+            !passwordError &&
+            nickname !== "" &&
+            email !== "" &&
+            passwordChk !== ""
+              ? style.color
+              : style.grey
           } `}
           type="submit"
           onClick={onSubmit}
-          disabled={!buttonColor}
+          disabled={
+            !passwordError &&
+            nickname !== "" &&
+            email !== "" &&
+            passwordChk !== ""
+          }
         >
           회원가입 하기
         </button>

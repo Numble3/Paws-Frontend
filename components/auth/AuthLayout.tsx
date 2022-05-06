@@ -5,10 +5,10 @@ const AuthLayout = ({children}: {children: ReactNode}) => {
 
   return (
     <div className={style.wrapper}>
-      <section className={style.imgSection}>
+      <section className={style.img_section}>
         <div className={style.logo}>Logo</div>
       </section>
-      <section className={style.formSection}>
+      <section className={style.form_section}>
         {children}
       </section>
     </div>

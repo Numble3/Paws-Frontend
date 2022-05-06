@@ -28,7 +28,7 @@
 
 }
 
-.logoContainer {
+.logo_container {
   display: flex;
   justify-content: space-evenly;
   padding: 36px 0px;
@@ -41,12 +41,12 @@
   line-height: 48px;
 }
 
-.signUp {
+.signup {
   cursor: pointer;
   font-weight: bold;
 }
 
-.signUpSection {
+.signup_section {
   width: 100%;
   text-align: center;
   margin: 48px 0px;

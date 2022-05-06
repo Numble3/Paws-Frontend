@@ -77,7 +77,9 @@ const Search = () => {
                 handleBlur();
               }
             }}
-            className={styles.input}
+            className={`${styles.input} ${
+              query !== "" ? styles.input_focused : ""
+            }`}
             placeholder="검색어를 입력해주세요"
           />
         </div>

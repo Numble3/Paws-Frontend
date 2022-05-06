@@ -1,7 +1,5 @@
 .thumbnail_li {
   list-style: none;
-  margin-bottom: 20px;
-  margin: 0 15px;
   height: 170px;
   position: relative;
 }

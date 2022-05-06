@@ -100,7 +100,7 @@ const Category = () => {
         )}
         <span className={styles.cate_name}>{cateObj.name}</span>
       </header>
-      <div className={styles.padding}>
+      <div className={styles.margin}>
         <div className={styles.select_container}>
           <div></div>
           <select name="sort" className={styles.select}>

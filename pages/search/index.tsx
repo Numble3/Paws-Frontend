@@ -4,6 +4,7 @@ import Header from "components/layout/header";
 import styles from "styles/search/index.module.css";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
+import Thumbnail from "components/search/thumbnail";
 const Search = () => {
   const [isFocused, setIsFocused] = useState(false);
   const [focusTimer, setFocusTimer] = useState<NodeJS.Timeout>();
@@ -62,6 +63,16 @@ const Search = () => {
             placeholder="검색어를 입력해주세요"
           />
         </div>
+        {query !== "" ? (
+          <ul style={{ marginTop: "20px" }} className={styles.thumbnail_row}>
+            <Thumbnail />
+            <Thumbnail />
+            <Thumbnail />
+            <Thumbnail />
+          </ul>
+        ) : (
+          <></>
+        )}
         {isFocused ? (
           <></>
         ) : (

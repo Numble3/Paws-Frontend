@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { ICONS, IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
@@ -8,6 +8,11 @@ import Thumbnail from "components/search/thumbnail";
 const Category = () => {
   const router = useRouter();
   const { cate } = router.query;
+  const [selectedValue, setSelectedValue] = useState("최신순");
+  const [isSelected, setIsSelected] = useState(false);
+  const handleSelectBox = (value: string) => {
+    setSelectedValue(value);
+  };
   const imageCate = cate ? (cate as string) : "";
   const changeName = (cate: string) => {
     switch (cate) {
@@ -103,14 +108,45 @@ const Category = () => {
       <div className={styles.margin}>
         <div className={styles.select_container}>
           <div></div>
-          <select name="sort" className={styles.select}>
-            <option className={styles.option} value="recent">
-              최신순
-            </option>
-            <option className={styles.option} value="popular">
-              인기순
-            </option>
-          </select>
+          <div
+            className={styles.select}
+            onClick={() => setIsSelected(!isSelected)}
+          >
+            <div
+              className={isSelected ? styles.selected_focused : styles.selected}
+            >
+              <div>{selectedValue}</div>
+              <Image src={ICONS.DOWN_ARROW} width={12} height={12} />
+            </div>
+            {isSelected ? (
+              <ul>
+                <li
+                  onClick={() => handleSelectBox("최신순")}
+                  className={styles.option}
+                >
+                  최신순{" "}
+                  {selectedValue === "최신순" ? (
+                    <Image src={ICONS.ACTIVE} width={4} height={4} />
+                  ) : (
+                    <></>
+                  )}
+                </li>
+                <li
+                  onClick={() => handleSelectBox("인기순")}
+                  className={styles.option}
+                >
+                  인기순{" "}
+                  {selectedValue === "인기순" ? (
+                    <Image src={ICONS.ACTIVE} width={4} height={4} />
+                  ) : (
+                    <></>
+                  )}
+                </li>
+              </ul>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
         {/* 썸네일 임시 대체 */}
         <ul className={styles.thumbnail_row}>

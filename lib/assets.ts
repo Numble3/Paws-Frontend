@@ -11,6 +11,8 @@ export const ICONS = {
   BACK: getIconPath("back.svg"),
   EMPTY_HEART: getIconPath("empty_heart.svg"),
   FULL_HEART: getIconPath("full_heart.svg"),
+  DOWN_ARROW: getIconPath("down_arrow.svg"),
+  ACTIVE: getIconPath("active.svg"),
 };
 
 export const IMAGES: ImagesType = {

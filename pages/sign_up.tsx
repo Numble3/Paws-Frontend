@@ -1,6 +1,6 @@
 
-import AuthLayout from 'components/auth/AuthLayout';
-import SignUpForm from 'components/auth/SignUpForm';
+import AuthLayout from 'components/auth/authLayout';
+import SignUpForm from 'components/auth/signUpForm';
 import { NextPageWithLayout } from 'types/common';
 
 const SignUpPage : NextPageWithLayout = () => {

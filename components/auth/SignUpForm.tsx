@@ -1,11 +1,6 @@
 import CustomInput from "components/customInput";
 import useInput from "hooks/useInput";
-import React, {
-  ChangeEvent,
-  MouseEvent,
-  useCallback,
-  useState,
-} from "react";
+import React, { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import style from "styles/signup.module.css";
 
 const SignUpForm = () => {
@@ -43,7 +38,6 @@ const SignUpForm = () => {
           value={email}
           onChange={onChangeEmail}
           placeHolderMessage="이메일 입력"
-          errorMessage="중복된 이메일 입니다."
         />
         <CustomInput
           inputType="password"
@@ -55,16 +49,17 @@ const SignUpForm = () => {
           inputType="password"
           value={passwordChk}
           onChange={onChangePasswordChk}
-          isError={passwordError}
-          isSuccess={!passwordError && passwordChk !== ""}
+          error={{
+            isError: passwordError,
+            message: "비밀번호가 일치하지 않습니다.",
+          }}
           placeHolderMessage="비밀 번호 확인"
-          errorMessage="비밀 번호가 일치하지 않습니다."
+          isSuccess={!passwordError && passwordChk !== ""}
         />
         <CustomInput
           inputType="text"
           value={nickname}
           onChange={onChangeNickname}
-          errorMessage="중복된 닉네임 입니다."
           placeHolderMessage="닉네임 입력"
         />
         <button

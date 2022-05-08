@@ -8,9 +8,8 @@ interface Props {
   value: string;
   width?: number;
   height?: number;
-  isError?: boolean;
   isSuccess?: boolean;
-  errorMessage?: string;
+  error?: { isError: boolean; message: string} 
   placeHolderMessage?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -20,9 +19,8 @@ const CustomInput = ({
   value,
   width=343,
   height=52,
-  isError,
   isSuccess,
-  errorMessage,
+  error,
   placeHolderMessage,
   onChange
 }: Props) => {
@@ -36,16 +34,16 @@ const CustomInput = ({
 
   return (
     <div className={style.container}>
-      {isError && <label className={style.label}>{errorMessage}</label>}
+      {error?.isError && <label className={style.label}>{error.message}</label>}
       <input
         style={{ width: width, height: height }}
         placeholder={placeHolderMessage}
-        className={`${style.input} ${isError ? style.err : ""}`}
+        className={`${style.input} ${error?.isError ? style.err : ""}`}
         type={inputType}
         value={value}
         onChange={onChange}
       />
-      {isError && (
+      {error?.isError && (
         <div style={iconPosition} className={style.icon}>
           <Image src={ICONS.CAUTION} width={20} height={20}/>
         </div>

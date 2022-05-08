@@ -2,25 +2,15 @@ import { NextPageWithLayout } from "types/common";
 import style from "styles/edit.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
-import { useCallback, useMemo, useState } from 'react';
-import NicknameEditForm from 'components/nicknameEditForm';
+import { useCallback, useMemo, useState } from "react";
+import NicknameEditForm from "components/nicknameEditForm";
 
 const ProfileEdit: NextPageWithLayout = () => {
-
   const [editOpen, setEditOpen] = useState(false);
 
   const onClose = useCallback(() => {
     setEditOpen(false);
   }, []);
-
-  const font =  useMemo(
-    () => ({
-  fontWeight: 500,
-  fontSize: 12,
-  color: "#373737",
-    }),
-    []
-  );
 
   return (
     <div className={style.wrapper}>
@@ -33,13 +23,13 @@ const ProfileEdit: NextPageWithLayout = () => {
       <section className={style["info-section"]}>
         <div className={style["info-title"]}>기본 정보</div>
         <div className={`${style.box} ${style.first}`}>
-          <span>연결된 이메일</span>
+          <span className={style["info-font"]}>연결된 이메일</span>
           <div>sampleEmail@naver.com</div>
         </div>
         <div className={`${style.box} `}>
           <div className={style.nickname}>
             <div>
-              <span>닉네임</span>
+              <span className={style["info-font"]}>닉네임</span>
               <div>sampleNickname</div>
             </div>
             <div onClick={() => setEditOpen(true)}>
@@ -50,12 +40,10 @@ const ProfileEdit: NextPageWithLayout = () => {
       </section>
       <section className={style["info-section"]}>
         <div className={style["info-title"]}>계정</div>
-        <div style={font} className={`${style.box} ${style.first}`}>
+        <div className={`${style.box} ${style.first} ${style["account-font"]}`}>
           로그아웃
         </div>
-        <div style={font} className={style.box} >
-          탈퇴
-        </div>
+        <div className={`${style.box} ${style["account-font"]}`}>탈퇴</div>
       </section>
       {editOpen && <NicknameEditForm onClose={onClose} />}
     </div>

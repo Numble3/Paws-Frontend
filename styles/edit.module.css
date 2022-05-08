@@ -45,13 +45,20 @@
   border-radius: 8px;
 }
 
-.box > span {
+.box > div {
+  font-weight: 500;
+  font-size: 12px;
+  color: #373737;
+}
+
+
+.info-font {
   font-weight: 400;
   font-size: 10px;
   color: #828385;
 }
 
-.box > div {
+.account-font {
   font-weight: 500;
   font-size: 12px;
   color: #373737;
@@ -62,3 +69,5 @@
   justify-content: space-between;
   align-items: center;
 }
+
+

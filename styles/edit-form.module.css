@@ -1,0 +1,84 @@
+.background {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: hidden;
+}
+
+.wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(81, 81, 81, 0.7);
+  padding: 0px 24px;
+  display: flex;
+  align-items: center;
+}
+
+.form-container {
+  width: 100%;
+  height: 184px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #000000;
+  margin-bottom: 16px;
+}
+.input {
+  border: 0.5px solid #c1c1c3;
+  border-radius: 8px;
+  width: 100%;
+  height: 36px;
+}
+.message {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.message :last-child {
+  font-weight: 500;
+  font-size: 10px;
+  color: #e95733;
+}
+
+.message :first-child {
+  font-weight: 400;
+  font-size: 10px;
+  color: #a0a1a5;
+}
+
+.err {
+  border: 1px solid #e95733;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-wrapper button {
+  width: 48%;
+  padding: 11px 0px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.close {
+  background: #ffffff;
+  border: 0.5px solid #dadada;
+  color: #a0a1a5;
+}
+.submit {
+  background: #eca354;
+  border: none;
+  color: #ffffff;
+}

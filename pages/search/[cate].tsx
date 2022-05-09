@@ -118,13 +118,13 @@ const Category = () => {
               <div>{selectedValue}</div>
               <Image src={ICONS.DOWN_ARROW} width={12} height={12} />
             </div>
-            {isSelected ? (
+            {isSelected && (
               <ul>
                 <li
                   onClick={() => handleSelectBox("최신순")}
                   className={styles.option}
                 >
-                  최신순{" "}
+                  최신순
                   {selectedValue === "최신순" ? (
                     <Image src={ICONS.ACTIVE} width={4} height={4} />
                   ) : (
@@ -135,7 +135,7 @@ const Category = () => {
                   onClick={() => handleSelectBox("인기순")}
                   className={styles.option}
                 >
-                  인기순{" "}
+                  인기순
                   {selectedValue === "인기순" ? (
                     <Image src={ICONS.ACTIVE} width={4} height={4} />
                   ) : (
@@ -143,8 +143,6 @@ const Category = () => {
                   )}
                 </li>
               </ul>
-            ) : (
-              <></>
             )}
           </div>
         </div>

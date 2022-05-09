@@ -15,7 +15,6 @@ const Embed = () => {
     "기타",
   ];
   const [imageSrc, setImageSrc] = useState("");
-  const [isImageUpload, setIsImageUpload] = useState(false);
   const encodeFileToBase64 = (fileBlob: File) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
@@ -42,34 +41,48 @@ const Embed = () => {
         <div>
           <div className={styles.preview_row}>
             <div className={styles.preview}>
-              {imageSrc ? (
-                <img src={imageSrc} alt="preview-img" />
-              ) : (
-                <div>
+              <div>
+                {imageSrc ? (
                   <div>
-                    <Image src={ICONS.GALLERY} width={25} height={25} />
+                    <Image src={imageSrc} layout="fill" alt="preview-img" />
                   </div>
-                  <span>이미지를 업로드 해주세요!</span>
-                </div>
-              )}
+                ) : (
+                  <>
+                    <div>
+                      <Image src={ICONS.GALLERY} layout="fill" />
+                    </div>
+                    <span>이미지를 업로드 해주세요!</span>
+                  </>
+                )}
+              </div>
             </div>
             <span>최대 용량 : 10mb</span>
           </div>
           <div className={styles.image__icon_row}>
             <input
               type="file"
-              name="imageFile"
+              id="imageFile"
               onChange={(e) => {
                 encodeFileToBase64(e.target.files[0] as File);
               }}
             />
-            <label htmlFor="imageFile"></label>
-            <div className={styles.trash}></div>
+            <label className={styles.upload_btn} htmlFor="imageFile">
+              <div>
+                <Image src={ICONS.IMAGE_UPLOAD} width={25} height={25} />
+              </div>
+            </label>
+            <div className={styles.trash}>
+              <div>
+                <Image src={ICONS.TRASH} width={25} height={25} />
+              </div>
+            </div>
             <div className={styles.image_loading}>
-              {isImageUpload ? (
-                <div>녹색아이콘</div>
-              ) : (
+              {imageSrc ? (
                 <div className={styles.image_success}>
+                  <Image src={ICONS.SUCCESS} width={25} height={25} />
+                </div>
+              ) : (
+                <div className={styles.no_image}>
                   <Image src={ICONS.SUCCESS} width={25} height={25} />
                 </div>
               )}

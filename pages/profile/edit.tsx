@@ -2,27 +2,14 @@ import { NextPageWithLayout } from "types/common";
 import style from "styles/edit.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
-import { MouseEvent, useCallback, useMemo, useState } from "react";
 import NicknameEditForm from "components/nicknameEditForm";
 import AlertModal from "components/alertModal";
+import useModal from 'hooks/useModal';
 
 const ProfileEdit: NextPageWithLayout = () => {
-  const [editOpen, setEditOpen] = useState(false);
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertType, setAlertType] = useState("");
-
-  const onClose = useCallback(() => {
-    setEditOpen(false);
-  }, []);
   
-  const onAlertClose = useCallback(() => {
-    setAlertOpen(false);
-  }, []);
-
-  const AlertHandler = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    setAlertType((e.target as HTMLDivElement).id);
-    setAlertOpen(true);
-  }, []);
+  const [editOpen, onEditClose, setIsOpen] = useModal("edit");
+  const [alertOpen, onAlertClose, AlertHandler, alertType] = useModal("alert");
 
   return (
     <div className={style.wrapper}>
@@ -44,7 +31,7 @@ const ProfileEdit: NextPageWithLayout = () => {
               <span className={style["info-font"]}>닉네임</span>
               <div>sampleNickname</div>
             </div>
-            <div onClick={() => setEditOpen(true)}>
+            <div onClick={()=> setIsOpen(true)}>
               <Image src={ICONS.EDIT} width={20} height={20} />
             </div>
           </div>
@@ -67,8 +54,8 @@ const ProfileEdit: NextPageWithLayout = () => {
           탈퇴
         </div>
       </section>
-      {editOpen && <NicknameEditForm onClose={onClose} />}
-      {alertOpen && <AlertModal alertType={alertType} onClose={onAlertClose} />}
+      {editOpen && <NicknameEditForm onClose={onEditClose} />}
+      {alertOpen && <AlertModal alertType={alertType!} onClose={onAlertClose} />}
     </div>
   );
 };

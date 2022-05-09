@@ -11,8 +11,8 @@ export default function Thumbnail() {
         <Image
           className={styles.image}
           src="/images/temp.png"
-          width="320px"
-          height="170px"
+          layout="fill"
+          objectFit="cover"
         />
       </div>
       <div className={styles.text_container}>

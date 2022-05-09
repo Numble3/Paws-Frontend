@@ -17,6 +17,7 @@ export const ICONS = {
   TRASH: getIconPath("trash.svg"),
   IMAGE_UPLOAD: getIconPath("image_upload.svg"),
   GALLERY: getIconPath("gallery.svg"),
+  VIDEO: getIconPath("video.svg"),
 };
 
 export const IMAGES: ImagesType = {

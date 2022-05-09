@@ -36,7 +36,7 @@ const Embed = () => {
           placeholder="링크 주소를 입력해주세요"
         />
       </div>
-      <div className="border-gray"></div>
+      <div className="border-gray" />
       <div className={styles.thumbnail}>
         <p className={styles.title}>썸네일 이미지</p>
         <div>
@@ -102,7 +102,7 @@ const Embed = () => {
           </div>
         </div>
       </div>
-      <div className="border-gray"></div>
+      <div className="border-gray" />
       <div className={styles.video_name}>
         <p className={styles.title}>영상 제목</p>
         <input
@@ -110,12 +110,12 @@ const Embed = () => {
           placeholder="영상 제목을 입력해주세요"
         />
       </div>
-      <div className="border-gray"></div>
+      <div className="border-gray" />
       <div className={styles.description}>
         <p className={styles.title}>설명</p>
         <textarea placeholder="설명 내용을 입력해주세요" />
       </div>
-      <div className="border-gray"></div>
+      <div className="border-gray" />
       <div className={styles.category}>
         <p className={styles.title}>
           카테고리 <span>중복 선택 불가</span>

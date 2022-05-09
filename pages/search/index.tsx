@@ -27,7 +27,7 @@ const Search = () => {
             placeholder="검색어를 입력해주세요"
           />
         </div>
-        <div className="border-gray"></div>
+        <div className="border-gray" />
         <p className={styles.category_title}>카테고리로 찾기</p>
         <div className={styles.cate_container}>
           <Link href="/search/whole">

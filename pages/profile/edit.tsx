@@ -2,7 +2,7 @@ import { NextPageWithLayout } from "types/common";
 import style from "styles/edit.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
-import NicknameEditForm from "components/nicknameEditForm";
+import NicknameEditForm from "components/custom/nickname-edit-form";
 import AlertModal from "components/alertModal";
 import useModal from "hooks/useModal";
 import EditIcon from "components/icons/edit";

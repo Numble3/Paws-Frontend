@@ -104,7 +104,6 @@ const Category = () => {
       </header>
       <div className={styles.margin}>
         <div className={styles.select_container}>
-          <div></div>
           <SelectBox />
         </div>
         {/* 썸네일 임시 대체 */}

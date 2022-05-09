@@ -14,7 +14,7 @@ const Nav = () => {
           </Link>
         </li>
         <li>
-          <Link href="/myVideo">
+          <Link href="/search">
             <Image src={ICONS.CATEGORY} width={20} height={20} />
           </Link>
         </li>

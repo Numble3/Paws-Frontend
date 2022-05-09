@@ -6,7 +6,7 @@ import style from 'styles/custom/custom-input.module.css';
 interface Props {
   inputType: string;
   value: string;
-  width?: number;
+  width?: number | string;
   height?: number;
   isSuccess?: boolean;
   error?: { isError: boolean; message: string} 
@@ -17,7 +17,7 @@ interface Props {
 const CustomInput = ({
   inputType,
   value,
-  width=343,
+  width="100%",
   height=52,
   isSuccess,
   error,
@@ -27,7 +27,7 @@ const CustomInput = ({
 
   const iconPosition = useMemo(
     () => ({
-      transform: `translate(${width - 40}px,-${20 + (height - 20) / 2}px)`,
+      transform: `translate(-20px,${(height - 20) / 2}px)`,
     }),
     []
   );

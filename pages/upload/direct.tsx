@@ -7,3 +7,4 @@ const Direct = () => {
 };
 
 export default Direct;
+Direct.header = { title: "직접 영상 업로드" };

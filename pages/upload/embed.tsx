@@ -141,3 +141,4 @@ const Embed = () => {
 };
 
 export default Embed;
+Embed.header = { title: "임베드 영상 업로드" };

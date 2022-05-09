@@ -1,4 +1,4 @@
-import LayoutContiner from "components/layout";
+import LayoutContainer from "components/layout";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
 import "styles/globals.css";
@@ -20,14 +20,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <DefaultSeo {...DEFAULT_SEO} />
-      <LayoutContiner
+      <LayoutContainer
         {...{
           layoutHeader,
           noNav,
         }}
       >
         <Component {...pageProps} />
-      </LayoutContiner>
+      </LayoutContainer>
 
       <style jsx global>
         {`

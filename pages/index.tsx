@@ -1,25 +1,11 @@
-import type { NextPage } from "next";
-import Tab from "components/layout/nav";
 import { NextPageWithLayout } from "types/common";
+import subTitle from "styles/search/index.module.css";
 
 const Home: NextPageWithLayout = () => {
   return (
-    <div>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      <h1>Paws</h1>
-      hi
-    </div>
+    <>
+      <p>주간 인기 동영상</p>
+    </>
   );
 };
 

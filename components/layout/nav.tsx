@@ -18,10 +18,12 @@ const Nav = () => {
     () => [
       {
         path: "/",
+        isActive: router.asPath === "/",
         icon: <HomeIcon isActive={router.asPath === "/"} />,
       },
       {
         path: "/search",
+        isActive: router.asPath === "/search",
         icon: <CategoryIcon isActive={router.asPath === "/search"} />,
       },
       {
@@ -31,11 +33,13 @@ const Nav = () => {
       },
       {
         path: "/interestVideo",
+        isActive: router.asPath === "/interestVideo",
         icon: <LikeIcon isActive={router.asPath === "/interestVideo"} />,
       },
       {
         path: "/profile",
-        icon: <ProfileIcon isActive={router.asPath === "/profile"} />,
+        isActive: /profile/.test(router.asPath),
+        icon: <ProfileIcon isActive={/profile/.test(router.asPath)} />,
       },
     ],
     [router]
@@ -48,7 +52,7 @@ const Nav = () => {
           <Link href={v.path} key={i}>
             <li
               className={`${v.hasCircle ? styles.upload : ""} ${
-                router.asPath === v.path ? styles.highlight : ""
+                v.isActive ? styles.highlight : ""
               }`}
             >
               {v.icon}

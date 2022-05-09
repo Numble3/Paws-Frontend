@@ -4,7 +4,7 @@ import Nav from "./nav";
 import styles from "styles/layout.module.css";
 import { LayoutHeader } from "types/common";
 
-export default function LayoutContiner({
+export default function LayoutContainer({
   children,
   layoutHeader,
   noNav,

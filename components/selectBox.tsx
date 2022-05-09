@@ -34,10 +34,8 @@ const SelectBox = () => {
             className={styles.option}
           >
             인기순
-            {selectedValue === "인기순" ? (
+            {selectedValue === "인기순" && (
               <Image src={ICONS.ACTIVE} width={4} height={4} />
-            ) : (
-              <></>
             )}
           </li>
         </ul>

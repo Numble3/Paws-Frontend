@@ -1,0 +1,48 @@
+.title {
+  font-family: "Pretendard";
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+/*category*/
+.category ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+  padding: 0;
+  column-gap: 16px;
+  row-gap: 12px;
+  margin-bottom: 35px;
+}
+
+.category__not_selected {
+  list-style: none;
+  padding: 15px 0;
+  border: 0.5px solid #dadada;
+  box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+}
+.category ul li:hover {
+  cursor: pointer;
+  background: #e88539;
+  color: white;
+}
+.category__selected {
+  list-style: none;
+  padding: 15px 0;
+  border: 0.5px solid #dadada;
+  box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+  background: #e88539;
+  color: white;
+}
+.category .title span {
+  font-size: 10px;
+  padding-left: 4px;
+  color: #828385;
+}

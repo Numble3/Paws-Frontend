@@ -5,9 +5,20 @@ import { NextPageWithLayout } from "types/common";
 const Home: NextPageWithLayout = () => {
   return (
     <div>
-      <main>
-        <h1>Paws</h1>
-      </main>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      <h1>Paws</h1>
+      hi
     </div>
   );
 };

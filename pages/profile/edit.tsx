@@ -2,14 +2,26 @@ import { NextPageWithLayout } from "types/common";
 import style from "styles/edit.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
-import { useCallback, useMemo, useState } from "react";
+import { MouseEvent, useCallback, useMemo, useState } from "react";
 import NicknameEditForm from "components/nicknameEditForm";
+import AlertModal from "components/alertModal";
 
 const ProfileEdit: NextPageWithLayout = () => {
   const [editOpen, setEditOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertType, setAlertType] = useState("");
 
   const onClose = useCallback(() => {
     setEditOpen(false);
+  }, []);
+  
+  const onAlertClose = useCallback(() => {
+    setAlertOpen(false);
+  }, []);
+
+  const AlertHandler = useCallback((e: MouseEvent<HTMLDivElement>) => {
+    setAlertType((e.target as HTMLDivElement).id);
+    setAlertOpen(true);
   }, []);
 
   return (
@@ -40,12 +52,23 @@ const ProfileEdit: NextPageWithLayout = () => {
       </section>
       <section className={style["info-section"]}>
         <div className={style["info-title"]}>계정</div>
-        <div className={`${style.box} ${style.first} ${style["account-font"]}`}>
+        <div
+          id="logout"
+          onClick={AlertHandler}
+          className={`${style.box} ${style.first} ${style["account-font"]}`}
+        >
           로그아웃
         </div>
-        <div className={`${style.box} ${style["account-font"]}`}>탈퇴</div>
+        <div
+          id="withdraw"
+          onClick={AlertHandler}
+          className={`${style.box} ${style["account-font"]}`}
+        >
+          탈퇴
+        </div>
       </section>
       {editOpen && <NicknameEditForm onClose={onClose} />}
+      {alertOpen && <AlertModal alertType={alertType} onClose={onAlertClose} />}
     </div>
   );
 };

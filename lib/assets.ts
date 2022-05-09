@@ -11,4 +11,6 @@ export const ICONS = {
   PAW: getIconPath("paw.svg"),
   ARROW_RIGHT: getIconPath("arrowRight.svg"),
   EDIT: getIconPath("edit.svg"),
+  DELETE: getIconPath("delete.svg"),
+  LOGOUT: getIconPath("logout.svg"),
 };

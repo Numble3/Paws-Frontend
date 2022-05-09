@@ -31,13 +31,16 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 52px;
+  justify-content: space-between;
   margin: 0;
   padding: 8px 34px;
 }
 .nav > ul > li {
   list-style: none;
   cursor: pointer;
+  position: relative;
+  display: grid;
+  place-items:center ;
 }
 .upload {
   background: var(--primary);
@@ -45,4 +48,14 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
+}
+
+.highlight::after{
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--primary);
+  position: absolute;
+  bottom: -8px;
 }

@@ -96,58 +96,7 @@
   display: flex;
   flex-direction: row-reverse;
 }
-.select {
-  margin: 12px 0;
-  background: #ffffff;
-  border: 0.5px solid #dadada;
-  font-family: "Pretendard";
-  font-weight: 400;
-  font-size: 10px;
-  box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
-  border-radius: 4px;
-  display: inline-block;
-  width: 80px;
-}
 
-.select .selected {
-  color: #828385;
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 10px;
-}
-.select .selected_focused {
-  color: #828385;
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 10px;
-  border: 1px solid #eca354;
-}
-
-.select ul {
-  z-index: 1;
-  width: 80px;
-  position: absolute;
-  background: #ffffff;
-  /* 그림자 */
-  transform: translateY(-4px);
-  box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
-  border-radius: 4px;
-  padding: 0;
-}
-
-.select ul li {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  padding: 8px 5px;
-  margin: 0 8px;
-}
-.select ul li:hover {
-  color: #eca354;
-}
-.select ul li:first-child {
-  border-bottom: 0.25px solid #e9e9e9;
-}
 /*thumbnail*/
 .thumbnail_row {
   margin: 0;

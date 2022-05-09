@@ -3,7 +3,7 @@ import { ICONS, IMAGES } from "lib/assets";
 import Header from "components/layout/header";
 import styles from "styles/search/index.module.css";
 import Link from "next/link";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import useInput from "hooks/useInput";
 
 type video = {
@@ -16,10 +16,10 @@ const Search = () => {
   const [query, inputHandler, setQuery] = useInput("");
   const [queryTimer, setQueryTimer] = useState<NodeJS.Timeout>();
   const [data, setData] = useState<video[]>([]);
-  console.log(query);
+
   return (
     <>
-      {isFocused ? <></> : <Header title="검색 및 카테고리" />}
+      <Header title="검색 및 카테고리" />
       <div className={styles.wrap}>
         <p className={styles.search_title}>검색어로 찾기</p>
         <div className={styles.search_container}>

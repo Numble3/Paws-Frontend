@@ -1,7 +1,5 @@
-import styles from "styles/border.module.css";
-
 const Border = () => {
-  return <div className={styles.border}></div>;
+  return <div className="border-gray"></div>;
 };
 
 export default Border;

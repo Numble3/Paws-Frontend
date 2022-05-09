@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
 import editStyle from "styles/edit-form.module.css";
 import style from "styles/alert.module.css";
-import LogoutIcon from './icons/logout';
-import CautionIcon from './icons/caution';
-import TrashIcon from './icons/trash';
+import LogoutIcon from '../icons/logout';
+import CautionIcon from '../icons/caution';
+import TrashIcon from '../icons/trash';
 
 interface Props {
   alertType: string;

@@ -18,6 +18,9 @@ export const ICONS = {
   DOWN_ARROW: getIconPath("down_arrow.svg"),
   ACTIVE: getIconPath("active.svg"),
   EDIT: getIconPath("edit.svg"),
+  TRASH: getIconPath("trash.svg"),
+  IMAGE_UPLOAD: getIconPath("image_upload.svg"),
+  GALLERY: getIconPath("gallery.svg"),
 };
 
 export const IMAGES: ImagesType = {

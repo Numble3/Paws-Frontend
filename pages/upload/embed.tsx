@@ -1,8 +1,7 @@
 import { useState } from "react";
 import styles from "styles/upload/embed.module.css";
-import { ICONS, IMAGES } from "lib/assets";
+import { ICONS } from "lib/assets";
 import Image from "next/image";
-import Border from "components/border";
 
 const Embed = () => {
   const category = [
@@ -20,7 +19,8 @@ const Embed = () => {
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
       reader.onload = () => {
-        setImageSrc(reader.result as string);
+        setImageSrc(reader.result);
+        console.log(imageSrc);
         resolve();
       };
     });
@@ -35,28 +35,39 @@ const Embed = () => {
           placeholder="링크 주소를 입력해주세요"
         />
       </div>
-      <Border />
+      <div className="border-gray"></div>
       <div className={styles.thumbnail}>
         <p className={styles.title}>썸네일 이미지</p>
         <div>
           <div className={styles.preview_row}>
-            <div className={styles.preview}>
+            <div
+              className={`${styles.preview} ${
+                !imageSrc && styles.preview__align_items
+              }`}
+            >
               <div>
                 {imageSrc ? (
-                  <div>
+                  <div className={styles.preview__image}>
                     <Image src={imageSrc} layout="fill" alt="preview-img" />
                   </div>
                 ) : (
                   <>
-                    <div>
+                    <div className={styles.no_image__icon}>
                       <Image src={ICONS.GALLERY} layout="fill" />
                     </div>
-                    <span>이미지를 업로드 해주세요!</span>
+                    <span className={styles.no_image__text}>
+                      이미지를 업로드 해주세요!
+                    </span>
                   </>
                 )}
               </div>
             </div>
-            <span>최대 용량 : 10mb</span>
+            <div>
+              <span>최대 용량 : 10mb</span>
+              {imageSrc && (
+                <span className={styles.upload_complete}>업로드 완료!</span>
+              )}
+            </div>
           </div>
           <div className={styles.image__icon_row}>
             <input
@@ -71,7 +82,7 @@ const Embed = () => {
                 <Image src={ICONS.IMAGE_UPLOAD} width={25} height={25} />
               </div>
             </label>
-            <div className={styles.trash}>
+            <div className={styles.trash} onClick={() => setImageSrc("")}>
               <div>
                 <Image src={ICONS.TRASH} width={25} height={25} />
               </div>
@@ -90,7 +101,7 @@ const Embed = () => {
           </div>
         </div>
       </div>
-      <Border />
+      <div className="border-gray"></div>
       <div className={styles.video_name}>
         <p className={styles.title}>영상 제목</p>
         <input
@@ -98,19 +109,19 @@ const Embed = () => {
           placeholder="영상 제목을 입력해주세요"
         />
       </div>
-      <Border />
+      <div className="border-gray"></div>
       <div className={styles.description}>
         <p className={styles.title}>설명</p>
         <textarea placeholder="설명 내용을 입력해주세요" />
       </div>
-      <Border />
+      <div className="border-gray"></div>
       <div className={styles.category}>
         <p className={styles.title}>
           카테고리 <span>중복 선택 불가</span>
         </p>
         <ul>
           {category.map((name) => (
-            <li>{name}</li>
+            <li key={name}>{name}</li>
           ))}
         </ul>
       </div>

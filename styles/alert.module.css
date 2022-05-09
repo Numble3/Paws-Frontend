@@ -11,8 +11,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: #f4ab99;
-  opacity: 0.25;
+  background-color: rgba(244, 171, 153, 0.25);
 }
 
 
@@ -22,13 +21,13 @@
   color: #000000;
 }
 
-.form > p {
-  width: 90%;
+.form > pre {
+  width: 100%;
   font-weight: 400;
   font-size: 12px;
   color: #030303;
   margin: 14px auto;
-  white-space: pre-wrap;
+  white-space: pre-line;
 }
 
 .button-wrapper {

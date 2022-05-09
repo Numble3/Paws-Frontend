@@ -4,10 +4,10 @@ import Image from "next/image";
 import { ICONS } from "lib/assets";
 import NicknameEditForm from "components/nicknameEditForm";
 import AlertModal from "components/alertModal";
-import useModal from 'hooks/useModal';
+import useModal from "hooks/useModal";
+import EditIcon from "components/icons/edit";
 
 const ProfileEdit: NextPageWithLayout = () => {
-  
   const [editOpen, onEditClose, setIsOpen] = useModal("edit");
   const [alertOpen, onAlertClose, AlertHandler, alertType] = useModal("alert");
 
@@ -16,7 +16,7 @@ const ProfileEdit: NextPageWithLayout = () => {
       <section className={style["img-section"]}>
         <Image src={ICONS.PAW} width={72} height={72} />
         <div className={style["icon-wrapper"]}>
-          <Image src={ICONS.EDIT} width={36} height={36} />
+          <EditIcon width={36} height={36} />
         </div>
       </section>
       <section className={style["info-section"]}>
@@ -31,8 +31,8 @@ const ProfileEdit: NextPageWithLayout = () => {
               <span className={style["info-font"]}>닉네임</span>
               <div>sampleNickname</div>
             </div>
-            <div onClick={()=> setIsOpen(true)}>
-              <Image src={ICONS.EDIT} width={20} height={20} />
+            <div onClick={() => setIsOpen(true)}>
+              <EditIcon width={20} height={20} color={true} />
             </div>
           </div>
         </div>
@@ -55,7 +55,9 @@ const ProfileEdit: NextPageWithLayout = () => {
         </div>
       </section>
       {editOpen && <NicknameEditForm onClose={onEditClose} />}
-      {alertOpen && <AlertModal alertType={alertType!} onClose={onAlertClose} />}
+      {alertOpen && (
+        <AlertModal alertType={alertType!} onClose={onAlertClose} />
+      )}
     </div>
   );
 };

@@ -4,8 +4,7 @@ import Header from "components/layout/header";
 import styles from "styles/search/index.module.css";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
-import Thumbnail from "components/search/thumbnail";
-import NoResult from "components/search/noResult";
+import useInput from "hooks/useInput";
 
 type video = {
   // 나중에 수정할 임시 타입
@@ -14,25 +13,10 @@ type video = {
 };
 const Search = () => {
   const [isFocused, setIsFocused] = useState(false);
-
+  const [query, inputHandler, setQuery] = useInput("");
   const [queryTimer, setQueryTimer] = useState<NodeJS.Timeout>();
-  const [query, setQuery] = useState("");
   const [data, setData] = useState<video[]>([]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.currentTarget.value);
-    setData([
-      {
-        id: 1,
-        name: "고양이~",
-      },
-      {
-        id: 2,
-        name: "강아지~",
-      },
-    ]);
-    console.log(query);
-  };
+  console.log(query);
   return (
     <>
       {isFocused ? <></> : <Header title="검색 및 카테고리" />}
@@ -43,23 +27,13 @@ const Search = () => {
             <Image src={ICONS.SEARCH} width={11.73} height={12} />
           </div>
           <input
-            onChange={(e) => handleChange(e)}
+            onChange={inputHandler}
             className={`${styles.input} ${
               query !== "" ? styles.input_focused : ""
             }`}
             placeholder="검색어를 입력해주세요"
           />
         </div>
-        {/* {data ? (
-          <ul style={{ marginTop: "20px" }} className={styles.thumbnail_row}>
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-          </ul>
-        ) : (
-          <NoResult />
-        )} */}
         <div className={styles.border}></div>
         <p className={styles.category_title}>카테고리로 찾기</p>
         <div className={styles.cate_container}>

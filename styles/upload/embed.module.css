@@ -16,13 +16,14 @@
 .text_input {
   font-size: 12px;
   font-family: "Pretendard";
-  color: #dadada;
   flex-basis: 100%;
   padding: 15px 16px;
   border: 0.5px solid #c1c1c3;
   border-radius: 8px;
 }
-
+.text_input::placeholder {
+  color: #dadada;
+}
 /*image*/
 .thumbnail > div {
   display: flex;
@@ -118,11 +119,14 @@
   border-radius: 8px;
   font-family: pretendard;
   padding: 15px 16px;
-  color: #dadada;
   resize: none;
   height: 120px;
   font-size: 12px;
 }
+.description > textarea::placeholder {
+  color: #dadada;
+}
+
 /*category*/
 .category ul {
   display: grid;
@@ -134,7 +138,7 @@
   margin-bottom: 35px;
 }
 
-.category ul li {
+.category__not_selected {
   list-style: none;
   padding: 15px 0;
   border: 0.5px solid #dadada;
@@ -148,7 +152,17 @@
   background: #e88539;
   color: white;
 }
-
+.category__selected {
+  list-style: none;
+  padding: 15px 0;
+  border: 0.5px solid #dadada;
+  box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+  background: #e88539;
+  color: white;
+}
 .category .title span {
   font-size: 10px;
   padding-left: 4px;

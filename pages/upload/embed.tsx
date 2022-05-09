@@ -14,6 +14,7 @@ const Embed = () => {
     "기타",
   ];
   const [imageSrc, setImageSrc] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const encodeFileToBase64 = (fileBlob: File) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
@@ -121,7 +122,17 @@ const Embed = () => {
         </p>
         <ul>
           {category.map((name) => (
-            <li key={name}>{name}</li>
+            <li
+              className={
+                selectedCategory === name
+                  ? styles.category__selected
+                  : styles.category__not_selected
+              }
+              onClick={() => setSelectedCategory(name)}
+              key={name}
+            >
+              {name}
+            </li>
           ))}
         </ul>
       </div>

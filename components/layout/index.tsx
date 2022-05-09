@@ -16,7 +16,7 @@ export default function LayoutContiner({
   return (
     <div className={styles.wrapper}>
       {layoutHeader && <Header {...layoutHeader} />}
-      {children}
+      <main className={styles.main}>{children}</main>
       {!noNav && <Nav />}
     </div>
   );

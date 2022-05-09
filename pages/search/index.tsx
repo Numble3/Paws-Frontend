@@ -6,16 +6,9 @@ import Link from "next/link";
 import { useState } from "react";
 import useInput from "hooks/useInput";
 
-type video = {
-  // 나중에 수정할 임시 타입
-  id: number;
-  name: string;
-};
 const Search = () => {
-  const [isFocused, setIsFocused] = useState(false);
   const [query, inputHandler, setQuery] = useInput("");
   const [queryTimer, setQueryTimer] = useState<NodeJS.Timeout>();
-  const [data, setData] = useState<video[]>([]);
 
   return (
     <>
@@ -34,7 +27,7 @@ const Search = () => {
             placeholder="검색어를 입력해주세요"
           />
         </div>
-        <div className={styles.border}></div>
+        <div className="border-gray"></div>
         <p className={styles.category_title}>카테고리로 찾기</p>
         <div className={styles.cate_container}>
           <Link href="/search/whole">

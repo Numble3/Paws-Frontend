@@ -1,7 +1,7 @@
 import { ICONS } from 'lib/assets';
 import Image from 'next/image';
 import { ChangeEvent, useMemo } from "react";
-import style from 'styles/customInput.module.css';
+import style from 'styles/custom/custom-input.module.css';
 
 interface Props {
   inputType: string;

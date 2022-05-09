@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ICONS } from "lib/assets";
 import NicknameEditForm from "components/custom/nickname-edit-form";
 import AlertModal from "components/custom/alert-modal";
-import useModal from "hooks/useModal";
+import useModal from "hooks/use-modal";
 import EditIcon from "components/icons/edit";
 
 const ProfileEdit: NextPageWithLayout = () => {

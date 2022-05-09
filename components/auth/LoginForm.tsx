@@ -1,5 +1,5 @@
 import { CustomInput } from "components/custom";
-import useInput from "hooks/useInput";
+import useInput from "hooks/use-input";
 import Link from "next/link";
 import React from "react";
 import style from "styles/loginform.module.css";

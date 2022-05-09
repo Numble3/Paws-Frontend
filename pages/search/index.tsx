@@ -4,7 +4,7 @@ import Header from "components/layout/header";
 import styles from "styles/search/index.module.css";
 import Link from "next/link";
 import { useState } from "react";
-import useInput from "hooks/useInput";
+import useInput from "hooks/use-input";
 
 const Search = () => {
   const [query, inputHandler, setQuery] = useInput("");

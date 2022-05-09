@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import editStyle from "styles/edit-form.module.css";
-import style from "styles/alert.module.css";
+import style from "styles/custom/alert.module.css";
 import LogoutIcon from '../icons/logout';
 import CautionIcon from '../icons/caution';
 import TrashIcon from '../icons/trash';

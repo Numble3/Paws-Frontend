@@ -1,4 +1,4 @@
-import CustomInput from "components/customInput";
+import { CustomInput } from "components/custom";
 import useInput from "hooks/useInput";
 import React, { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import style from "styles/signup.module.css";

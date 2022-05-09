@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ICONS, IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
 import Thumbnail from "components/search/thumbnail";
-import SelectBox from "components/selectBox";
+import SelectBox from "components/custom/select-box";
 
 const Category = () => {
   const router = useRouter();

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Border from "components/border";
 import { ICONS, IMAGES } from "lib/assets";
 import Header from "components/layout/header";
 import styles from "styles/search/index.module.css";
@@ -34,7 +35,7 @@ const Search = () => {
             placeholder="검색어를 입력해주세요"
           />
         </div>
-        <div className={styles.border}></div>
+        <Border />
         <p className={styles.category_title}>카테고리로 찾기</p>
         <div className={styles.cate_container}>
           <Link href="/search/whole">

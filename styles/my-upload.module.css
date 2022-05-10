@@ -1,0 +1,16 @@
+.select-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.select-container > div {
+  margin-top: 0;
+}
+
+.video-list {
+  margin: 0;
+  margin-bottom: 30px;
+  padding: 0;
+  height: 470px;
+  overflow: auto;
+}

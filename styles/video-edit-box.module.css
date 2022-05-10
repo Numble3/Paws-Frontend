@@ -1,0 +1,52 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  background: rgba(81, 81, 81, 0.7);
+  padding: 0px 24px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.box-wrapper {
+  padding-bottom: 20px;
+  width: 100%;
+  animation: slide-top 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.box-wrapper :first-child {
+  display: flex;
+  flex-direction: column;
+}
+.margin-top {
+  margin-top: 10px;
+}
+.border-top {
+  border-top: 0.5px solid #e9e9e9;
+}
+.box-wrapper > div {
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+.button {
+  width: 100%;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 14px 0px;
+}
+.padding {
+  padding: 0px 16px;
+}
+
+.button:first-child {
+  color: #E95733;
+}
+
+@keyframes slide-top {
+  0% {
+    transform: translateY(100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

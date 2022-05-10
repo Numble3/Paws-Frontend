@@ -1,6 +1,6 @@
 .background {
   position: absolute;
-  z-index: 10;
+  z-index: 1001;
   top: 0;
   bottom: 0;
   left: 0;
@@ -23,6 +23,7 @@
   background: #ffffff;
   border-radius: 8px;
   padding: 24px;
+  animation: scale-in-ver-center 0.1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .title {
@@ -80,4 +81,15 @@
   background: #eca354;
   border: none;
   color: #ffffff;
+}
+
+@keyframes scale-in-ver-center {
+  0% {
+    transform: scaleY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }

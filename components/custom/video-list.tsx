@@ -1,10 +1,10 @@
 import { HeartIcon } from "components/icons";
 import Link from "next/link";
-import styles from "styles/main.module.css";
+import styles from "styles/custom/video-list.module.css";
 
 interface Props {}
 
-const HomeVideos = (props: Props) => {
+const VideoList = (props: Props) => {
   return (
     <section className={styles.videos}>
       {Array.from(Array(10).keys()).map((v) => (
@@ -36,4 +36,4 @@ const HomeVideos = (props: Props) => {
   );
 };
 
-export default HomeVideos;
+export default VideoList;

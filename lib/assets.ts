@@ -9,8 +9,6 @@ export const ICONS = {
   ARROW_RIGHT: getIconPath("arrowRight.svg"),
   SEARCH: getIconPath("search.svg"),
   BACK: getIconPath("back.svg"),
-  EMPTY_HEART: getIconPath("emptyHeart.svg"),
-  FULL_HEART: getIconPath("fullHeart.svg"),
   DOWN_ARROW: getIconPath("arrowDown.svg"),
   ACTIVE: getIconPath("active.svg"),
   EDIT: getIconPath("edit.svg"),

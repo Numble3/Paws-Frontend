@@ -143,6 +143,11 @@
   right: 8px;
 }
 
-.cate_ETC {
+.cate_etc {
   background-color: cateETC;
+}
+.cate_etc > div {
+  position: absolute;
+  bottom: -4px;
+  right: 1px;
 }

@@ -102,7 +102,10 @@ const Search = () => {
           </Link>
           <Link href="/search/etc">
             <a>
-              <div className={`${styles.cate} ${styles.cate_whole}`}>
+              <div className={`${styles.cate} ${styles.cate_etc}`}>
+                <div>
+                  <Image width={150} height={90} src={IMAGES.ETC} />
+                </div>
                 <span className={styles.cate_name}>기타</span>
               </div>
             </a>

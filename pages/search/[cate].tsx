@@ -57,8 +57,8 @@ const Category: NextPageWithLayout = () => {
       case "etc":
         return {
           name: "기타",
-          width: 90,
-          height: 120,
+          width: 150,
+          height: 90,
         };
       default:
         return {
@@ -74,7 +74,8 @@ const Category: NextPageWithLayout = () => {
       cate === "lizard" ||
       cate === "rabbit" ||
       cate === "bird" ||
-      cate === "hamster"
+      cate === "hamster" ||
+      cate === "etc"
     )
       return true;
   }, [cate]);

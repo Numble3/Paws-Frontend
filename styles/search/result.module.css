@@ -1,6 +1,28 @@
 .back {
   padding: 10px;
 }
+
+.header {
+  max-width: 480px;
+  top: 0;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  height: 56px;
+  box-shadow: 0px 2px 4px rgba(203, 203, 203, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.6s ease-in-out;
+  position: fixed;
+  z-index: 1000;
+  background: #fff;
+}
+
+.header:active {
+  transform: translate(100%);
+}
+
 .search_container {
   width: 100%;
   padding: 0 16px;
@@ -36,6 +58,7 @@
 /*select box*/
 .select_container {
   z-index: 1000;
+  max-width: 480px;
   position: fixed;
   display: flex;
   width: 100%;
@@ -43,25 +66,6 @@
   top: 56px;
   padding: 0 16px;
   flex-direction: row-reverse;
-}
-.header {
-  max-width: 480px;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 56px;
-  box-shadow: 0px 2px 4px rgba(203, 203, 203, 0.25);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.6s ease-in-out;
-  position: fixed;
-  z-index: 1000;
-  background: #fff;
-}
-
-.header:active {
-  transform: translate(100%);
 }
 
 .thumbnail_container {

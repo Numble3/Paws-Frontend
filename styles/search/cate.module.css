@@ -1,13 +1,15 @@
 @value cateWhole, cateDog, cateCat, cateLizard, cateBird, cateRabbit, cateHamster, cateETC from 'styles/variables.css';
 
 .header {
+  max-width: 480px;
   overflow: hidden;
   display: flex;
   position: fixed;
   padding: 15px 10px;
   width: 100%;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   height: 100px;
   z-index: 1000;
   border-bottom-left-radius: 8px;
@@ -92,8 +94,15 @@
   overflow: hidden;
 }
 
+.etc_container {
+  position: absolute;
+  right: 40px;
+  bottom: -4px;
+  overflow: hidden;
+}
 /*select box*/
 .select_container {
+  max-width: 480px;
   z-index: 1000;
   position: fixed;
   display: flex;

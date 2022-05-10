@@ -1,6 +1,6 @@
-import VideoEditBox from 'components/custom/video-edit-box';
-import Thumbnail from 'components/search/thumbnail';
-import useModal from 'hooks/use-modal';
+import VideoEditBox from "components/custom/video-edit-box";
+import Thumbnail from "components/search/thumbnail";
+import useModal from "hooks/use-modal";
 import { ICONS } from "lib/assets";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,7 +10,6 @@ import style from "styles/profile.module.css";
 import { NextPageWithLayout } from "types/common";
 
 const ProfilePage: NextPageWithLayout = () => {
-
   const [isOpen, onClose, setIsOpen] = useModal("edit");
 
   /* 벡엔드연동 시 user 정보를 받아옴 */
@@ -44,22 +43,46 @@ const ProfilePage: NextPageWithLayout = () => {
         </div>
         <div className={style["video-container"]}>
           <div className={style.video}>
-            <Thumbnail noInfo={true} noDot={false} onEdit={() => setIsOpen(true)} />
+            <Thumbnail
+              noInfo={true}
+              noDot={false}
+              onEdit={() => setIsOpen(true)}
+            />
           </div>
           <div className={style.video}>
-            <Thumbnail noInfo={true} noDot={false} onEdit={() => setIsOpen(true)} />
+            <Thumbnail
+              noInfo={true}
+              noDot={false}
+              onEdit={() => setIsOpen(true)}
+            />
           </div>
           <div className={style.video}>
-            <Thumbnail noInfo={true} noDot={false} onEdit={() => setIsOpen(true)} />
+            <Thumbnail
+              noInfo={true}
+              noDot={false}
+              onEdit={() => setIsOpen(true)}
+            />
           </div>
           <div className={style.video}>
-            <Thumbnail noInfo={true} noDot={false} onEdit={() => setIsOpen(true)} />
+            <Thumbnail
+              noInfo={true}
+              noDot={false}
+              onEdit={() => setIsOpen(true)}
+            />
           </div>
           <div className={style.video}>
-            <Thumbnail noInfo={true} noDot={false} onEdit={() => setIsOpen(true)} />
+            <Thumbnail
+              noInfo={true}
+              noDot={false}
+              onEdit={() => setIsOpen(true)}
+            />
           </div>
           <div className={style.video}>
-            <Thumbnail noInfo={true} noDot={false} onEdit={() => setIsOpen(true)} />
+            <Thumbnail
+              noInfo={true}
+              noDot={false}
+              onEdit={() => setIsOpen(true)}
+            />
           </div>
         </div>
       </section>

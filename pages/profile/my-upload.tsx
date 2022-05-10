@@ -8,7 +8,7 @@ import VideoEditBox from 'components/custom/video-edit-box';
 const MyUploadPage: NextPageWithLayout = () => {
   const [isOpen, onClose, setIsOpen] = useModal("edit");
   return (
-    <div>
+    <div className={style.wrapper}>
       <div className={style["select-container"]}>
         <SelectBox />
       </div>

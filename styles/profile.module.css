@@ -1,6 +1,6 @@
 .wrapper {
   margin: 0px 16px;
-  height: 90%;
+  height: 100%;
 }
 
 .profile-section {
@@ -39,7 +39,7 @@
 
 .video-section {
   padding-top: 26px;
-  height: 50%;
+  height: 100%;
 }
 
 .title-container {
@@ -56,11 +56,11 @@
 .video-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
   gap: 16px;
   align-items: center;
   justify-items: center;
-  height: 100%;
+  /* height를 px말고 작업할 수 있는 방법 없는지?*/
+  height: 300px;
 }
 
 .video{

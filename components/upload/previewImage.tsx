@@ -12,7 +12,6 @@ const PreviewImage = () => {
     return new Promise<void>((resolve) => {
       reader.onload = () => {
         setImageSrc(reader.result);
-        console.log(imageSrc);
         resolve();
       };
     });
@@ -36,7 +35,7 @@ const PreviewImage = () => {
               ) : (
                 <>
                   <div className={styles.no_image__icon}>
-                    <Image src={ICONS.GALLERY} layout="fill" />
+                    <Image src={ICONS.GALLERY} priority={true} layout="fill" />
                   </div>
                   <span className={styles.no_image__text}>
                     이미지를 업로드 해주세요!

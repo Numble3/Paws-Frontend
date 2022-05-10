@@ -44,7 +44,7 @@ const PreviewVideo = () => {
               ) : (
                 <>
                   <div className={styles.no_image__icon}>
-                    <Image src={ICONS.VIDEO} layout="fill" />
+                    <Image src={ICONS.VIDEO} priority={true} layout="fill" />
                   </div>
                   <span className={styles.no_image__text}>
                     비디오를 업로드 해주세요!

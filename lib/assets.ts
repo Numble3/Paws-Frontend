@@ -14,6 +14,8 @@ export const ICONS = {
   DOWN_ARROW: getIconPath("arrowDown.svg"),
   ACTIVE: getIconPath("active.svg"),
   EDIT: getIconPath("edit.svg"),
+  DELETE: getIconPath("delete.svg"),
+  LOGOUT: getIconPath("logout.svg"),
   TRASH: getIconPath("trash.svg"),
   IMAGE_UPLOAD: getIconPath("imageUpload.svg"),
   GALLERY: getIconPath("gallery.svg"),

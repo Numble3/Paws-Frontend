@@ -1,17 +1,25 @@
 .back {
-  filter: grayscale(100%);
+  padding: 10px;
 }
 .search_container {
   width: 100%;
+  padding: 0 16px;
+  position: relative;
+  display: flex;
 }
 .search_container > div {
   position: absolute;
   top: 50%;
-  left: 16px;
+  left: 32px;
   transform: translateY(-50%);
 }
 
-/*input 관련*/
+.thumbnail_row {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
 .input {
   font-family: pretendard;
   flex-basis: 100%;

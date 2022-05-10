@@ -2,11 +2,17 @@ import Image from "next/image";
 import { ICONS, IMAGES } from "lib/assets";
 import styles from "styles/search/index.module.css";
 import Link from "next/link";
-import useInput from "hooks/use-input";
+import Router from "next/router";
+import { useRef, useState } from "react";
 
 const Search = () => {
-  const [query, inputHandler, setQuery] = useInput("");
-
+  const [isFocus, setIsFocus] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      Router.push(`/search/result?query=${inputRef.current?.value}`);
+    }
+  };
   return (
     <>
       <div className={styles.wrap}>
@@ -16,11 +22,12 @@ const Search = () => {
             <Image src={ICONS.SEARCH} width={12} height={12} />
           </div>
           <input
-            onChange={inputHandler}
-            className={`${styles.input} ${
-              query !== "" ? styles.input_focused : ""
-            }`}
-            placeholder="검색어를 입력해주세요"
+            ref={inputRef}
+            onKeyPress={handleKeyPress}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            className={`${styles.input} ${isFocus && styles.input_focused}`}
+            placeholder="검색어 입력 후 엔터를 누르세요."
           />
         </div>
         <div className="border-gray" />

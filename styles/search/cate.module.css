@@ -100,8 +100,6 @@
 /*thumbnail*/
 .thumbnail_row {
   margin: 0;
-  margin-bottom: 30px;
   padding: 0;
-  height: 470px;
   overflow: auto;
 }

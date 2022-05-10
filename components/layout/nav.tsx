@@ -18,13 +18,13 @@ const Nav = () => {
     () => [
       {
         path: "/",
-        isActive: router.asPath === "/",
-        icon: <HomeIcon isActive={router.asPath === "/"} />,
+        isActive: router.pathname === "/",
+        icon: <HomeIcon isActive={router.pathname === "/"} />,
       },
       {
         path: "/search",
-        isActive: router.asPath === "/search",
-        icon: <CategoryIcon isActive={router.asPath === "/search"} />,
+        isActive: router.pathname === "/search",
+        icon: <CategoryIcon isActive={router.pathname === "/search"} />,
       },
       {
         path: "/upload",
@@ -33,13 +33,13 @@ const Nav = () => {
       },
       {
         path: "/interestVideo",
-        isActive: router.asPath === "/interestVideo",
-        icon: <LikeIcon isActive={router.asPath === "/interestVideo"} />,
+        isActive: router.pathname === "/interestVideo",
+        icon: <LikeIcon isActive={router.pathname === "/interestVideo"} />,
       },
       {
         path: "/profile",
-        isActive: /profile/.test(router.asPath),
-        icon: <ProfileIcon isActive={/profile/.test(router.asPath)} />,
+        isActive: /profile/.test(router.pathname),
+        icon: <ProfileIcon isActive={/profile/.test(router.pathname)} />,
       },
     ],
     [router]

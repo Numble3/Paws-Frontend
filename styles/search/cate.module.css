@@ -14,9 +14,6 @@
   border-bottom-right-radius: 8px;
 }
 
-.thumbnail_container {
-  padding: 0 16px;
-}
 .cate_name {
   position: absolute;
   bottom: 15px;
@@ -108,6 +105,10 @@
 }
 
 /*thumbnail*/
+.thumbnail_container {
+  padding: 0 16px;
+}
+
 .thumbnail_row {
   margin: 0;
   padding: 0;

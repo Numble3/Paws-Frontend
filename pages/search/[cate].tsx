@@ -102,7 +102,7 @@ const Category: NextPageWithLayout = () => {
           <></>
         )}
         <span className={styles.cate_name}>{cateObj.name}</span>
-      </header>{" "}
+      </header>
       <div className={styles.select_container}>
         <SelectBox />
       </div>

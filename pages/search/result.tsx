@@ -39,17 +39,19 @@ const Result: NextPageWithLayout = () => {
         </div>
       </section>
       {data ? (
-        <section>
+        <>
           <div className={styles.select_container}>
             <SelectBox />
           </div>
-          <ul className={styles.thumbnail_row}>
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-            <Thumbnail />
-          </ul>
-        </section>
+          <section className={styles.thumbnail_container}>
+            <ul className={styles.thumbnail_row}>
+              <Thumbnail />
+              <Thumbnail />
+              <Thumbnail />
+              <Thumbnail />
+            </ul>
+          </section>
+        </>
       ) : (
         <NoResult />
       )}

@@ -14,12 +14,6 @@
   transform: translateY(-50%);
 }
 
-.thumbnail_row {
-  margin: 0;
-  padding: 0;
-  overflow: auto;
-}
-
 .input {
   font-family: pretendard;
   flex-basis: 100%;
@@ -41,7 +35,13 @@
 }
 /*select box*/
 .select_container {
+  z-index: 1000;
+  position: fixed;
   display: flex;
+  width: 100%;
+  background-color: #fbfbfb;
+  top: 56px;
+  padding: 0 16px;
   flex-direction: row-reverse;
 }
 .header {
@@ -62,4 +62,15 @@
 
 .header:active {
   transform: translate(100%);
+}
+
+.thumbnail_container {
+  padding: 0 16px;
+}
+
+.thumbnail_row {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  margin-top: 112px;
 }

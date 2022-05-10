@@ -37,7 +37,9 @@ const ProfilePage: NextPageWithLayout = () => {
           <span className={style.title}>업로드한 비디오</span>
           <span>
             <Link href={"profile/my-upload"}>
-              <Image src={ICONS.ARROW_RIGHT} width={12} height={12} />
+              <a>
+                <Image src={ICONS.ARROW_RIGHT} width={12} height={12} />
+              </a>
             </Link>
           </span>
         </div>

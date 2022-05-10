@@ -1,7 +1,8 @@
 @value cateWhole, cateDog, cateCat, cateLizard, cateBird, cateRabbit, cateHamster, cateETC from 'styles/variables.css';
 .wrap {
   background: #fbfbfb;
-  margin-bottom: 35px;
+  height: 100%;
+  padding: 24px 17px;
 }
 
 .search_title {
@@ -27,8 +28,8 @@
 .search_container > div {
   position: absolute;
   left: 16px;
-  top: 15px;
-  transform: translateY(-10%);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /*input 관련*/
@@ -65,12 +66,16 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 12px;
+  height: 100%;
+  padding-bottom: 56px;
 }
 
 .cate {
   position: relative;
   border-radius: 8px;
-  height: 90px;
+  height: 100%;
+  overflow: hidden;
+  min-height: 90px;
 }
 .cate:hover {
   opacity: 0.5;
@@ -101,7 +106,7 @@
 .cate_cat > div {
   position: absolute;
   right: 15px;
-  bottom: 2px;
+  bottom: -4px;
 }
 
 .cate_lizard {
@@ -114,7 +119,6 @@
 }
 
 .cate_bird {
-  overflow: hidden;
   background-color: cateBird;
 }
 .cate_bird > div {
@@ -139,6 +143,11 @@
   right: 8px;
 }
 
-.cate_ETC {
+.cate_etc {
   background-color: cateETC;
+}
+.cate_etc > div {
+  position: absolute;
+  bottom: -4px;
+  right: 1px;
 }

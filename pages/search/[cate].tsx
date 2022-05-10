@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import Image from "next/image";
-import { ICONS, IMAGES } from "lib/assets";
+import { IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
-import Thumbnail from "components/search/thumbnail";
 import SelectBox from "components/custom/select-box";
+import { NextPageWithLayout } from "types/common";
+import { VideoList } from "components/custom";
+import BackIcon from "components/icons/back";
 
-const Category = () => {
+const Category: NextPageWithLayout = () => {
   const router = useRouter();
   const { cate } = router.query;
 
@@ -56,8 +58,8 @@ const Category = () => {
       case "etc":
         return {
           name: "기타",
-          width: 90,
-          height: 120,
+          width: 150,
+          height: 90,
         };
       default:
         return {
@@ -73,21 +75,17 @@ const Category = () => {
       cate === "lizard" ||
       cate === "rabbit" ||
       cate === "bird" ||
-      cate === "hamster"
+      cate === "hamster" ||
+      cate === "etc"
     )
       return true;
   }, [cate]);
 
   return (
-    <div className={styles.wrap}>
+    <>
       <header className={`${styles[`cate_${cate}`]} ${styles.header}`}>
-        <div>
-          <Image
-            onClick={() => router.back()}
-            width={20}
-            height={20}
-            src={ICONS.BACK}
-          />
+        <div onClick={() => router.back()}>
+          <BackIcon isGray={false} />
         </div>
         {isImage ? (
           <div className={`${styles[`${cate}_container`]}`}>
@@ -102,20 +100,17 @@ const Category = () => {
         )}
         <span className={styles.cate_name}>{cateObj.name}</span>
       </header>
-      <div>
-        <div className={styles.select_container}>
-          <SelectBox />
-        </div>
-        {/* 썸네일 임시 대체 */}
-        <ul className={styles.thumbnail_row}>
-          <Thumbnail />
-          <Thumbnail />
-          <Thumbnail />
-          <Thumbnail />
-        </ul>
+      <div className={styles.select_container}>
+        <SelectBox />
       </div>
-    </div>
+      <section className={styles.thumbnail_container}>
+        <ul className={styles.thumbnail_row}>
+          <VideoList />
+        </ul>
+      </section>
+    </>
   );
 };
+Category.header = undefined;
 
 export default Category;

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { ICONS, IMAGES } from "lib/assets";
-import Header from "components/layout/header";
 import styles from "styles/search/index.module.css";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,7 +11,6 @@ const Search = () => {
 
   return (
     <>
-      <Header title="검색 및 카테고리" />
       <div className={styles.wrap}>
         <p className={styles.search_title}>검색어로 찾기</p>
         <div className={styles.search_container}>
@@ -109,5 +107,6 @@ const Search = () => {
     </>
   );
 };
+Search.header = { title: "검색 및 카테고리 페이지" };
 
 export default Search;

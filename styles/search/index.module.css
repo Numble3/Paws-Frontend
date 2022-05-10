@@ -1,12 +1,10 @@
 @value cateWhole, cateDog, cateCat, cateLizard, cateBird, cateRabbit, cateHamster, cateETC from 'styles/variables.css';
 .wrap {
-  padding: 0 15px 15px 16px;
   background: #fbfbfb;
   margin-bottom: 35px;
 }
 
 .search_title {
-  padding-top: 18px;
   font-size: 14px;
   margin: 0;
   font-weight: 600;

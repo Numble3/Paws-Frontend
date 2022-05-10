@@ -3,10 +3,13 @@
   background: #fbfbfb;
   height: 100%;
   width: 100%;
+  margin-top: 20px;
 }
 
 .header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   overflow: hidden;
   display: flex;
   padding: 15px 10px;
@@ -16,9 +19,6 @@
   border-bottom-right-radius: 8px;
 }
 
-.margin {
-  margin: 0 15px;
-}
 .cate_name {
   position: absolute;
   bottom: 15px;

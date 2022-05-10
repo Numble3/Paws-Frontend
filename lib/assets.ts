@@ -9,16 +9,17 @@ export const ICONS = {
   ARROW_RIGHT: getIconPath("arrowRight.svg"),
   SEARCH: getIconPath("search.svg"),
   BACK: getIconPath("back.svg"),
-  EMPTY_HEART: getIconPath("empty_heart.svg"),
-  FULL_HEART: getIconPath("full_heart.svg"),
-  DOWN_ARROW: getIconPath("down_arrow.svg"),
+  EMPTY_HEART: getIconPath("emptyHeart.svg"),
+  FULL_HEART: getIconPath("fullHeart.svg"),
+  DOWN_ARROW: getIconPath("arrowDown.svg"),
   ACTIVE: getIconPath("active.svg"),
   EDIT: getIconPath("edit.svg"),
   DELETE: getIconPath("delete.svg"),
   LOGOUT: getIconPath("logout.svg"),
   TRASH: getIconPath("trash.svg"),
-  IMAGE_UPLOAD: getIconPath("image_upload.svg"),
+  IMAGE_UPLOAD: getIconPath("imageUpload.svg"),
   GALLERY: getIconPath("gallery.svg"),
+  VIDEO: getIconPath("video.svg"),
 };
 
 export const IMAGES: ImagesType = {

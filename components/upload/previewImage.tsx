@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
 
 const PreviewImage = () => {
   const [imageSrc, setImageSrc] = useState("");
-
+  const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: File) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
       reader.onload = () => {
         setImageSrc(reader.result);
+        console.log(imageSrc);
         resolve();
       };
     });
@@ -56,6 +57,7 @@ const PreviewImage = () => {
             type="file"
             id="imageFile"
             accept="image/*"
+            ref={inputRef}
             onChange={(e) => {
               encodeFileToBase64(e.target.files[0] as File);
             }}
@@ -65,7 +67,13 @@ const PreviewImage = () => {
               <Image src={ICONS.IMAGE_UPLOAD} width={25} height={25} />
             </div>
           </label>
-          <div className={styles.trash} onClick={() => setImageSrc("")}>
+          <div
+            className={styles.trash}
+            onClick={() => {
+              if (inputRef.current) inputRef.current.value = "";
+              setImageSrc("");
+            }}
+          >
             <div>
               <Image src={ICONS.TRASH} width={25} height={25} />
             </div>

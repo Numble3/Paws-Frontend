@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
 
 const PreviewVideo = () => {
   const [videoSrc, setVideoSrc] = useState("");
-
+  const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: File) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
@@ -64,6 +64,7 @@ const PreviewVideo = () => {
           <input
             type="file"
             id="videoFile"
+            ref={inputRef}
             onChange={(e) => {
               encodeFileToBase64(e.target.files[0] as File);
             }}
@@ -73,7 +74,13 @@ const PreviewVideo = () => {
               <Image src={ICONS.IMAGE_UPLOAD} width={25} height={25} />
             </div>
           </label>
-          <div className={styles.trash} onClick={() => setVideoSrc("")}>
+          <div
+            className={styles.trash}
+            onClick={() => {
+              if (inputRef.current) inputRef.current.value = "";
+              setVideoSrc("");
+            }}
+          >
             <div>
               <Image src={ICONS.TRASH} width={25} height={25} />
             </div>

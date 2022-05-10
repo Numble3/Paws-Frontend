@@ -1,5 +1,5 @@
 .back {
-  padding: 10px;
+  padding: 10px 0 10px 14px;
 }
 
 .header {
@@ -63,7 +63,7 @@
   display: flex;
   width: 100%;
   background-color: #fbfbfb;
-  top: 56px;
+  top: 55px;
   padding: 0 16px;
   flex-direction: row-reverse;
 }

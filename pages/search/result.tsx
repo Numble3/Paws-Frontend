@@ -7,6 +7,7 @@ import SelectBox from "components/custom/select-box";
 import NoResult from "components/search/noResult";
 import { VideoList } from "components/custom";
 import { NextPageWithLayout } from "types/common";
+import BackIcon from "components/icons/back";
 
 const Result: NextPageWithLayout = () => {
   const router = useRouter();
@@ -24,8 +25,8 @@ const Result: NextPageWithLayout = () => {
     <>
       <section className={styles.header}>
         {/* back 아이콘 추후 교체 */}
-        <div className={styles.back}>
-          <Image src={ICONS.BACK} width={12} height={12} />
+        <div className={styles.back} onClick={() => router.back()}>
+          <BackIcon isGray={true} />
         </div>
         <div className={styles.search_container}>
           <div>

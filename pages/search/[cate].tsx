@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import Image from "next/image";
-import { ICONS, IMAGES } from "lib/assets";
+import { IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
-import Thumbnail from "components/search/thumbnail";
 import SelectBox from "components/custom/select-box";
 import { NextPageWithLayout } from "types/common";
 import { VideoList } from "components/custom";
+import BackIcon from "components/icons/back";
 
 const Category: NextPageWithLayout = () => {
   const router = useRouter();
@@ -84,13 +84,8 @@ const Category: NextPageWithLayout = () => {
   return (
     <>
       <header className={`${styles[`cate_${cate}`]} ${styles.header}`}>
-        <div>
-          <Image
-            onClick={() => router.back()}
-            width={20}
-            height={20}
-            src={ICONS.BACK}
-          />
+        <div onClick={() => router.back()}>
+          <BackIcon isGray={false} />
         </div>
         {isImage ? (
           <div className={`${styles[`${cate}_container`]}`}>

@@ -1,6 +1,6 @@
 .background {
   position: absolute;
-  z-index: 10;
+  z-index: 1001;
   top: 0;
   bottom: 0;
   left: 0;

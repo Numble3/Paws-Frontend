@@ -8,7 +8,7 @@ import { NextPageWithLayout } from "types/common";
 
 const ProfilePage: NextPageWithLayout = () => {
   /* 벡엔드연동 시 user 정보를 받아옴 */
-  const userInfo = false;
+  const userInfo = true;
 
   useEffect(() => {
     //user 정보가 없으면 로그인 페이지로 이동
@@ -31,7 +31,9 @@ const ProfilePage: NextPageWithLayout = () => {
         <div className={style.title_container}>
           <span className={style.title}>업로드한 비디오</span>
           <span>
-            <Image src={ICONS.ARROW_RIGHT} width={12} height={12} />
+            <Link href={"profile/my-upload"}>
+              <Image src={ICONS.ARROW_RIGHT} width={12} height={12} />
+            </Link>
           </span>
         </div>
         <div className={style.video_container}>

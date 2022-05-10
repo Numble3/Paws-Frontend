@@ -16,7 +16,16 @@ export default function LayoutContainer({
   return (
     <div className={styles.wrapper}>
       {layoutHeader && <Header {...layoutHeader} />}
-      <main className={styles.main}>{children}</main>
+      <main
+        style={{
+          paddingTop: layoutHeader && "56px",
+          paddingBottom: !noNav ? "56px" : "0",
+          overflow: "auto",
+          height: "100%",
+        }}
+      >
+        {children}
+      </main>
       {!noNav && <Nav />}
     </div>
   );

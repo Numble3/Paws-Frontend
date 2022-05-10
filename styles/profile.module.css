@@ -3,7 +3,7 @@
   height: 90%;
 }
 
-.profile_section {
+.profile-section {
   text-align: center;
   padding-top: 33px;
   padding-bottom: 24px;
@@ -37,12 +37,12 @@
   cursor: pointer;
 }
 
-.video_section {
+.video-section {
   padding-top: 26px;
-  height: 44%;
+  height: 50%;
 }
 
-.title_container {
+.title-container {
   display: flex;
   justify-content: space-between;
   margin-bottom: 18px;
@@ -53,9 +53,10 @@
   color: #373737;
 }
 
-.video_container {
+.video-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 16px;
   align-items: center;
   justify-items: center;
@@ -67,4 +68,8 @@
   height: 100%;
   background-color: lightgray;
   text-align: center;
+}
+
+.video > li {
+  height: 100%;
 }

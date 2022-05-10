@@ -6,6 +6,7 @@ import styles from "styles/search/cate.module.css";
 import Thumbnail from "components/search/thumbnail";
 import SelectBox from "components/custom/select-box";
 import { NextPageWithLayout } from "types/common";
+import { VideoList } from "components/custom";
 
 const Category: NextPageWithLayout = () => {
   const router = useRouter();
@@ -108,12 +109,8 @@ const Category: NextPageWithLayout = () => {
         <SelectBox />
       </div>
       <section className={styles.thumbnail_container}>
-        {/* 썸네일 임시 대체 */}
         <ul className={styles.thumbnail_row}>
-          <Thumbnail />
-          <Thumbnail />
-          <Thumbnail />
-          <Thumbnail />
+          <VideoList />
         </ul>
       </section>
     </>

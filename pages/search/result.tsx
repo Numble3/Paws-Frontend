@@ -3,9 +3,9 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from "styles/search/result.module.css";
 import { ICONS } from "lib/assets";
-import Thumbnail from "components/search/thumbnail";
 import SelectBox from "components/custom/select-box";
 import NoResult from "components/search/noResult";
+import { VideoList } from "components/custom";
 import { NextPageWithLayout } from "types/common";
 
 const Result: NextPageWithLayout = () => {
@@ -45,10 +45,7 @@ const Result: NextPageWithLayout = () => {
           </div>
           <section className={styles.thumbnail_container}>
             <ul className={styles.thumbnail_row}>
-              <Thumbnail />
-              <Thumbnail />
-              <Thumbnail />
-              <Thumbnail />
+              <VideoList />
             </ul>
           </section>
         </>

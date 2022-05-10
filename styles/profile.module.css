@@ -39,7 +39,7 @@
 
 .video-section {
   padding-top: 26px;
-  height: 100%;
+  height: 46%;
 }
 
 .title-container {
@@ -59,8 +59,7 @@
   gap: 16px;
   align-items: center;
   justify-items: center;
-  /* height를 px말고 작업할 수 있는 방법 없는지?*/
-  height: 300px;
+  height: 100%;
 }
 
 .video{

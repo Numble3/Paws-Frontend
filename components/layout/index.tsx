@@ -4,7 +4,7 @@ import Nav from "./nav";
 import styles from "styles/layout.module.css";
 import { LayoutHeader } from "types/common";
 
-export default function LayoutContiner({
+export default function LayoutContainer({
   children,
   layoutHeader,
   noNav,
@@ -16,7 +16,7 @@ export default function LayoutContiner({
   return (
     <div className={styles.wrapper}>
       {layoutHeader && <Header {...layoutHeader} />}
-      {children}
+      <main className={styles.main}>{children}</main>
       {!noNav && <Nav />}
     </div>
   );

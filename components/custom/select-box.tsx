@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "styles/selectBox.module.css";
+import styles from "styles/custom/selectBox.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
 

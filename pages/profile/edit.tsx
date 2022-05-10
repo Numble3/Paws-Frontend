@@ -2,22 +2,21 @@ import { NextPageWithLayout } from "types/common";
 import style from "styles/edit.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
-import { useCallback, useMemo, useState } from 'react';
-import NicknameEditForm from 'components/nicknameEditForm';
+import { useCallback, useMemo, useState } from "react";
+import NicknameEditForm from "components/custom/nickname-edit-form";
 
 const ProfileEdit: NextPageWithLayout = () => {
-
   const [editOpen, setEditOpen] = useState(false);
 
   const onClose = useCallback(() => {
     setEditOpen(false);
   }, []);
 
-  const font =  useMemo(
+  const font = useMemo(
     () => ({
-  fontWeight: 500,
-  fontSize: 12,
-  color: "#373737",
+      fontWeight: 500,
+      fontSize: 12,
+      color: "#373737",
     }),
     []
   );
@@ -53,7 +52,7 @@ const ProfileEdit: NextPageWithLayout = () => {
         <div style={font} className={`${style.box} ${style.first}`}>
           로그아웃
         </div>
-        <div style={font} className={style.box} >
+        <div style={font} className={style.box}>
           탈퇴
         </div>
       </section>

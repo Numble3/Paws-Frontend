@@ -1,4 +1,4 @@
-import CustomInput from "components/customInput";
+import { CustomInput } from "components/custom";
 import useInput from "hooks/useInput";
 import Link from "next/link";
 import React from "react";

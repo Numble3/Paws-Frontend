@@ -1,8 +1,8 @@
 import styles from "styles/search/thumbnail.module.css";
 import Image from "next/image";
-import { ICONS } from "lib/assets";
 import { useState } from "react";
 import { DotIcon } from "components/icons";
+import { HeartIcon } from "components/icons";
 
 interface Props {
   noDot?: boolean;
@@ -45,12 +45,7 @@ export default function Thumbnail({
             </div>
           </div>
           <div className={styles.icon_row}>
-            <Image
-              width={15}
-              height={15}
-              onClick={() => setIsClick(!isClick)}
-              src={isClick ? ICONS.FULL_HEART : ICONS.EMPTY_HEART}
-            />
+            <HeartIcon isLike={true} />
             <span>38만</span>
           </div>
         </div>

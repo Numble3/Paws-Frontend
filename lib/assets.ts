@@ -8,9 +8,6 @@ export const ICONS = {
   PAW: getIconPath("paw.svg"),
   ARROW_RIGHT: getIconPath("arrowRight.svg"),
   SEARCH: getIconPath("search.svg"),
-  BACK: getIconPath("back.svg"),
-  EMPTY_HEART: getIconPath("emptyHeart.svg"),
-  FULL_HEART: getIconPath("fullHeart.svg"),
   DOWN_ARROW: getIconPath("arrowDown.svg"),
   ACTIVE: getIconPath("active.svg"),
   EDIT: getIconPath("edit.svg"),
@@ -29,6 +26,7 @@ export const IMAGES: ImagesType = {
   BIRD: getImagePath("bird.png"),
   RABBIT: getImagePath("rabbit.png"),
   HAMSTER: getImagePath("hamster.png"),
+  ETC: getImagePath("squirrel.png"),
 };
 
 type ImagesType = {

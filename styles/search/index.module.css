@@ -28,8 +28,8 @@
 .search_container > div {
   position: absolute;
   left: 16px;
-  top: 15px;
-  transform: translateY(-10%);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /*input 관련*/
@@ -67,6 +67,7 @@
   grid-template-columns: 1fr 1fr;
   grid-gap: 12px;
   height: 100%;
+  padding-bottom: 56px;
 }
 
 .cate {
@@ -103,7 +104,7 @@
 .cate_cat > div {
   position: absolute;
   right: 15px;
-  bottom: 2px;
+  bottom: -4px;
 }
 
 .cate_lizard {

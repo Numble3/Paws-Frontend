@@ -2,12 +2,10 @@ import Image from "next/image";
 import { ICONS, IMAGES } from "lib/assets";
 import styles from "styles/search/index.module.css";
 import Link from "next/link";
-import { useState } from "react";
 import useInput from "hooks/use-input";
 
 const Search = () => {
   const [query, inputHandler, setQuery] = useInput("");
-  const [queryTimer, setQueryTimer] = useState<NodeJS.Timeout>();
 
   return (
     <>
@@ -15,7 +13,7 @@ const Search = () => {
         <p className={styles.search_title}>검색어로 찾기</p>
         <div className={styles.search_container}>
           <div>
-            <Image src={ICONS.SEARCH} width={11.73} height={12} />
+            <Image src={ICONS.SEARCH} width={12} height={12} />
           </div>
           <input
             onChange={inputHandler}

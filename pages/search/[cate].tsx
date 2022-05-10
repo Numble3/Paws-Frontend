@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import Image from "next/image";
 import { ICONS, IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
@@ -119,3 +119,5 @@ const Category = () => {
 };
 
 export default Category;
+
+Category.header = "undefined";

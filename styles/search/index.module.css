@@ -74,6 +74,8 @@
   position: relative;
   border-radius: 8px;
   height: 100%;
+  overflow: hidden;
+  min-height: 90px;
 }
 .cate:hover {
   opacity: 0.5;
@@ -117,7 +119,6 @@
 }
 
 .cate_bird {
-  overflow: hidden;
   background-color: cateBird;
 }
 .cate_bird > div {

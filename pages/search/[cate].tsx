@@ -80,7 +80,7 @@ const Category: NextPageWithLayout = () => {
   }, [cate]);
 
   return (
-    <div className={styles.wrap}>
+    <>
       <header className={`${styles[`cate_${cate}`]} ${styles.header}`}>
         <div>
           <Image
@@ -102,11 +102,11 @@ const Category: NextPageWithLayout = () => {
           <></>
         )}
         <span className={styles.cate_name}>{cateObj.name}</span>
-      </header>
+      </header>{" "}
+      <div className={styles.select_container}>
+        <SelectBox />
+      </div>
       <section className={styles.thumbnail_container}>
-        <div className={styles.select_container}>
-          <SelectBox />
-        </div>
         {/* 썸네일 임시 대체 */}
         <ul className={styles.thumbnail_row}>
           <Thumbnail />
@@ -115,7 +115,7 @@ const Category: NextPageWithLayout = () => {
           <Thumbnail />
         </ul>
       </section>
-    </div>
+    </>
   );
 };
 Category.header = undefined;

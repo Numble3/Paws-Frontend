@@ -1,17 +1,15 @@
 @value cateWhole, cateDog, cateCat, cateLizard, cateBird, cateRabbit, cateHamster, cateETC from 'styles/variables.css';
-.wrap {
-  background: #fbfbfb;
-  height: 100%;
-  width: 100%;
-}
 
 .header {
   overflow: hidden;
   display: flex;
-  position: relative;
+  position: fixed;
   padding: 15px 10px;
   width: 100%;
+  top: 0;
+  left: 0;
   height: 100px;
+  z-index: 1000;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
@@ -62,38 +60,50 @@
 .dog_container {
   position: absolute;
   right: 30px;
+  overflow: hidden;
 }
 
 .cat_container {
   position: absolute;
   right: 50px;
+  overflow: hidden;
 }
 
 .lizard_container {
   position: absolute;
   right: 0px;
   bottom: -4px;
+  overflow: hidden;
 }
 
 .bird_container {
   position: absolute;
   right: 0px;
+  overflow: hidden;
 }
 
 .rabbit_container {
   position: absolute;
   right: 50px;
+  overflow: hidden;
 }
 
 .hamster_container {
   position: absolute;
   right: 40px;
   bottom: -4px;
+  overflow: hidden;
 }
 
 /*select box*/
 .select_container {
+  z-index: 1000;
+  position: fixed;
   display: flex;
+  width: 100%;
+  background-color: #fbfbfb;
+  top: 100px;
+  padding: 0 16px;
   flex-direction: row-reverse;
 }
 
@@ -101,5 +111,6 @@
 .thumbnail_row {
   margin: 0;
   padding: 0;
+  margin-top: 156px;
   overflow: auto;
 }

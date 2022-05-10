@@ -5,8 +5,9 @@ import { ICONS, IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
 import Thumbnail from "components/search/thumbnail";
 import SelectBox from "components/custom/select-box";
+import { NextPageWithLayout } from "types/common";
 
-const Category = () => {
+const Category: NextPageWithLayout = () => {
   const router = useRouter();
   const { cate } = router.query;
 
@@ -102,7 +103,7 @@ const Category = () => {
         )}
         <span className={styles.cate_name}>{cateObj.name}</span>
       </header>
-      <div>
+      <section className={styles.thumbnail_container}>
         <div className={styles.select_container}>
           <SelectBox />
         </div>
@@ -113,11 +114,10 @@ const Category = () => {
           <Thumbnail />
           <Thumbnail />
         </ul>
-      </div>
+      </section>
     </div>
   );
 };
+Category.header = undefined;
 
 export default Category;
-
-Category.header = "undefined";

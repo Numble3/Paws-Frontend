@@ -102,7 +102,7 @@ const Category = () => {
         )}
         <span className={styles.cate_name}>{cateObj.name}</span>
       </header>
-      <div className={styles.margin}>
+      <div>
         <div className={styles.select_container}>
           <SelectBox />
         </div>

@@ -2,6 +2,7 @@
 .wrap {
   background: #fbfbfb;
   margin-bottom: 35px;
+  height: 100%;
 }
 
 .search_title {
@@ -65,12 +66,13 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 12px;
+  height: 100%;
 }
 
 .cate {
   position: relative;
   border-radius: 8px;
-  height: 90px;
+  height: 100%;
 }
 .cate:hover {
   opacity: 0.5;

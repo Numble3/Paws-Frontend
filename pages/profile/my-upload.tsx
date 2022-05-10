@@ -12,14 +12,13 @@ const MyUploadPage: NextPageWithLayout = () => {
       <div className={style["select-container"]}>
         <SelectBox />
       </div>
-      <button onClick={() => setIsOpen(true)}>test</button>
       <ul className={style["video-list"]}>
-        <Thumbnail />
-        <Thumbnail />
-        <Thumbnail />
-        <Thumbnail />
-        <Thumbnail />
-        <Thumbnail />
+        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
+        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
+        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
+        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
+        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
+        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
       </ul>
       {isOpen && <VideoEditBox onClose={onClose} />}
     </div>

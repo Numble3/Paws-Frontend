@@ -4,14 +4,14 @@ import Image from "next/image";
 import { ICONS } from "lib/assets";
 
 const PreviewVideo = () => {
-  const [imageSrc, setImageSrc] = useState("");
+  const [videoSrc, setVideoSrc] = useState("");
 
   const encodeFileToBase64 = (fileBlob: File) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
       reader.onload = () => {
-        setImageSrc(reader.result);
+        setVideoSrc(reader.result);
         resolve();
       };
     });
@@ -24,18 +24,27 @@ const PreviewVideo = () => {
         <div className={styles.preview_row}>
           <div
             className={`${styles.preview} ${
-              !imageSrc && styles.preview__align_items
+              !videoSrc && styles.preview__align_items
             }`}
           >
             <div>
-              {imageSrc ? (
+              {videoSrc ? (
                 <div className={styles.preview__image}>
-                  <Image src={imageSrc} layout="fill" alt="preview-img" />
+                  <video
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  >
+                    <source src={videoSrc} type="video/mp4" />
+                    Sorry, your browser doesn't support embedded videos.
+                  </video>
                 </div>
               ) : (
                 <>
                   <div className={styles.no_image__icon}>
-                    <Image src={ICONS.GALLERY} layout="fill" />
+                    <Image src={ICONS.VIDEO} layout="fill" />
                   </div>
                   <span className={styles.no_image__text}>
                     비디오를 업로드 해주세요!
@@ -46,7 +55,7 @@ const PreviewVideo = () => {
           </div>
           <div>
             <span>최대 용량 : 100mb</span>
-            {imageSrc && (
+            {videoSrc && (
               <span className={styles.upload_complete}>업로드 완료!</span>
             )}
           </div>
@@ -54,23 +63,23 @@ const PreviewVideo = () => {
         <div className={styles.image__icon_row}>
           <input
             type="file"
-            id="imageFile"
+            id="videoFile"
             onChange={(e) => {
               encodeFileToBase64(e.target.files[0] as File);
             }}
           />
-          <label className={styles.upload_btn} htmlFor="imageFile">
+          <label className={styles.upload_btn} htmlFor="videoFile">
             <div>
               <Image src={ICONS.IMAGE_UPLOAD} width={25} height={25} />
             </div>
           </label>
-          <div className={styles.trash} onClick={() => setImageSrc("")}>
+          <div className={styles.trash} onClick={() => setVideoSrc("")}>
             <div>
               <Image src={ICONS.TRASH} width={25} height={25} />
             </div>
           </div>
           <div className={styles.image_loading}>
-            {imageSrc ? (
+            {videoSrc ? (
               <div className={styles.image_success}>
                 <Image src={ICONS.SUCCESS} width={25} height={25} />
               </div>

@@ -55,6 +55,7 @@ const PreviewImage = () => {
           <input
             type="file"
             id="imageFile"
+            accept="image/*"
             onChange={(e) => {
               encodeFileToBase64(e.target.files[0] as File);
             }}

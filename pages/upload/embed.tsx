@@ -39,9 +39,14 @@ const Embed = () => {
       setLinkSuccess(false);
     }
   }, [link]);
+  const postEmbed = () => {
+    //To do: post embed
+  };
   return (
-    <section className={styles.wrap}>
-      <span className={styles.complete}>완료</span>
+    <form className={styles.wrap}>
+      <header className={styles.complete}>
+        <span onClick={postEmbed}>완료</span>
+      </header>
       <div>
         <p className={styles.title}>영상 임베드 링크</p>
         <CustomInput
@@ -73,7 +78,7 @@ const Embed = () => {
       </div>
       <div className="border-gray"></div>
       <VideoCategory />
-    </section>
+    </form>
   );
 };
 

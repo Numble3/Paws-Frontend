@@ -11,9 +11,15 @@ const Direct = () => {
     isError: false,
     message: "제목을 입력해주세요.",
   });
+  const postDirect = () => {
+    //To do: post direct
+  };
   const [title, setTitle] = useState("");
   return (
-    <section className={styles.wrap}>
+    <form className={styles.wrap}>
+      <header className={styles.complete}>
+        <span onClick={postDirect}>완료</span>
+      </header>
       <PreviewVideo />
       <div className="border-gray"></div>
       <PreviewImage />
@@ -31,7 +37,7 @@ const Direct = () => {
       </div>
       <div className="border-gray"></div>
       <VideoCategory />
-    </section>
+    </form>
   );
 };
 

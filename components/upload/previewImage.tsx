@@ -2,11 +2,20 @@ import { useState, useRef } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
+import { CautionIcon } from "components/icons";
 
 const PreviewImage = () => {
   const [imageSrc, setImageSrc] = useState("");
+  const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: File) => {
+    if (fileBlob.size > 10 * 1024 * 1024) {
+      setImageSrc("");
+      setCanUpload(false);
+      // return;
+    } else {
+      setCanUpload(true);
+    }
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
@@ -29,7 +38,11 @@ const PreviewImage = () => {
           >
             <div>
               {imageSrc ? (
-                <div className={styles.preview__image}>
+                <div
+                  className={`${styles.preview__image} ${
+                    !canUpload && styles.preview__opacity
+                  }`}
+                >
                   <Image src={imageSrc} layout="fill" alt="preview-img" />
                 </div>
               ) : (
@@ -46,8 +59,13 @@ const PreviewImage = () => {
           </div>
           <div>
             <span>최대 용량 : 10mb</span>
-            {imageSrc && (
+            {imageSrc && canUpload && (
               <span className={styles.upload_complete}>업로드 완료!</span>
+            )}
+            {!canUpload && (
+              <span className={styles.upload_incomplete}>
+                파일 용량이 너무 커요
+              </span>
             )}
           </div>
         </div>
@@ -71,6 +89,7 @@ const PreviewImage = () => {
             onClick={() => {
               if (inputRef.current) inputRef.current.value = "";
               setImageSrc("");
+              setCanUpload(true);
             }}
           >
             <div>
@@ -78,13 +97,17 @@ const PreviewImage = () => {
             </div>
           </div>
           <div className={styles.image_loading}>
-            {imageSrc ? (
+            {imageSrc && canUpload ? (
               <div className={styles.image_success}>
                 <Image src={ICONS.SUCCESS} width={25} height={25} />
               </div>
-            ) : (
+            ) : !imageSrc && canUpload ? (
               <div className={styles.no_image}>
                 <Image src={ICONS.SUCCESS} width={25} height={25} />
+              </div>
+            ) : (
+              <div className={styles.image_success}>
+                <CautionIcon width={20} height={20} fill="#e95733" />{" "}
               </div>
             )}
           </div>

@@ -1,6 +1,6 @@
 .wrapper {
   margin: 0px 16px;
-  height: 90%;
+  height: 100%;
 }
 
 .profile-section {
@@ -39,7 +39,7 @@
 
 .video-section {
   padding-top: 26px;
-  height: 50%;
+  height: 46%;
 }
 
 .title-container {
@@ -56,7 +56,6 @@
 .video-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
   gap: 16px;
   align-items: center;
   justify-items: center;

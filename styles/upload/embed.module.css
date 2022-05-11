@@ -1,12 +1,6 @@
 .wrap {
   padding: 24px 16px;
 }
-.link {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin-bottom: -16px;
-}
 .title {
   font-family: "Pretendard";
   font-weight: 600;
@@ -39,32 +33,6 @@
 }
 .description > textarea::placeholder {
   color: #dadada;
-}
-
-.text_input__fail {
-  border: 1px solid #e95733;
-}
-.text_input__success {
-  border: 1px solid #489c5a;
-}
-.text_input:focus {
-  outline: none;
-}
-
-.false_link {
-  color: #e95733;
-  font-weight: 500;
-  font-size: 10px;
-  position: absolute;
-  transform: translate(10%, 100%);
-  padding: 0 5px;
-  background: linear-gradient(to bottom, var(--bg) 50%, white 50%);
-}
-
-.input_icon {
-  position: absolute;
-  right: 20px;
-  top: calc(78px / 2 + 5px);
 }
 
 .complete {

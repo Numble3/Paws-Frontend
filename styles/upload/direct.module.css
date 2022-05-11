@@ -1,3 +1,11 @@
 .wrap {
   padding: 24px 16px;
 }
+
+.title {
+  font-family: "Pretendard";
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 12px;
+  font-size: 14px;
+}

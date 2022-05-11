@@ -55,6 +55,10 @@
 .preview_row > div > .upload_complete {
   color: #489c5a;
 }
+
+.preview_row > div > .upload_incomplete {
+  color: #e95733;
+}
 /*icon row*/
 .image__icon_row {
   display: flex;
@@ -93,4 +97,8 @@
 .no_image {
   filter: grayscale(100%);
   opacity: 0.3;
+}
+
+.preview__opacity {
+  opacity: 0.2;
 }

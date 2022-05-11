@@ -2,16 +2,25 @@ import { useState, useRef } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
+import { CautionIcon } from "components/icons";
 
 const PreviewVideo = () => {
-  const [videoSrc, setVideoSrc] = useState("");
+  const [videoSrc, setVideoSrc] = useState<string | null>("");
+  const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: File) => {
+    if (fileBlob.size > 100 * 1024 * 1024) {
+      setVideoSrc("");
+      setCanUpload(false);
+      // return;
+    } else {
+      setCanUpload(true);
+    }
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
       reader.onload = () => {
-        setVideoSrc(reader.result);
+        setVideoSrc(reader.result as string);
         resolve();
       };
     });
@@ -29,7 +38,11 @@ const PreviewVideo = () => {
           >
             <div>
               {videoSrc ? (
-                <div className={styles.preview__image}>
+                <div
+                  className={`${styles.preview__image} ${
+                    !canUpload && styles.preview__opacity
+                  }`}
+                >
                   <video
                     style={{
                       width: "100%",
@@ -55,8 +68,13 @@ const PreviewVideo = () => {
           </div>
           <div>
             <span>최대 용량 : 100mb</span>
-            {videoSrc && (
+            {videoSrc && canUpload && (
               <span className={styles.upload_complete}>업로드 완료!</span>
+            )}
+            {!canUpload && (
+              <span className={styles.upload_incomplete}>
+                파일 용량이 너무 커요
+              </span>
             )}
           </div>
         </div>
@@ -65,8 +83,9 @@ const PreviewVideo = () => {
             type="file"
             id="videoFile"
             ref={inputRef}
+            accept="video/mp4"
             onChange={(e) => {
-              encodeFileToBase64(e.target.files[0] as File);
+              if (e.target.files) encodeFileToBase64(e.target.files[0]);
             }}
           />
           <label className={styles.upload_btn} htmlFor="videoFile">
@@ -79,6 +98,7 @@ const PreviewVideo = () => {
             onClick={() => {
               if (inputRef.current) inputRef.current.value = "";
               setVideoSrc("");
+              setCanUpload(true);
             }}
           >
             <div>
@@ -86,13 +106,17 @@ const PreviewVideo = () => {
             </div>
           </div>
           <div className={styles.image_loading}>
-            {videoSrc ? (
+            {videoSrc && canUpload ? (
               <div className={styles.image_success}>
                 <Image src={ICONS.SUCCESS} width={25} height={25} />
               </div>
-            ) : (
+            ) : !videoSrc && canUpload ? (
               <div className={styles.no_image}>
                 <Image src={ICONS.SUCCESS} width={25} height={25} />
+              </div>
+            ) : (
+              <div className={styles.image_success}>
+                <CautionIcon width={20} height={20} fill="#e95733" />{" "}
               </div>
             )}
           </div>

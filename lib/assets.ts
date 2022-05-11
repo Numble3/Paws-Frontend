@@ -16,6 +16,9 @@ export const ICONS = {
   IMAGE_UPLOAD: getIconPath("imageUpload.svg"),
   GALLERY: getIconPath("gallery.svg"),
   VIDEO: getIconPath("video.svg"),
+  WATCH: getIconPath("watch.svg"),
+  TIME: getIconPath("time.svg"),
+  MSG_SEND: getIconPath("msg-send.svg"),
 };
 
 export const IMAGES: ImagesType = {
@@ -26,6 +29,7 @@ export const IMAGES: ImagesType = {
   RABBIT: getImagePath("rabbit.png"),
   HAMSTER: getImagePath("hamster.png"),
   ETC: getImagePath("squirrel.png"),
+  MESSAGE: getImagePath("message.png"),
 };
 
 type ImagesType = {

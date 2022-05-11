@@ -2,8 +2,8 @@
   flex: 1;
   padding: 7px 21px;
   background: #fff;
-  color: var(--gray);
-  border: 0.5px solid var(--gray-light);
+  color: var(--gray-700);
+  border: 0.5px solid var(--gray-400);
   box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
   border-radius: 8px;
   white-space: nowrap;

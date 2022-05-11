@@ -1,0 +1,218 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: calc(56px - 12px);
+}
+
+.header{ 
+  border-bottom: var(--b-gray);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+}
+
+.header > h4{
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.profile{
+  width: 24px;
+  height: 24px;
+  background: green;
+  border-radius: 8px;
+}
+
+.info{
+  padding: 20px 18px 16px;
+  position: relative;
+  background: #fff;
+}
+
+.info-detail{
+  width: 90%;
+}
+.info-detail>h2{
+  font-size: 20px;
+}
+.info-detail>div{
+  display: flex;
+  gap:8px;
+}
+
+/* detail 화살표 */
+.arrow{
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  right: 4%;
+  top: 34px;
+}
+
+.show{
+  transform: rotate(180deg);
+}
+
+/* 조회수, 시간, 좋아요 표시 버튼 */
+.info-button{
+  width: fit-content;
+  color: var(--gray-800);
+  gap: 6px;
+  display: flex;
+  align-items: center;
+  padding: 5px 8px 5px 10px;
+  box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
+  border-radius: 4px;
+  background: #fff;
+  font-size: 12px;
+}
+
+.active-heart{
+  background: var(--primary);
+  color: #fff;
+}
+
+/* 동영상 추가정보 */
+.detail-info{
+  max-height: 0;
+  overflow: hidden;
+  background: #fff;
+  padding-top: 12px;
+  margin-bottom: 17px;
+  transition: max-height 0.6s ease-in-out;
+}
+
+.show-detail{
+  max-height: 1000px;
+}
+
+/* 댓글 리스트 */
+.comments-list{
+  --comment-h: 0;
+
+  flex:1;
+  overflow: visible;
+  margin-top: 8px;
+  background: #fff;
+  padding: 24px 17px;
+  position: relative;
+}
+.comments-header{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.comments-header>h2{
+  font-size: 16px;
+}
+.comments-header>span{
+  font-size: 12px;
+}
+.comments-filter{
+  position: absolute;
+  right:15px;
+  top:0;
+}
+
+/* 댓글 */
+.comment{
+  position: relative;
+  padding: 12px 0;
+  border-bottom: var(--b-gray);
+  display: flex;
+  gap:12px;
+}
+.comment>section:nth-child(2){
+  width: 80%;
+  font-size: 12px;
+}
+.comment-profile{
+  background: #ADD3FB;
+  border-radius: 8px;
+  width: 24px;
+  height: 24px;
+}
+
+.comment-info{
+  color: var(--gray-800);
+  font-size: 10px;
+  display: flex;
+  gap: 4px;
+}
+.comment-info>span:nth-child(1)::after, .comment-info>span:nth-child(2)::after{
+  content: '•';
+  margin-left: 4px;
+}
+.comment-text{
+  color: var(--gray-900);
+  margin-top: 6px;
+}
+.comment-like{
+  position: absolute;
+  right: 0;
+  top: 24px;
+}
+
+/* 내 댓글 */
+.my-comment{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background:#fff;
+  padding: 10px 16px;
+  box-shadow: 0px -2px 4px rgba(203, 203, 203, 0.25);
+  display: flex;
+  gap: 12px;
+}
+.my-comment-profile{
+  background: #ADD3FB;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+}
+
+.my-input{
+  border: 0.5px solid var(--gray-600);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  flex:1;
+}
+.my-input>input{
+  padding: 11px 12px;
+  border: none;
+  background: none;
+  flex:1
+}
+.my-input>input:focus{
+  outline-width: 0;
+}
+.my-input>input::placeholder{
+  color: var(--gray-600);
+}
+.send-button{
+  background: none;
+  padding:0;
+  margin-right: 14px;
+}
+
+/* empty comment */
+.empty{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+.empty > p{
+  color:var(--gray-600);
+  font-weight: 500;
+    font-size: 12px;
+}

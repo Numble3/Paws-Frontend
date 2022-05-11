@@ -8,3 +8,4 @@ export { default as EditIcon } from "./edit"
 export { default as TrashIcon } from "./trash"
 export { default as DotIcon } from "./dot"
 export { default as SuccessIcon } from "./suceess";
+export { default as OrangeHeartIcon } from "./orange-heart";

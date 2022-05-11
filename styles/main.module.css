@@ -1,6 +1,7 @@
 .categories{
+  position: absolute;
   width: 100%;
-  padding: 16px 0 20px;
+  padding: 59px 16px 20px;
   display: flex;
   overflow-x: auto;
   gap: 8px;

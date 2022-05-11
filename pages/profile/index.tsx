@@ -1,5 +1,5 @@
+import { VideoList } from "components/custom";
 import VideoEditBox from "components/custom/video-edit-box";
-import Thumbnail from "components/search/thumbnail";
 import useModal from "hooks/use-modal";
 import { ICONS } from "lib/assets";
 import Image from "next/image";
@@ -43,50 +43,7 @@ const ProfilePage: NextPageWithLayout = () => {
             </Link>
           </span>
         </div>
-        <div className={style["video-container"]}>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-        </div>
+        <VideoList videoCnt={6} noInfo={true} noDot={false} onEdit={() => setIsOpen(true)} />
       </section>
       {isOpen && <VideoEditBox onClose={onClose} />}
     </div>

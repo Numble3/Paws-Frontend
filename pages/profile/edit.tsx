@@ -16,7 +16,7 @@ const ProfileEdit: NextPageWithLayout = () => {
       <section className={style["img-section"]}>
         <Image src={ICONS.PAW} width={72} height={72} />
         <div className={style["icon-wrapper"]}>
-          <EditIcon width={36} height={36} />
+          <EditIcon width={36} height={36} isGrey={true} />
         </div>
       </section>
       <section className={style["info-section"]}>
@@ -32,7 +32,7 @@ const ProfileEdit: NextPageWithLayout = () => {
               <div>sampleNickname</div>
             </div>
             <div onClick={() => setIsOpen(true)}>
-              <EditIcon width={20} height={20} color={true} />
+              <EditIcon width={20} height={20} isGrey={false} />
             </div>
           </div>
         </div>

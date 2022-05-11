@@ -3,7 +3,6 @@ const getImagePath = (path: string) => `/images/${path}`;
 
 export const ICONS = {
   UPLOAD: getIconPath("upload.svg"),
-  CAUTION: getIconPath("caution.svg"),
   SUCCESS: getIconPath("success.svg"),
   PAW: getIconPath("paw.svg"),
   ARROW_RIGHT: getIconPath("arrowRight.svg"),

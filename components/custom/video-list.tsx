@@ -4,15 +4,16 @@ import styles from "styles/custom/video-list.module.css";
 import Image from "next/image";
 
 interface Props {
+  videoCnt?:number;
   noDot?: boolean;
   noInfo?: boolean;
   onEdit?: () => void;
 }
 
-const VideoList = ({ noDot = true, noInfo = false, onEdit }: Props) => {
+const VideoList = ({ videoCnt=10, noDot = true, noInfo = false, onEdit }: Props) => {
   return (
     <section className={styles.videos}>
-      {Array.from(Array(10).keys()).map((v) => (
+      {Array.from(Array(videoCnt).keys()).map((v) => (
         <Link key={v} passHref href={`/video/${123}`}>
           <div className={styles["video-container"]}>
             {/* TODO: div -> fetch video thumbnail */}
@@ -20,7 +21,7 @@ const VideoList = ({ noDot = true, noInfo = false, onEdit }: Props) => {
               <Image src={`/images/temp.png`} layout="fill" objectFit="cover" />
             </div>
             {!noDot && (
-              <div onClick={onEdit} className={styles.icon_test}>
+              <div onClick={onEdit} className={styles["dot-icon"]}>
                 <DotIcon />
               </div>
             )}

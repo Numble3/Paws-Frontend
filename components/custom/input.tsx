@@ -1,7 +1,8 @@
-import { ICONS } from 'lib/assets';
-import Image from 'next/image';
+import { CautionIcon } from "components/icons";
+import { ICONS } from "lib/assets";
+import Image from "next/image";
 import { ChangeEvent, useMemo } from "react";
-import style from 'styles/custom/custom-input.module.css';
+import style from "styles/custom/custom-input.module.css";
 
 interface Props {
   inputType: string;
@@ -9,7 +10,7 @@ interface Props {
   width?: number | string;
   height?: number;
   isSuccess?: boolean;
-  error?: { isError: boolean; message: string} 
+  error?: { isError: boolean; message: string };
   placeHolderMessage?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -17,14 +18,13 @@ interface Props {
 const CustomInput = ({
   inputType,
   value,
-  width="100%",
-  height=52,
+  width = "100%",
+  height = 52,
   isSuccess,
   error,
   placeHolderMessage,
-  onChange
+  onChange,
 }: Props) => {
-
   const iconPosition = useMemo(
     () => ({
       transform: `translate(-20px,${(height - 20) / 2}px)`,
@@ -45,12 +45,12 @@ const CustomInput = ({
       />
       {error?.isError && (
         <div style={iconPosition} className={style.icon}>
-          <Image src={ICONS.CAUTION} width={20} height={20}/>
+          <CautionIcon width={20} height={20} fill="#E95733" />
         </div>
       )}
       {isSuccess && (
         <div style={iconPosition} className={style.icon}>
-          <Image src={ICONS.SUCCESS} width={20} height={20}/>
+          <Image src={ICONS.SUCCESS} width={20} height={20} />
         </div>
       )}
     </div>

@@ -1,9 +1,9 @@
 import SelectBox from "components/custom/select-box";
 import { NextPageWithLayout } from "types/common";
 import style from "styles/my-upload.module.css";
-import Thumbnail from "components/search/thumbnail";
 import useModal from "hooks/use-modal";
-import VideoEditBox from 'components/custom/video-edit-box';
+import VideoEditBox from "components/custom/video-edit-box";
+import { VideoList } from "components/custom";
 
 const MyUploadPage: NextPageWithLayout = () => {
   const [isOpen, onClose, setIsOpen] = useModal("edit");
@@ -12,14 +12,7 @@ const MyUploadPage: NextPageWithLayout = () => {
       <div className={style["select-container"]}>
         <SelectBox />
       </div>
-      <ul className={style["video-list"]}>
-        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
-        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
-        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
-        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
-        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
-        <Thumbnail noDot={false} onEdit={() => setIsOpen(true)} />
-      </ul>
+      <VideoList noDot={false} onEdit={() => setIsOpen(true)} />
       {isOpen && <VideoEditBox onClose={onClose} />}
     </div>
   );

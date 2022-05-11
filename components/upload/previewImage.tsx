@@ -5,7 +5,7 @@ import { ICONS } from "lib/assets";
 import { CautionIcon } from "components/icons";
 
 const PreviewImage = () => {
-  const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>();
+  const [imageSrc, setImageSrc] = useState<string | null>();
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: File) => {
@@ -20,7 +20,7 @@ const PreviewImage = () => {
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
       reader.onload = () => {
-        setImageSrc(reader.result);
+        setImageSrc(reader.result as string);
         resolve();
       };
     });

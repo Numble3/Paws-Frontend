@@ -5,7 +5,7 @@ import { ICONS } from "lib/assets";
 import { CautionIcon } from "components/icons";
 
 const PreviewVideo = () => {
-  const [videoSrc, setVideoSrc] = useState<string | ArrayBuffer | null>("");
+  const [videoSrc, setVideoSrc] = useState<string | null>("");
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: File) => {
@@ -20,7 +20,7 @@ const PreviewVideo = () => {
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
       reader.onload = () => {
-        setVideoSrc(reader.result);
+        setVideoSrc(reader.result as string);
         resolve();
       };
     });

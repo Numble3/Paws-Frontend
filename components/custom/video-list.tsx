@@ -2,19 +2,20 @@ import { HeartIcon, DotIcon } from "components/icons";
 import Link from "next/link";
 import styles from "styles/custom/video-list.module.css";
 import Image from "next/image";
+import { MouseEvent } from 'react';
 
 interface Props {
   videoCnt?:number;
   noDot?: boolean;
   noInfo?: boolean;
-  onEdit?: () => void;
+  onEdit?: (e:MouseEvent) => void;
 }
 
 const VideoList = ({ videoCnt=10, noDot = true, noInfo = false, onEdit }: Props) => {
   return (
     <section className={styles.videos}>
       {Array.from(Array(videoCnt).keys()).map((v) => (
-        <Link key={v} passHref href={`/video/${123}`}>
+        <Link key={v} href={`/video/${123}`}>
           <div className={styles["video-container"]}>
             {/* TODO: div -> fetch video thumbnail */}
             <div>

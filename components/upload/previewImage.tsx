@@ -5,7 +5,7 @@ import { ICONS } from "lib/assets";
 import { CautionIcon } from "components/icons";
 
 const PreviewImage = () => {
-  const [imageSrc, setImageSrc] = useState("");
+  const [imageSrc, setImageSrc] = useState<string | ArrayBuffer | null>();
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: File) => {
@@ -76,7 +76,7 @@ const PreviewImage = () => {
             accept="image/*"
             ref={inputRef}
             onChange={(e) => {
-              encodeFileToBase64(e.target.files[0] as File);
+              if (e.target.files) encodeFileToBase64(e.target.files[0]);
             }}
           />
           <label className={styles.upload_btn} htmlFor="imageFile">

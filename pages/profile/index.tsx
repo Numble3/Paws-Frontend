@@ -1,11 +1,11 @@
+import { VideoList } from "components/custom";
 import VideoEditBox from "components/custom/video-edit-box";
-import Thumbnail from "components/search/thumbnail";
 import useModal from "hooks/use-modal";
 import { ICONS } from "lib/assets";
 import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
-import { useEffect } from "react";
+import { MouseEvent, useCallback, useEffect } from "react";
 import style from "styles/profile.module.css";
 import { NextPageWithLayout } from "types/common";
 
@@ -22,6 +22,10 @@ const ProfilePage: NextPageWithLayout = () => {
     }
   }, [userInfo]);
 
+  const onEditHandler = useCallback((e:MouseEvent)=>{
+    e.stopPropagation();
+    setIsOpen(true)
+  },[]);
   return (
     <div className={style.wrapper}>
       <section className={style["profile-section"]}>
@@ -43,50 +47,7 @@ const ProfilePage: NextPageWithLayout = () => {
             </Link>
           </span>
         </div>
-        <div className={style["video-container"]}>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-          <div className={style.video}>
-            <Thumbnail
-              noInfo={true}
-              noDot={false}
-              onEdit={() => setIsOpen(true)}
-            />
-          </div>
-        </div>
+        <VideoList videoCnt={6} noInfo={true} noDot={false} onEdit={onEditHandler} />
       </section>
       {isOpen && <VideoEditBox onClose={onClose} />}
     </div>

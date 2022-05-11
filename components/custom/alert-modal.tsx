@@ -1,9 +1,10 @@
 import React, { ReactNode } from "react";
 import editStyle from "styles/edit-form.module.css";
 import style from "styles/custom/alert.module.css";
-import LogoutIcon from '../icons/logout';
 import CautionIcon from '../icons/caution';
 import TrashIcon from '../icons/trash';
+import Image from 'next/image';
+import { ICONS } from 'lib/assets';
 
 interface Props {
   alertType: string;
@@ -35,11 +36,11 @@ const AlertModal = ({ alertType, onClose }: Props) => {
   if(alertType === "logout"){
     variable.type = "로그아웃";
     variable.message = LOG_OUT_MESSAGE;
-    variable.icon = <LogoutIcon />;
+    variable.icon = <Image src={ICONS.LOGOUT} width={44} height={44} />
   }else if(alertType === "withdraw"){
     variable.type = "탈퇴";
     variable.message = WITH_DRAW_MESSAGE;
-    variable.icon = <CautionIcon />;
+    variable.icon = <CautionIcon width={44} height={44} fill="#F08970" />;
   }else{
     variable.type = "삭제";
     variable.message = DELETE_MESSAGE;

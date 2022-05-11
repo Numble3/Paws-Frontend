@@ -1,12 +1,21 @@
-const LikeIcon = ({ isActive }: { isActive: boolean }) => {
+import { SVGProps } from "react";
+
+const LikeIcon = ({
+  isActive,
+  svgProps,
+}: {
+  isActive: boolean;
+  svgProps?: SVGProps<SVGSVGElement>;
+}) => {
+  const defaultSvgProps: SVGProps<SVGSVGElement> = {
+    width: svgProps?.width ?? 20,
+    height: svgProps?.height ?? 20,
+    viewBox: svgProps?.viewBox ?? "0 0 20 18",
+    fill: svgProps?.fill ?? "none",
+  };
+
   return (
-    <svg
-      width="20"
-      height="18"
-      viewBox="0 0 20 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...defaultSvgProps} xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

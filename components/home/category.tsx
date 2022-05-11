@@ -3,9 +3,7 @@ import { categories } from "lib/variables";
 import { useRouter } from "next/router";
 import styles from "styles/main.module.css";
 
-interface Props {}
-
-const HomeCategory = (props: Props) => {
+const HomeCategory = () => {
   const router = useRouter();
   const { category } = router.query;
 

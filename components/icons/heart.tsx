@@ -1,12 +1,14 @@
 interface Props {
+  width?:number;
+  height?:number;
   isLike: boolean;
 }
 
-const Heart = ({ isLike }: Props) => {
+const Heart = ({ width=20, height=20,isLike }: Props) => {
   return isLike ? (
     <svg
-      width="20"
-      height="18"
+      width={width}
+      height={height}
       viewBox="0 0 20 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -20,8 +22,8 @@ const Heart = ({ isLike }: Props) => {
     </svg>
   ) : (
     <svg
-      width="20"
-      height="18"
+      width={width}
+      height={height}
       viewBox="0 0 20 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

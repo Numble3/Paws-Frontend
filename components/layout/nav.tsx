@@ -8,8 +8,9 @@ import { ICONS } from "lib/assets";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
 import styles from "styles/layout.module.css";
+import NavPopUp from "components/custom/nav-popup";
 
 const Nav = () => {
   const router = useRouter();
@@ -44,21 +45,38 @@ const Nav = () => {
     ],
     [router]
   );
-
+  const [visible, setVisible] = useState(false);
   return (
     <nav className={styles.nav}>
+      {visible && (
+        <NavPopUp
+          onClose={() => {
+            setVisible(false);
+          }}
+        />
+      )}
       <ul>
-        {navItems.map((v, i) => (
-          <Link href={v.path} key={i}>
-            <li
-              className={`${v.hasCircle ? styles.upload : ""} ${
-                v.isActive ? styles.highlight : ""
-              }`}
-            >
-              {v.icon}
-            </li>
-          </Link>
-        ))}
+        {navItems.map((v, i) => {
+          if (i === 2) {
+            return (
+              <li onClick={() => setVisible(true)} className={styles.upload}>
+                {v.icon}
+              </li>
+            );
+          } else {
+            return (
+              <Link href={v.path} key={i}>
+                <li
+                  className={`${v.hasCircle ? styles.upload : ""} ${
+                    v.isActive ? styles.highlight : ""
+                  }`}
+                >
+                  {v.icon}
+                </li>
+              </Link>
+            );
+          }
+        })}
       </ul>
     </nav>
   );

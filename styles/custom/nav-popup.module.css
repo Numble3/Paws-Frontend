@@ -1,0 +1,39 @@
+.box-wrapper {
+  position: absolute;
+  bottom: 68px;
+  left: 20%;
+  width: 60%;
+  font-size: 12px;
+  animation: slide-top 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  color: white;
+}
+
+.border-top {
+  border-top: 0.5px solid #e9e9e9;
+}
+.box-wrapper > div {
+  background-color: #eca354;
+  border-radius: 8px;
+  padding: 0px 16px;
+}
+.box-wrapper > div > div:last-child:hover {
+  cursor: pointer;
+}
+.button {
+  width: 100%;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 14px 0px;
+}
+
+@keyframes slide-top {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

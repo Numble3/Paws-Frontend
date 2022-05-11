@@ -33,6 +33,7 @@ const Embed = () => {
       setLinkSuccess(false);
     }
   };
+  const [selectedCategory, setSelectedCategory] = useState("");
   useEffect(() => {
     if (link === "") {
       setLinkError({ ...linkError, isError: false });
@@ -77,7 +78,10 @@ const Embed = () => {
         <textarea placeholder="설명 내용을 입력해주세요" />
       </div>
       <div className="border-gray"></div>
-      <VideoCategory />
+      <VideoCategory
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />{" "}
     </form>
   );
 };

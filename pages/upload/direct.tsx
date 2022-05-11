@@ -11,6 +11,7 @@ const Direct = () => {
     isError: false,
     message: "제목을 입력해주세요.",
   });
+  const [selectedCategory, setSelectedCategory] = useState("");
   const postDirect = () => {
     //To do: post direct
   };
@@ -36,7 +37,10 @@ const Direct = () => {
         />
       </div>
       <div className="border-gray"></div>
-      <VideoCategory />
+      <VideoCategory
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
     </form>
   );
 };

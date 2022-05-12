@@ -5,8 +5,11 @@ import useInput from "hooks/use-input";
 import { ICONS } from 'lib/assets';
 import Image from 'next/image';
 import Link from "next/link";
+import { useRouter } from 'next/router';
 import React, { MouseEvent, useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useDispatch } from 'react-redux';
+import modalSlice from 'reducers/modal';
 import style from "styles/loginform.module.css";
 type User = {
   email: string;
@@ -18,7 +21,7 @@ const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [isLoading, setIsLoading] = useState(false);
-
+  
   const queryClient = useQueryClient();
   const mutation = useMutation<string, AxiosError,{ email: string; password: string } >('login', logInAPI, {
     onMutate: () => {
@@ -46,7 +49,18 @@ const LoginForm = () => {
     e.preventDefault();
     mutation.mutate({ email, password });
   }, [email, password, mutation]);
-  
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const testHandler = () =>{
+    dispatch(modalSlice.actions.isError({isError: false}));
+    dispatch(modalSlice.actions.open({}));
+    setTimeout(()=>{
+      dispatch(modalSlice.actions.close({}));
+    },3000);
+    router.replace("/profile/my-upload");
+  };
 
   return (
     <>
@@ -83,6 +97,7 @@ const LoginForm = () => {
           </div>
         </div>
       </section>
+      <button onClick={testHandler}>test</button>
       <section className={style.signup_section}>
         <span>회원이 아니신가요? </span>
         <Link href="/sign-up">

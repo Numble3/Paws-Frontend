@@ -1,35 +1,32 @@
-import { Dispatch, MouseEvent, SetStateAction, useCallback } from "react";
+import { RootState } from './../reducers/index';
+import { Dispatch, MouseEvent, SetStateAction, useCallback, useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import modalSlice from 'reducers/modal';
 
 type ReturnType = {
-  successHandler: (e: any) => void | Dispatch<SetStateAction<boolean>>;
-  errorHandler: (e: any) => void | Dispatch<SetStateAction<boolean>>;
-  isError: boolean
+  getMessage:boolean,
+  error: boolean
 };
 
 const useMessage = (): ReturnType => {
-  const dispatch = useDispatch();
-  const [isError, setIsError] = useState(false);
+  const {error} = useSelector((state:RootState)=> state.modal);
+  const [getMessage, setMassage] = useState(false);
+  const {messageOpen} = useSelector((state:RootState)=> state.modal);
+
+  useEffect(()=>{
+    console.log("useEffect 실행");
+    console.log(messageOpen);
+    if(messageOpen){
+        setMassage(true);
+    }else{
+      setMassage(false);
+    }
+  },[messageOpen]);
   
-  const successHandler = useCallback(()=>{
-    setIsError(false);
-    dispatch(modalSlice.actions.open({}));
-    setTimeout(()=>{
-      dispatch(modalSlice.actions.close({}));
-    },3000);
-  },[]);
+  
 
-  const errorHandler = useCallback(()=>{
-    setIsError(true);
-    dispatch(modalSlice.actions.open({}));
-    setTimeout(()=>{
-      dispatch(modalSlice.actions.close({}));
-    },3000);
-  },[]);
-
-  return {  successHandler, errorHandler, isError };
+  return { getMessage, error };
 };
 
 export default useMessage;

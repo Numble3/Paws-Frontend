@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  messageOpen:false
+  messageOpen:false,
+  error:false,
 };
 
 const modalSlice = createSlice({
@@ -13,6 +14,9 @@ const modalSlice = createSlice({
     },
     close(state,action){
       state.messageOpen = false;
+    },
+    isError(state, action){
+      state.error = action.payload.isError;
     }
   }
 })

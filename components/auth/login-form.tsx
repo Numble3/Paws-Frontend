@@ -2,6 +2,8 @@ import { getUserInfoAPI, logInAPI } from 'apis/auth';
 import { AxiosError } from 'axios';
 import { CustomInput } from "components/custom";
 import useInput from "hooks/use-input";
+import { ICONS } from 'lib/assets';
+import Image from 'next/image';
 import Link from "next/link";
 import React, { MouseEvent, useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -16,6 +18,7 @@ const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [isLoading, setIsLoading] = useState(false);
+
   const queryClient = useQueryClient();
   const mutation = useMutation<string, AxiosError,{ email: string; password: string } >('login', logInAPI, {
     onMutate: () => {
@@ -26,9 +29,13 @@ const LoginForm = () => {
     },
     onSuccess: (token) => {
       console.log("access token 들어오는지 확인 : ", token);
-      const {data} = useQuery<User>('user', getUserInfoAPI);
-      console.log("getUserAPI 잘 들어오는지 확인 : ", data);
-      queryClient.setQueryData('user', data);
+      getUserInfoAPI()
+        .then((data)=>{
+          console.log(data);
+        })
+        .catch((error) => {
+          alert(error.response?.data);
+        })
     },
     onSettled: () => {
       setIsLoading(false);
@@ -37,7 +44,6 @@ const LoginForm = () => {
 
   const onSubmit = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(email, password);
     mutation.mutate({ email, password });
   }, [email, password, mutation]);
   
@@ -62,16 +68,24 @@ const LoginForm = () => {
         </button>
       </form>
       <section className={style.Oauth}>
-        <div>SNS로 로그인 하기</div>
+        <div className={style.sns}>
+          <span>SNS로 로그인 하기</span>
+        </div>
         <div className={style.logo_container}>
-          <div className={style.logo}>logo</div>
-          <div className={style.logo}>logo</div>
-          <div className={style.logo}>logo</div>
+          <div className={style.logo}>
+            <Image src={ICONS.GOOGLE} width={22} height={22} />
+          </div>
+          <div className={style.logo}>
+            <Image src={ICONS.NAVER} width={28} height={28} />
+          </div>
+          <div className={style.logo}>
+            <Image src={ICONS.KAKAO} width={28} height={28} />
+          </div>
         </div>
       </section>
       <section className={style.signup_section}>
         <span>회원이 아니신가요? </span>
-        <Link href="/sign_up">
+        <Link href="/sign-up">
           <a className={style.signup}>회원가입</a>
         </Link>
       </section>

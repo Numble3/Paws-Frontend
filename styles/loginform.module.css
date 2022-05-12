@@ -14,11 +14,12 @@
   width: 100%;
   height: 52px;
   margin-top: 24px;
-  background: #F2BA3E;
+  background: var(--primary);
   border-radius: 8px;
   color: white;
   border: none;
-  font-size: 1.1em;
+  font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -34,19 +35,27 @@
   display: flex;
   justify-content: space-evenly;
   align-content: center;
-  
 }
 
 .logo {
   width: 72px;
   height: 48px;
-  background-color: darkgray;
-  line-height: 48px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
 }
 
 .signup {
   cursor: pointer;
   font-weight: bold;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--primary);
 }
 
 .signup_section {
@@ -54,3 +63,26 @@
   text-align: center;
 }
 
+.sns {
+  border-top: 0.5px solid #e9e9e9;
+  position: relative;
+}
+
+.sns > span {
+  position: absolute;
+  font-size: 12px;
+  color: #828385;
+  font-weight: 400;
+  background-color: #fbfbfb;
+  padding: 0px 12px;
+
+  top: -8px;
+  transform: translateX(-50%);
+}
+
+.signup_section > span {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--gray-800);
+  margin-right: 12px;
+}

@@ -34,6 +34,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           {...{
             layoutHeader,
             noNav,
+            hasBack,
           }}
         >
           <Component {...pageProps} />

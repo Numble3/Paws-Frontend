@@ -59,7 +59,11 @@ const Nav = () => {
         {navItems.map((v, i) => {
           if (i === 2) {
             return (
-              <li onClick={() => setVisible(true)} className={styles.upload}>
+              <li
+                key={i}
+                onClick={() => setVisible(true)}
+                className={styles.upload}
+              >
                 {v.icon}
               </li>
             );

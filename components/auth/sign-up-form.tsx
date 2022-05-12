@@ -1,5 +1,7 @@
+import { signUpAPI } from 'apis/auth';
 import { CustomInput } from "components/custom";
 import useInput from "hooks/use-input";
+import Router from 'next/router';
 import React, { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import style from "styles/signup.module.css";
 
@@ -7,6 +9,7 @@ const SignUpForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [nickname, onChangeNickname] = useInput("");
   const [password, onChangePassword] = useInput("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [passwordChk, setPasswordChk] = useState("");
   const [passwordError, setPasswordError] = useState(false);
@@ -24,8 +27,19 @@ const SignUpForm = () => {
 
   const onSubmit = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
-      console.log("회원가입 클릭");
       e.preventDefault();
+      console.log('회원가입');
+      setIsLoading(true);
+      signUpAPI({email, nickname, password })
+        .then(()=>{
+          Router.replace('/');
+        })
+        .catch((error) => {
+          alert(error.response.data);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     },
     [email, password, nickname]
   );
@@ -74,10 +88,10 @@ const SignUpForm = () => {
           type="submit"
           onClick={onSubmit}
           disabled={
-            !passwordError &&
-            nickname !== "" &&
-            email !== "" &&
-            passwordChk !== ""
+            passwordError ||
+            nickname == "" ||
+            email == "" ||
+            passwordChk == ""
           }
         >
           회원가입 하기

@@ -6,7 +6,7 @@ import AlertModal from './alert-modal';
 
 const VideoEditBox = ({ onClose }: { onClose: () => void }) => {
   const [alertOpen, onAlertClose, AlertHandler, alertType] = useModal("alert");
-
+  document.body.style.overflow = "hidden";
   return (
     <div className={editStyle.background}>
       <div className={style.wrapper}>

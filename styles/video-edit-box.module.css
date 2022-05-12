@@ -10,7 +10,7 @@
 .box-wrapper {
   padding-bottom: 20px;
   width: 100%;
-  animation: slide-top 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-top-and-down 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .box-wrapper :first-child {
@@ -42,7 +42,7 @@
   color: #E95733;
 }
 
-@keyframes slide-top {
+@keyframes slide-top-and-down {
   0% {
     transform: translateY(100px);
   }

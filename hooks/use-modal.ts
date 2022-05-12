@@ -13,6 +13,7 @@ const useModal = (type: "edit"|"alert"): ReturnType => {
   const [alertType, setAlertType] = useState("");
 
   const onClose = useCallback(() => {
+    document.body.style.overflow = "unset";
     setIsOpen(false);
   }, []);
   const AlertHandler = useCallback((e: MouseEvent<HTMLDivElement>) => {

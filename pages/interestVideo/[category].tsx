@@ -4,7 +4,7 @@ import style from "styles/interest/category.module.css";
 import Istyle from "styles/interest/interested.module.css";
 import { categories } from "lib/variables";
 import BackIcon from "components/icons/back";
-import InterestVideo from 'components/custom/interset-video';
+import InterestVideo from "components/custom/interset-video";
 
 const InterestedCategory: NextPageWithLayout = () => {
   const router = useRouter();
@@ -14,8 +14,10 @@ const InterestedCategory: NextPageWithLayout = () => {
   console.log(router);
   return (
     <div className={style.wrapper}>
-      <BackIcon isGray={true} />
-      <section className={style.header}>
+      <header className={style.header}>
+      <div className={style.back}>
+        <BackIcon isGray={true} />
+      </div>
         <div className={style.title}>
           <h1>{label}</h1>
           <div className={Istyle.info}>
@@ -24,7 +26,7 @@ const InterestedCategory: NextPageWithLayout = () => {
             <span>3일 전</span>
           </div>
         </div>
-      </section>
+      </header>
       <section className={style.contents}>
         <InterestVideo />
         <InterestVideo />

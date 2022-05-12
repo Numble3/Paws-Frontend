@@ -1,11 +1,6 @@
 .wrap {
   padding: 24px 16px;
 }
-.link {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
 .title {
   font-family: "Pretendard";
   font-weight: 600;
@@ -40,28 +35,23 @@
   color: #dadada;
 }
 
-.text_input__fail {
-  border: 1px solid #e95733;
+.complete {
+  max-width: 480px;
+  top: 0;
+  width: 100%;
+  height: 56px;
+  position: fixed;
+  z-index: 1000;
 }
-.text_input__success {
-  border: 1px solid #489c5a;
-}
-.text_input:focus {
-  outline: none;
-}
-
-.false_link {
-  color: #e95733;
-  font-weight: 500;
-  font-size: 10px;
+.complete > span {
   position: absolute;
-  transform: translate(10%, 100%);
-  padding: 0 5px;
-  background: linear-gradient(to bottom, var(--bg) 50%, white 50%);
+  top: calc(56px / 2);
+  transform: translateY(-50%);
+  font-size: 14px;
+  right: 35px;
+  color: #eca354;
+  font-weight: 600;
 }
-
-.input_icon {
-  position: absolute;
-  right: 20px;
-  top: calc(78px / 2 + 5px);
+.complete > span:hover {
+  cursor: pointer;
 }

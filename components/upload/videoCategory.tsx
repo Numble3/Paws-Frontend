@@ -1,34 +1,38 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import styles from "styles/upload/videoCategory.module.css";
 
-const VideoCategory = () => {
+interface Props {
+  selectedCategory: string;
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+}
+
+const VideoCategory = ({ selectedCategory, setSelectedCategory }: Props) => {
   const category = [
-    "강아지",
-    "고양이",
-    "토끼",
-    "햄스터",
-    "새",
-    "도마뱀",
-    "기타",
+    { name: "강아지", val: "dog" },
+    { name: "고양이", val: "cat" },
+    { name: "토끼", val: "rabbit" },
+    { name: "햄스터", val: "hamster" },
+    { name: "새", val: "bird" },
+    { name: "도마뱀", val: "lizard" },
+    { name: "기타", val: "etc" },
   ];
-  const [selectedCategory, setSelectedCategory] = useState("");
   return (
     <div className={styles.category}>
       <p className={styles.title}>
         카테고리 <span>중복 선택 불가</span>
       </p>
       <ul>
-        {category.map((name) => (
+        {category.map((v, i) => (
           <li
-            className={
-              selectedCategory === name
-                ? styles.category__selected
-                : styles.category__not_selected
-            }
-            onClick={() => setSelectedCategory(name)}
-            key={name}
+            className={`${styles.category__not_selected}
+              ${
+                selectedCategory === v.name ? styles[`category__${v.val}`] : ""
+              } 
+            `}
+            onClick={() => setSelectedCategory(v.name)}
+            key={i}
           >
-            {name}
+            {v.name}
           </li>
         ))}
       </ul>

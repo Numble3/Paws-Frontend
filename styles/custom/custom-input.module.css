@@ -32,3 +32,6 @@
   color: #f17971;
   font-weight: 700;
 }
+.input::placeholder {
+  color: #dadada;
+}

@@ -6,7 +6,7 @@ import style from "styles/custom/custom-input.module.css";
 
 interface Props {
   inputType: string;
-  value: string;
+  value?: string;
   width?: number | string;
   height?: number;
   isSuccess?: boolean;

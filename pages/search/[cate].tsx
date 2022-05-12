@@ -5,9 +5,8 @@ import { IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
 import SelectBox from "components/custom/select-box";
 import { NextPageWithLayout } from "types/common";
-import { VideoList } from "components/custom";
 import BackIcon from "components/icons/back";
-
+import InfiniteScroll from "components/custom/infinite-scroll";
 const Category: NextPageWithLayout = () => {
   const router = useRouter();
   const { cate } = router.query;
@@ -105,7 +104,7 @@ const Category: NextPageWithLayout = () => {
       </div>
       <section className={styles.thumbnail_container}>
         <ul className={styles.thumbnail_row}>
-          <VideoList />
+          <InfiniteScroll />
         </ul>
       </section>
     </>

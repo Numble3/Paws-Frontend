@@ -3,12 +3,13 @@ import { ICONS, IMAGES } from "lib/assets";
 import styles from "styles/search/index.module.css";
 import Link from "next/link";
 import Router from "next/router";
-import { useRef, useState } from "react";
+import { KeyboardEvent, useRef, useState } from "react";
+import { NextPageWithLayout } from "types/common";
 
-const Search = () => {
+const Search: NextPageWithLayout = () => {
   const [isFocus, setIsFocus] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       Router.push(`/search/result?query=${inputRef.current?.value}`);
     }
@@ -115,6 +116,6 @@ const Search = () => {
     </>
   );
 };
-Search.header = { title: "검색 및 카테고리 페이지" };
+Search.header = { title: "검색 및 카테고리" };
 
 export default Search;

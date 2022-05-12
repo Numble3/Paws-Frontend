@@ -21,7 +21,7 @@ const MyUploadPage: NextPageWithLayout = () => {
       {isOpen && <VideoEditBox onClose={onClose} />}
     </div>
   );
-}
+};
 MyUploadPage.header = { title: "업로드 비디오" };
 
 export default MyUploadPage;

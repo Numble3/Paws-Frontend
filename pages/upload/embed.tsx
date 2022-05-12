@@ -4,8 +4,9 @@ import VideoCategory from "components/upload/videoCategory";
 import { ChangeEvent, useState, useEffect } from "react";
 import axios from "axios";
 import { CustomInput } from "components/custom";
+import { NextPageWithLayout } from "types/common";
 
-const Embed = () => {
+const Embed: NextPageWithLayout = () => {
   const URL = "https://www.youtube.com/oembed?url=";
   //link
   const [linkError, setLinkError] = useState({
@@ -86,5 +87,6 @@ const Embed = () => {
   );
 };
 
-export default Embed;
 Embed.header = { title: "임베드 영상 업로드" };
+Embed.back = { color: "gray" };
+export default Embed;

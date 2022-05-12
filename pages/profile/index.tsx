@@ -22,10 +22,10 @@ const ProfilePage: NextPageWithLayout = () => {
     }
   }, [userInfo]);
 
-  const onEditHandler = useCallback((e:MouseEvent)=>{
+  const onEditHandler = useCallback((e: MouseEvent) => {
     e.stopPropagation();
-    setIsOpen(true)
-  },[]);
+    setIsOpen(true);
+  }, []);
   return (
     <div className={style.wrapper}>
       <section className={style["profile-section"]}>
@@ -47,7 +47,12 @@ const ProfilePage: NextPageWithLayout = () => {
             </Link>
           </span>
         </div>
-        <VideoList videoCnt={6} noInfo={true} noDot={false} onEdit={onEditHandler} />
+        <VideoList
+          videoCnt={6}
+          noInfo={true}
+          noDot={false}
+          onEdit={onEditHandler}
+        />
       </section>
       {isOpen && <VideoEditBox onClose={onClose} />}
     </div>
@@ -55,5 +60,6 @@ const ProfilePage: NextPageWithLayout = () => {
 };
 
 ProfilePage.header = { title: "마이 페이지" };
+ProfilePage.back = { color: "gray" };
 
 export default ProfilePage;

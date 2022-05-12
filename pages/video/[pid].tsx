@@ -23,4 +23,5 @@ const VideoPage: NextPageWithLayout = () => {
 };
 
 VideoPage.noNav = true;
+VideoPage.back = { color: "white" };
 export default VideoPage;

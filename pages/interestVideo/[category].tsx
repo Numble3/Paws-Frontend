@@ -15,9 +15,9 @@ const InterestedCategory: NextPageWithLayout = () => {
   return (
     <div className={style.wrapper}>
       <header className={style.header}>
-      <div className={style.back}>
-        <BackIcon isGray={true} />
-      </div>
+        <div className={style.back}>
+          <BackIcon isGray={true} />
+        </div>
         <div className={style.title}>
           <h1>{label}</h1>
           <div className={Istyle.info}>
@@ -42,4 +42,5 @@ const InterestedCategory: NextPageWithLayout = () => {
   );
 };
 
+InterestedCategory.back = { color: "gray" };
 export default InterestedCategory;

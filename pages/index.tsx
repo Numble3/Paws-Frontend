@@ -14,5 +14,5 @@ const Home: NextPageWithLayout = () => {
   );
 };
 
-Home.header = { title: "메인 페이지" };
+Home.header = true;
 export default Home;

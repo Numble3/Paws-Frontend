@@ -1,6 +1,7 @@
 import LayoutContainer from "components/layout";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
+import wrapper from 'store/store';
 import "styles/globals.css";
 import { AppPropsWithLayout } from "types/common";
 
@@ -43,4 +44,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

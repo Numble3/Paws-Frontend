@@ -1,12 +1,20 @@
 import { CustomInput } from "components/custom";
+import CustomMessage from "components/custom/message";
 import useInput from "hooks/use-input";
+import useMessage from "hooks/use-message";
 import Link from "next/link";
-import React from "react";
+import React, { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "reducers";
 import style from "styles/loginform.module.css";
 
 const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
+  const { successHandler, isError, errorHandler } = useMessage();
+  const { messageOpen } = useSelector((state: RootState) => state.modal);
+  console.log(messageOpen);
+
   return (
     <>
       <form>
@@ -26,6 +34,16 @@ const LoginForm = () => {
           로그인
         </button>
       </form>
+      <Link href={"/profile/my-upload"}>
+        <a>
+          <button onClick={successHandler}>
+            누르면 업로드 성공하는 신기한 버튼
+          </button>
+        </a>
+      </Link>
+      <button onClick={errorHandler}>
+        누르면 에러 나는 신기한 버튼
+      </button>
       <section className={style.Oauth}>
         <div>SNS로 로그인 하기</div>
         <div className={style.logo_container}>
@@ -40,6 +58,7 @@ const LoginForm = () => {
           <a className={style.signup}>회원가입</a>
         </Link>
       </section>
+      {messageOpen && <CustomMessage isError={isError} />}
     </>
   );
 };

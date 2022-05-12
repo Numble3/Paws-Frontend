@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { CustomInput } from "components/custom";
 import useInput from "hooks/use-input";
 import Link from "next/link";
-import React, { useCallback, useState } from "react";
+import React, { MouseEvent, useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import style from "styles/loginform.module.css";
 type User = {
@@ -27,6 +27,7 @@ const LoginForm = () => {
     onSuccess: (token) => {
       console.log("access token 들어오는지 확인 : ", token);
       const {data} = useQuery<User>('user', getUserInfoAPI);
+      console.log("getUserAPI 잘 들어오는지 확인 : ", data);
       queryClient.setQueryData('user', data);
     },
     onSettled: () => {
@@ -34,7 +35,8 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     console.log(email, password);
     mutation.mutate({ email, password });
   }, [email, password, mutation]);

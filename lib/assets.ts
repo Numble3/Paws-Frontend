@@ -19,6 +19,7 @@ export const ICONS = {
   WATCH: getIconPath("watch.svg"),
   TIME: getIconPath("time.svg"),
   MSG_SEND: getIconPath("msg-send.svg"),
+  LOADING: getIconPath("loading.svg"),
 };
 
 export const IMAGES: ImagesType = {

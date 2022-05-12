@@ -1,6 +1,7 @@
 import VideoList from "components/custom/video-list";
 import React, { useState, useEffect } from "react";
-
+import Image from "next/image";
+import { ICONS } from "lib/assets";
 type VideoProps = {
   [key: number]: number[]; // 추후 number[]을 video type[]으로 수정. + common.ts로 보내기
 };
@@ -55,8 +56,12 @@ function InfiniteScroll({ videoCnt = 10 }: Props) {
         // 추후 data[i]를 video List에 전달
         return <VideoList key={i} videoCnt={videoCnt} />;
       })}
-      <div ref={setTarget} className="Loading">
-        {isLoaded && "Loading..."}
+      <div ref={setTarget} id="loading">
+        {isLoaded && (
+          <div>
+            <Image src={ICONS.LOADING} width={25} height={25} />
+          </div>
+        )}
       </div>
     </section>
   );

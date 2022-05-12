@@ -14,35 +14,39 @@ body {
 * {
   box-sizing: border-box;
 
-  --primary: #ECA354;
-  --bg: #FBFBFB;
+  --primary: #eca354;
+  --bg: #fbfbfb;
 
   --gray-900: #373737;
-  --gray-800:#828385;
-  --gray-700:#A0A1A5;
-  --gray-600:#C1C1C3;
-  --gray-500:#DADADA;
-  --gray-400:#E9E9E9;
-  --gray-300:#FFFFFF;
+  --gray-800: #828385;
+  --gray-700: #a0a1a5;
+  --gray-600: #c1c1c3;
+  --gray-500: #dadada;
+  --gray-400: #e9e9e9;
+  --gray-300: #ffffff;
 
   --b-gray: 0.5px solid #e9e9e9;
-
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
-p{
-  margin: 0 ;
+p {
+  margin: 0;
 }
 
-h1,h2,h3,h4,h5,h6{
-  margin:0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
   color: var(--gray-900);
 }
 
-button{
+button {
   cursor: pointer;
   border: none;
 }
@@ -52,17 +56,35 @@ button{
   margin: 24px 0;
 }
 
-.layout-content{
+.layout-content {
   padding: 24px 16px;
 }
 
-.layout-p{
+.layout-p {
   padding: 24px 16px;
 }
 
-#sub-title{
-  margin:0;
+#sub-title {
+  margin: 0;
   color: var(--gray-900);
   font-size: 16px;
   font-weight: 600;
+}
+
+#loading {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+#loading > div {
+  animation: spin 2s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

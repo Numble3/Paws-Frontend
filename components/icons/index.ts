@@ -10,3 +10,4 @@ export { default as DotIcon } from "./dot";
 export { default as SuccessIcon } from "./suceess";
 export { default as OrangeHeartIcon } from "./orange-heart";
 export { default as HeaderArrow } from "./header-arrow";
+export { default as LogoFeet } from "./logo-feet";

@@ -1,9 +1,12 @@
 import LayoutContainer from "components/layout";
 import { DefaultSeo } from "next-seo";
 import { AppProps } from "next/app";
-import wrapper from 'store/store';
+import { useRef } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import wrapper from "store/store";
 import "styles/globals.css";
 import { AppPropsWithLayout } from "types/common";
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 const DEFAULT_SEO = {
   title: "Paws🐾",
@@ -18,28 +21,36 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const layoutHeader = Component.header;
   const noNav = Component.noNav;
 
+  const queryClientRef = useRef<QueryClient>();
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient();
+  }
+
   return (
     <>
-      <DefaultSeo {...DEFAULT_SEO} />
-      <LayoutContainer
-        {...{
-          layoutHeader,
-          noNav,
-        }}
-      >
-        <Component {...pageProps} />
-      </LayoutContainer>
+      <QueryClientProvider client={queryClientRef.current}>
+        <DefaultSeo {...DEFAULT_SEO} />
+        <LayoutContainer
+          {...{
+            layoutHeader,
+            noNav,
+          }}
+        >
+          <Component {...pageProps} />
+        </LayoutContainer>
 
-      <style jsx global>
-        {`
-          #__next {
-            width: 100%;
-            height: 100%;
-            display: grid;
-            place-items: center;
-          }
-        `}
-      </style>
+        <style jsx global>
+          {`
+            #__next {
+              width: 100%;
+              height: 100%;
+              display: grid;
+              place-items: center;
+            }
+          `}
+        </style>
+        <ReactQueryDevtools initialIsOpen={false} position={'top-right'} />
+      </QueryClientProvider>
     </>
   );
 }

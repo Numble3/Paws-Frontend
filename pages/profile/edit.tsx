@@ -6,10 +6,63 @@ import NicknameEditForm from "components/custom/nickname-edit-form";
 import AlertModal from "components/custom/alert-modal";
 import useModal from "hooks/use-modal";
 import EditIcon from "components/icons/edit";
+import { useCallback, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { AxiosError } from 'axios';
+import { logOutAPI, withDrawAPI } from 'apis/auth';
+import Router from 'next/router';
 
 const ProfileEdit: NextPageWithLayout = () => {
   const [editOpen, onEditClose, setIsOpen] = useModal("edit");
   const [alertOpen, onAlertClose, AlertHandler, alertType] = useModal("alert");
+
+  const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
+
+  const logoutMutation = useMutation<void, AxiosError>(logOutAPI, {
+    onMutate: () => {
+      setLoading(true);
+    },
+    onError: (error) => {
+      alert(error.response?.data);
+    },
+    onSuccess: () => {
+      queryClient.setQueryData('user', null);
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      Router.replace("/");
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
+  const withdrawMutation = useMutation<void, AxiosError>(withDrawAPI, {
+    onMutate: () => {
+      setLoading(true);
+    },
+    onError: (error) => {
+      alert(error.response?.data);
+    },
+    onSuccess: () => {
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      Router.replace("/");
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
+  const onLogOut = useCallback(() => {
+    console.log('logout mutate');
+    logoutMutation.mutate();
+  }, [logoutMutation]);
+
+  const onWithdraw = useCallback(() => {
+    console.log('withdraw mutate');
+    withdrawMutation.mutate();
+  }, [withdrawMutation]);
 
   return (
     <div className={style.wrapper}>
@@ -56,7 +109,7 @@ const ProfileEdit: NextPageWithLayout = () => {
       </section>
       {editOpen && <NicknameEditForm onClose={onEditClose} />}
       {alertOpen && (
-        <AlertModal alertType={alertType!} onClose={onAlertClose} />
+        <AlertModal alertType={alertType!} onClose={onAlertClose} onLogOut={onLogOut} onWithDraw={onWithdraw} />
       )}
     </div>
   );

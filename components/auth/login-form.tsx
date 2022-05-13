@@ -1,81 +1,75 @@
-import { getUserInfoAPI, logInAPI } from 'apis/auth';
-import { AxiosError } from 'axios';
+import { getUserInfoAPI, logInAPI } from "apis/auth";
+import client from "apis/client";
+import { AxiosError } from "axios";
 import { CustomInput } from "components/custom";
-import CustomMessage from 'components/custom/message';
+import CustomMessage from "components/custom/message";
 import useInput from "hooks/use-input";
-import useMessage from 'hooks/use-message';
-import { ICONS } from 'lib/assets';
-import Image from 'next/image';
+import useMessage from "hooks/use-message";
+import { ICONS } from "lib/assets";
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import React, { MouseEvent, useCallback, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { RootState } from 'reducers';
-import modalSlice from 'reducers/modal';
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { RootState } from "reducers";
+import modalSlice from "reducers/modal";
 import style from "styles/loginform.module.css";
 type User = {
   email: string;
   profile: string;
   nickanme: string;
-}
+};
 
 const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  
+
   const queryClient = useQueryClient();
-  const mutation = useMutation<string, AxiosError,{ email: string; password: string } >('login', logInAPI, {
+  const mutation = useMutation<
+    { accessToken: string; refreshToken: string },
+    AxiosError,
+    { email: string; password: string }
+  >("login", logInAPI, {
     onMutate: () => {
-      setIsLoading(true)
+      setIsLoading(true);
     },
     onError: (error) => {
       alert(error.response?.data);
     },
     onSuccess: (token) => {
       console.log("access token 들어오는지 확인 : ", token);
-      router.replace("/");
+      const { accessToken } = token;
+      const { refreshToken } = token;
+      localStorage.setItem("access", accessToken);
+      localStorage.setItem("refresh", refreshToken);
+
       getUserInfoAPI()
-        .then((data)=>{
-          queryClient.setQueryData('user', data);
+        .then((data) => {
+          queryClient.setQueryData("user", data);
         })
         .catch((error) => {
           console.error(error);
           alert(error.response?.data);
-        })
+        });
+      router.replace("/");
     },
     onSettled: () => {
       setIsLoading(false);
     },
   });
 
-  const onSubmit = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    mutation.mutate({ email, password });
-  }, [email, password, mutation]);
+  const onSubmit = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      mutation.mutate({ email, password });
+    },
+    [email, password, mutation]
+  );
 
-  const dispatch = useDispatch();
-  const {getMessage ,error} = useMessage();
-
-  const testHandler = () =>{
-    dispatch(modalSlice.actions.isError({isError: false}));
-    dispatch(modalSlice.actions.open({}));
-    setTimeout(()=>{
-      dispatch(modalSlice.actions.close({}));
-    },3000);
-    router.replace("/profile/my-upload");
-  };
-
-  const errorHandelr = () =>{
-    dispatch(modalSlice.actions.isError({isError: true}));
-    dispatch(modalSlice.actions.open({}));
-    setTimeout(()=>{
-      dispatch(modalSlice.actions.close({}));
-    },3000);
-  }
 
   return (
     <>
@@ -112,14 +106,11 @@ const LoginForm = () => {
           </div>
         </div>
       </section>
-      <button onClick={testHandler}>test</button>
-      <button onClick={errorHandelr}>error</button>
       <section className={style.signup_section}>
         <span>회원이 아니신가요? </span>
         <Link href="/sign-up">
           <a className={style.signup}>회원가입</a>
         </Link>
-        {getMessage && <CustomMessage isError={error}/>}
       </section>
     </>
   );

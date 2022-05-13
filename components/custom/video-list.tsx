@@ -12,9 +12,56 @@ interface Props {
   onEdit?: (e: MouseEvent) => void;
   style?: CSSProperties;
 }
+const dummy: VideoListType[] = [
+  {
+    createdAt: "2022-11-11 16-50-10",
+    like: 0,
+    nickname: "다희네 우당탕탕 3묘",
+    thumbnailPath: "/images/temp.png",
+    title: "발로 꼬리 밟아서 화난 고양이 장수",
+    videoId: 1,
+    view: 380,
+  },
+  {
+    createdAt: "2022-11-11 16-50-10",
+    like: 0,
+    nickname: "다희네 우당탕탕 3묘",
+    thumbnailPath: "/images/temp.png",
+    title: "발로 꼬리 밟아서 화난 고양이 장수",
+    videoId: 2,
+    view: 380,
+  },
+  {
+    createdAt: "2022-11-11 16-50-10",
+    like: 0,
+    nickname: "다희네 우당탕탕 3묘",
+    thumbnailPath: "/images/temp.png",
+    title: "발로 꼬리 밟아서 화난 고양이 장수",
+    videoId: 3,
+    view: 380,
+  },
+  {
+    createdAt: "2022-11-11 16-50-10",
+    like: 0,
+    nickname: "다희네 우당탕탕 3묘",
+    thumbnailPath: "/images/temp.png",
+    title: "발로 꼬리 밟아서 화난 고양이 장수",
+    videoId: 4,
+    view: 380,
+  },
+  {
+    createdAt: "2022-11-11 16-50-10",
+    like: 0,
+    nickname: "다희네 우당탕탕 3묘",
+    thumbnailPath: "/images/temp.png",
+    title: "발로 꼬리 밟아서 화난 고양이 장수",
+    videoId: 5,
+    view: 380,
+  },
+];
 
 const VideoList = ({
-  datas,
+  datas = dummy,
   noDot = true,
   noInfo = false,
   onEdit,

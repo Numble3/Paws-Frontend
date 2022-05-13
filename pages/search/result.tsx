@@ -4,24 +4,21 @@ import { useState } from "react";
 import styles from "styles/search/result.module.css";
 import { ICONS } from "lib/assets";
 import SelectBox from "components/custom/select-box";
-import NoResult from "components/search/noResult";
+import NoResult from "components/custom/no-result";
 import { VideoList } from "components/custom";
 import { NextPageWithLayout } from "types/common";
 import BackIcon from "components/icons/back";
 
+const noSearchResult = {
+  title: "검색 결과 없음",
+  content:
+    "해당 키워드와 관련된 검색결과가 없어요.\n다른 검색어로 다시 시도해보세요!",
+};
 const Result: NextPageWithLayout = () => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const router = useRouter();
   const { query } = router.query;
-  const [data, setData] = useState({
-    createdAt: "2022-11-11 16-50-10",
-    like: 0,
-    nickname: "다희네 우당탕탕 3묘",
-    thumbnailPath: "/images/temp.png",
-    title: "발로 꼬리 밟아서 화난 고양이 장수",
-    videoId: 10,
-    view: 380,
-  });
+
   return (
     <>
       <section className={styles.header}>
@@ -39,19 +36,19 @@ const Result: NextPageWithLayout = () => {
           />
         </div>
       </section>
-      {data ? (
+      {true ? (
         <>
           <div className={styles.select_container}>
             <SelectBox setSelectedCategory={setSelectedCategory} />
           </div>
           <section className={styles.thumbnail_container}>
             <ul className={styles.thumbnail_row}>
-              <VideoList />
+              <VideoList datas={[]} />
             </ul>
           </section>
         </>
       ) : (
-        <NoResult />
+        <NoResult {...noSearchResult} />
       )}
     </>
   );

@@ -10,6 +10,11 @@ import InfiniteScroll from "components/custom/infinite-scroll";
 import { getVideos } from "apis/get-video";
 import { VideoParams } from "types/video";
 
+const noCateResult = {
+  title: "카테고리 영상 없음",
+  content: "아직 등록된 동영상이 없어요",
+};
+
 const Category: NextPageWithLayout = () => {
   const router = useRouter();
   const { cate } = router.query;
@@ -114,7 +119,11 @@ const Category: NextPageWithLayout = () => {
       </div>
       <section className={styles.thumbnail_container}>
         <ul className={styles.thumbnail_row}>
-          <InfiniteScroll query={query} fetchFunc={getVideos} />
+          <InfiniteScroll
+            noResult={noCateResult}
+            query={query}
+            fetchFunc={getVideos}
+          />
         </ul>
       </section>
     </>

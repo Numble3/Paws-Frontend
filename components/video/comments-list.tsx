@@ -1,6 +1,7 @@
 import { CustomSelectBox } from "components/custom";
 import { IMAGES } from "lib/assets";
 import Image from "next/image";
+import { useState } from "react";
 import styles from "styles/video.module.css";
 import VideoComment from "./comment";
 
@@ -44,6 +45,8 @@ const dummy2: typeof dummy = [];
 interface Props {}
 
 const VideoCommentsList = (props: Props) => {
+  const [selectedCategory, setSelectedCategory] = useState("LATEST");
+
   return (
     <section className={styles["comments-list"]}>
       <article className={styles["comments-header"]}>
@@ -51,7 +54,7 @@ const VideoCommentsList = (props: Props) => {
         <span>1.4만</span>
       </article>
       <article className={styles["comments-filter"]}>
-        <CustomSelectBox />
+        <CustomSelectBox setSelectedCategory={setSelectedCategory} />
       </article>
       {dummy2.length !== 0 ? (
         dummy2.map(({ comment, id, name, timeline, totalLike }) => (

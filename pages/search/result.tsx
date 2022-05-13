@@ -10,6 +10,7 @@ import { NextPageWithLayout } from "types/common";
 import BackIcon from "components/icons/back";
 
 const Result: NextPageWithLayout = () => {
+  const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const router = useRouter();
   const { query } = router.query;
   const [data, setData] = useState({
@@ -24,7 +25,6 @@ const Result: NextPageWithLayout = () => {
   return (
     <>
       <section className={styles.header}>
-        {/* back 아이콘 추후 교체 */}
         <div className={styles.back} onClick={() => router.back()}>
           <BackIcon isGray={true} />
         </div>
@@ -42,7 +42,7 @@ const Result: NextPageWithLayout = () => {
       {data ? (
         <>
           <div className={styles.select_container}>
-            <SelectBox />
+            <SelectBox setSelectedCategory={setSelectedCategory} />
           </div>
           <section className={styles.thumbnail_container}>
             <ul className={styles.thumbnail_row}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import styles from "styles/custom/selectBox.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
@@ -7,16 +7,23 @@ type SelectType = {
   value: string;
   desc: string;
 };
-const SelectBox = () => {
-  const selectOption = [
-    { value: "LATEST", desc: "최신순" },
-    { value: "POPULARITY", desc: "인기순" },
-  ];
+
+interface Props {
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+}
+
+const selectOption = [
+  { value: "LATEST", desc: "최신순" },
+  { value: "POPULARITY", desc: "인기순" },
+];
+
+const SelectBox = ({ setSelectedCategory }: Props) => {
   const [selectedValue, setSelectedValue] = useState(selectOption[0]);
   const [isSelected, setIsSelected] = useState(false);
 
   const handleSelectBox = ({ value, desc }: SelectType) => {
     setSelectedValue({ value, desc });
+    setSelectedCategory(value);
   };
   return (
     <div className={styles.select} onClick={() => setIsSelected(!isSelected)}>

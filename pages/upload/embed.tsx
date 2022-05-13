@@ -13,6 +13,19 @@ import CustomTextArea from "components/custom/textarea";
 import { NextPageWithLayout } from "types/common";
 
 const Embed: NextPageWithLayout = () => {
+  console.log(
+    //test
+    createEmbedVideo({
+      category: "",
+      content: "",
+      embeddedUrl: "",
+      thumbnailUrl: "",
+      title: "",
+      type: "EMBEDDED",
+      videoDuration: 0,
+      videoUrl: "",
+    })
+  );
   const [loading, setLoading] = useState(false);
   //link
   const [linkInfo, setLinkInfo] = useState({
@@ -50,6 +63,11 @@ const Embed: NextPageWithLayout = () => {
     }
 
     setLoading(true);
+    setLinkInfo({
+      link,
+      isSuccess: false,
+      linkError: { isError: true, message: "링크를 확인하는 중입니다..." },
+    });
     const result = await checkEmbedLink(link);
     if (result) {
       newLinkInfo = {
@@ -61,7 +79,10 @@ const Embed: NextPageWithLayout = () => {
       newLinkInfo = {
         link,
         isSuccess: false,
-        linkError: { ...linkInfo.linkError, isError: true },
+        linkError: {
+          isError: true,
+          message: "임베드 불가능한 링크 주소입니다.",
+        },
       };
     }
     setLoading(false);

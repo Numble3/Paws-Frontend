@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import { IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
@@ -9,12 +9,12 @@ import BackIcon from "components/icons/back";
 import InfiniteScroll from "components/custom/infinite-scroll";
 import { getVideos } from "apis/get-video";
 import { useQuery } from "react-query";
-import { AxiosError } from "axios";
-import { VideoType } from "types/video";
+import { Loading } from "components/custom";
+
 const Category: NextPageWithLayout = () => {
   const router = useRouter();
   const { cate } = router.query;
-
+  const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const imageCate = cate ? (cate as string) : "";
   const changeName = (cate: string) => {
     switch (cate) {
@@ -97,13 +97,16 @@ const Category: NextPageWithLayout = () => {
     size: 10,
   };
 
-  const {
-    data: { contents, hasNext },
-  } = useQuery(["video", query], () => getVideos(query), {
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { data, isLoading } = useQuery(
+    ["video", query],
+    () => getVideos(query),
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <header className={`${styles[`cate_${cate}`]} ${styles.header}`}>
@@ -124,7 +127,7 @@ const Category: NextPageWithLayout = () => {
         <span className={styles.cate_name}>{cateObj.name}</span>
       </header>
       <div className={styles.select_container}>
-        <SelectBox />
+        <SelectBox setSelectedCategory={setSelectedCategory} />
       </div>
       <section className={styles.thumbnail_container}>
         <ul className={styles.thumbnail_row}>

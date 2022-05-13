@@ -17,20 +17,22 @@ export async function getVideos(params: VideoParams) {
     page,
     size,
   };
-  if (category) {
+  if (category && category !== "whole") {
     if (category === "etc") category = "OTHERS";
-    else if (category === "whole") return;
     videoQuery["category"] = category.toUpperCase();
   }
   if (sortCondition) {
-    videoQuery["sortCondition"] = sortCondition;
+    videoQuery["sortCondition"] = sortCondition.toUpperCase();
   }
   if (title) {
-    videoQuery["title"] = title;
+    videoQuery["title"] = title.toUpperCase();
   }
-
-  const response = await axios.get("http://3.36.157.185/api/videos", {
-    params: videoQuery,
-  });
-  return response.data;
+  try {
+    const response = await axios.get("http://3.36.157.185/api/videos", {
+      params: videoQuery,
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
 }

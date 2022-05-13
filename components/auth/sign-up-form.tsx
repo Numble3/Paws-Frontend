@@ -32,10 +32,10 @@ const SignUpForm = () => {
       setIsLoading(true);
       signUpAPI({email, nickname, password })
         .then(()=>{
-          Router.replace('/');
+          Router.replace('/login');
         })
         .catch((error) => {
-          alert(error.response.data);
+          alert(error.response?.data);
         })
         .finally(() => {
           setIsLoading(false);

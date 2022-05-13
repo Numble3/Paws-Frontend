@@ -20,6 +20,9 @@ export const ICONS = {
   TIME: getIconPath("time.svg"),
   MSG_SEND: getIconPath("msg-send.svg"),
   LOADING: getIconPath("loading.svg"),
+  GOOGLE: getIconPath("google.svg"),
+  NAVER: getIconPath("naver.svg"),
+  KAKAO: getIconPath("kakao.svg"),
 };
 
 export const IMAGES: ImagesType = {
@@ -31,6 +34,8 @@ export const IMAGES: ImagesType = {
   HAMSTER: getImagePath("hamster.png"),
   ETC: getImagePath("squirrel.png"),
   MESSAGE: getImagePath("message.png"),
+  ICON_SM: getImagePath("icon-sm.png"),
+  ERROR: getImagePath("error.png"),
 };
 
 type ImagesType = {

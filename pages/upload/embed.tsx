@@ -10,8 +10,9 @@ import {
   videoTransform,
 } from "apis/upload";
 import CustomTextArea from "components/custom/textarea";
+import { NextPageWithLayout } from "types/common";
 
-const Embed = () => {
+const Embed: NextPageWithLayout = () => {
   const [loading, setLoading] = useState(false);
   //link
   const [linkInfo, setLinkInfo] = useState({
@@ -184,5 +185,6 @@ const Embed = () => {
   );
 };
 
-export default Embed;
 Embed.header = { title: "임베드 영상 업로드" };
+Embed.back = { color: "gray" };
+export default Embed;

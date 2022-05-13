@@ -66,10 +66,3 @@
   right : 35px;
 }
 
-.back{
-  top:0;
-  left:0;
-  position: absolute;
-  transform: translate(16px,20px);
-}
-

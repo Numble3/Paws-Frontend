@@ -1,12 +1,11 @@
 import LayoutContainer from "components/layout";
 import { DefaultSeo } from "next-seo";
-import { AppProps } from "next/app";
 import { useRef } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import wrapper from "store/store";
 import "styles/globals.css";
 import { AppPropsWithLayout } from "types/common";
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const DEFAULT_SEO = {
   title: "Paws🐾",
@@ -19,6 +18,7 @@ const DEFAULT_SEO = {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const layoutHeader = Component.header;
+  const hasBack = Component.back;
   const noNav = Component.noNav;
 
   const queryClientRef = useRef<QueryClient>();
@@ -34,6 +34,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           {...{
             layoutHeader,
             noNav,
+            hasBack,
           }}
         >
           <Component {...pageProps} />
@@ -49,7 +50,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             }
           `}
         </style>
-        <ReactQueryDevtools initialIsOpen={false} position={'top-right'} />
+        <ReactQueryDevtools initialIsOpen={false} position={"top-right"} />
       </QueryClientProvider>
     </>
   );

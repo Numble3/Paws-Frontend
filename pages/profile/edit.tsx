@@ -63,5 +63,6 @@ const ProfileEdit: NextPageWithLayout = () => {
 };
 
 ProfileEdit.header = { title: "마이 페이지" };
+ProfileEdit.back = { color: "gray" };
 
 export default ProfileEdit;

@@ -5,3 +5,4 @@ export { default as CustomSelectBox } from "./select-box";
 export { default as AlertModal } from "./alert-modal";
 
 export { default as VideoList } from "./video-list";
+export { default as Loading } from "./loading";

@@ -5,8 +5,9 @@ import VideoCategory from "components/upload/videoCategory";
 import { CustomInput } from "components/custom";
 import { useState } from "react";
 import CustomTextArea from "components/custom/textarea";
+import { NextPageWithLayout } from "types/common";
 
-const Direct = () => {
+const Direct: NextPageWithLayout = () => {
   //title
   const [titleError, setTitleError] = useState({
     isError: false,
@@ -83,5 +84,6 @@ const Direct = () => {
   );
 };
 
-export default Direct;
 Direct.header = { title: "직접 영상 업로드" };
+Direct.back = { color: "gray" };
+export default Direct;

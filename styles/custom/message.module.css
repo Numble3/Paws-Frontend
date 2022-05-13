@@ -28,7 +28,7 @@
   background-color: #70c97e;
   border-radius: 8px;
   box-shadow: 2px 2px 4px rgba(203, 203, 203, 0.25);
-  animation: slide-top 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-top-and-down 2.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
  
 }
 .icon {
@@ -39,21 +39,27 @@
   background-color: #f08970;
 }
 
-@keyframes slide-top {
+@keyframes slide-top-and-down {
   0% {
     transform: translateY(100px);
+    opacity: 0;
   }
   10%{
     transform: translateY(0);
+    opacity: 1;
   }
  
   70%{
     transform: translateY(0);
+    opacity: 1;
+
   } 
   80%{
+    opacity: 1;
     transform: translateY(-20px);
   }
   100% {
+    opacity: 0.3;
     transform: translateY(120px);
   }
 }

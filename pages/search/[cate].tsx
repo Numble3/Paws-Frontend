@@ -90,7 +90,7 @@ const Category: NextPageWithLayout = () => {
 
   const query: VideoParams = {
     category: cate as string,
-    page: 1,
+    page: 0,
     size: 10,
     sortCondition: selectedCategory,
   };

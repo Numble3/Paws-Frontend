@@ -93,8 +93,8 @@ const VideoList = ({
                     <div className={styles.profile} />
                     <span>{video.nickname}</span>
                     {/* To Do: 날짜 형식 바꾸기 */}
-                    <span>{video.createdAt}`</span>
-                    <span>조회수`${video.view}` 회</span>
+                    <span>{video.createdAt.split(" ")[0]}</span>
+                    <span>조회수 {video.view}회</span>
                   </div>
                 </article>
                 <article>

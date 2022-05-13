@@ -3,7 +3,6 @@ import { NextPageWithLayout } from "types/common";
 import style from "styles/interest/category.module.css";
 import Istyle from "styles/interest/interested.module.css";
 import { categories } from "lib/variables";
-import BackIcon from "components/icons/back";
 import InterestVideo from "components/custom/interset-video";
 
 const InterestedCategory: NextPageWithLayout = () => {
@@ -15,9 +14,6 @@ const InterestedCategory: NextPageWithLayout = () => {
   return (
     <div className={style.wrapper}>
       <header className={style.header}>
-        <div className={style.back}>
-          <BackIcon isGray={true} />
-        </div>
         <div className={style.title}>
           <h1>{label}</h1>
           <div className={Istyle.info}>

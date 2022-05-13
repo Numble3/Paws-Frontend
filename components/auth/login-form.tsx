@@ -1,10 +1,19 @@
 import { getUserInfoAPI, logInAPI } from 'apis/auth';
 import { AxiosError } from 'axios';
 import { CustomInput } from "components/custom";
+import CustomMessage from 'components/custom/message';
 import useInput from "hooks/use-input";
+import useMessage from 'hooks/use-message';
+import { ICONS } from 'lib/assets';
+import Image from 'next/image';
 import Link from "next/link";
-import React, { useCallback, useState } from "react";
+import { useRouter } from 'next/router';
+import React, { MouseEvent, useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { RootState } from 'reducers';
+import modalSlice from 'reducers/modal';
 import style from "styles/loginform.module.css";
 type User = {
   email: string;
@@ -16,6 +25,7 @@ const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [isLoading, setIsLoading] = useState(false);
+  
   const queryClient = useQueryClient();
   const mutation = useMutation<string, AxiosError,{ email: string; password: string } >('login', logInAPI, {
     onMutate: () => {
@@ -26,19 +36,44 @@ const LoginForm = () => {
     },
     onSuccess: (token) => {
       console.log("access token 들어오는지 확인 : ", token);
-      const {data} = useQuery<User>('user', getUserInfoAPI);
-      queryClient.setQueryData('user', data);
+      getUserInfoAPI()
+        .then((data)=>{
+          console.log(data);
+        })
+        .catch((error) => {
+          alert(error.response?.data);
+        })
     },
     onSettled: () => {
       setIsLoading(false);
     },
   });
 
-  const onSubmit = useCallback(() => {
-    console.log(email, password);
+  const onSubmit = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     mutation.mutate({ email, password });
   }, [email, password, mutation]);
-  
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const {getMessage ,error} = useMessage();
+
+  const testHandler = () =>{
+    dispatch(modalSlice.actions.isError({isError: false}));
+    dispatch(modalSlice.actions.open({}));
+    setTimeout(()=>{
+      dispatch(modalSlice.actions.close({}));
+    },3000);
+    router.replace("/profile/my-upload");
+  };
+
+  const errorHandelr = () =>{
+    dispatch(modalSlice.actions.isError({isError: true}));
+    dispatch(modalSlice.actions.open({}));
+    setTimeout(()=>{
+      dispatch(modalSlice.actions.close({}));
+    },3000);
+  }
 
   return (
     <>
@@ -60,18 +95,29 @@ const LoginForm = () => {
         </button>
       </form>
       <section className={style.Oauth}>
-        <div>SNS로 로그인 하기</div>
+        <div className={style.sns}>
+          <span>SNS로 로그인 하기</span>
+        </div>
         <div className={style.logo_container}>
-          <div className={style.logo}>logo</div>
-          <div className={style.logo}>logo</div>
-          <div className={style.logo}>logo</div>
+          <div className={style.logo}>
+            <Image src={ICONS.GOOGLE} width={22} height={22} />
+          </div>
+          <div className={style.logo}>
+            <Image src={ICONS.NAVER} width={28} height={28} />
+          </div>
+          <div className={style.logo}>
+            <Image src={ICONS.KAKAO} width={28} height={28} />
+          </div>
         </div>
       </section>
+      <button onClick={testHandler}>test</button>
+      <button onClick={errorHandelr}>error</button>
       <section className={style.signup_section}>
         <span>회원이 아니신가요? </span>
-        <Link href="/sign_up">
+        <Link href="/sign-up">
           <a className={style.signup}>회원가입</a>
         </Link>
+        {getMessage && <CustomMessage isError={error}/>}
       </section>
     </>
   );

@@ -9,8 +9,8 @@ type SelectType = {
 };
 const SelectBox = () => {
   const selectOption = [
-    { value: "latest", desc: "최신순" },
-    { value: "popular", desc: "인기순" },
+    { value: "LATEST", desc: "최신순" },
+    { value: "POPULARITY", desc: "인기순" },
   ];
   const [selectedValue, setSelectedValue] = useState(selectOption[0]);
   const [isSelected, setIsSelected] = useState(false);

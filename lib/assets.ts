@@ -31,6 +31,7 @@ export const IMAGES: ImagesType = {
   ETC: getImagePath("squirrel.png"),
   MESSAGE: getImagePath("message.png"),
   ICON_SM: getImagePath("icon-sm.png"),
+  ERROR: getImagePath("error.png"),
 };
 
 type ImagesType = {

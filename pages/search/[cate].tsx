@@ -8,8 +8,7 @@ import { NextPageWithLayout } from "types/common";
 import BackIcon from "components/icons/back";
 import InfiniteScroll from "components/custom/infinite-scroll";
 import { getVideos } from "apis/get-video";
-import { useQuery } from "react-query";
-import { Loading } from "components/custom";
+import { VideoParams } from "types/video";
 
 const Category: NextPageWithLayout = () => {
   const router = useRouter();
@@ -83,30 +82,14 @@ const Category: NextPageWithLayout = () => {
     )
       return true;
   }, [cate]);
-  type VideoParams = {
-    category?: string;
-    page: number;
-    size: number;
-    sortCondition?: string;
-    title?: string;
-  };
 
   const query: VideoParams = {
     category: cate as string,
     page: 1,
     size: 10,
+    sortCondition: selectedCategory,
   };
 
-  const { data, isLoading } = useQuery(
-    ["video", query],
-    () => getVideos(query),
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <>
       <header className={`${styles[`cate_${cate}`]} ${styles.header}`}>
@@ -131,7 +114,7 @@ const Category: NextPageWithLayout = () => {
       </div>
       <section className={styles.thumbnail_container}>
         <ul className={styles.thumbnail_row}>
-          <InfiniteScroll />
+          <InfiniteScroll query={query} fetchFunc={getVideos} />
         </ul>
       </section>
     </>

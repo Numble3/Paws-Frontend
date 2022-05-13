@@ -25,6 +25,7 @@ const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   
   const queryClient = useQueryClient();
   const mutation = useMutation<string, AxiosError,{ email: string; password: string } >('login', logInAPI, {
@@ -36,11 +37,13 @@ const LoginForm = () => {
     },
     onSuccess: (token) => {
       console.log("access token 들어오는지 확인 : ", token);
+      router.replace("/");
       getUserInfoAPI()
         .then((data)=>{
-          console.log(data);
+          queryClient.setQueryData('user', data);
         })
         .catch((error) => {
+          console.error(error);
           alert(error.response?.data);
         })
     },
@@ -54,7 +57,6 @@ const LoginForm = () => {
     mutation.mutate({ email, password });
   }, [email, password, mutation]);
 
-  const router = useRouter();
   const dispatch = useDispatch();
   const {getMessage ,error} = useMessage();
 

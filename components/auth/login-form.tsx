@@ -1,14 +1,18 @@
 import { getUserInfoAPI, logInAPI } from 'apis/auth';
 import { AxiosError } from 'axios';
 import { CustomInput } from "components/custom";
+import CustomMessage from 'components/custom/message';
 import useInput from "hooks/use-input";
+import useMessage from 'hooks/use-message';
 import { ICONS } from 'lib/assets';
 import Image from 'next/image';
 import Link from "next/link";
 import { useRouter } from 'next/router';
 import React, { MouseEvent, useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { RootState } from 'reducers';
 import modalSlice from 'reducers/modal';
 import style from "styles/loginform.module.css";
 type User = {
@@ -52,6 +56,7 @@ const LoginForm = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
+  const {getMessage ,error} = useMessage();
 
   const testHandler = () =>{
     dispatch(modalSlice.actions.isError({isError: false}));
@@ -61,6 +66,14 @@ const LoginForm = () => {
     },3000);
     router.replace("/profile/my-upload");
   };
+
+  const errorHandelr = () =>{
+    dispatch(modalSlice.actions.isError({isError: true}));
+    dispatch(modalSlice.actions.open({}));
+    setTimeout(()=>{
+      dispatch(modalSlice.actions.close({}));
+    },3000);
+  }
 
   return (
     <>
@@ -98,11 +111,13 @@ const LoginForm = () => {
         </div>
       </section>
       <button onClick={testHandler}>test</button>
+      <button onClick={errorHandelr}>error</button>
       <section className={style.signup_section}>
         <span>회원이 아니신가요? </span>
         <Link href="/sign-up">
           <a className={style.signup}>회원가입</a>
         </Link>
+        {getMessage && <CustomMessage isError={error}/>}
       </section>
     </>
   );

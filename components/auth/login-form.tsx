@@ -40,7 +40,7 @@ const LoginForm = () => {
       router.replace("/");
       getUserInfoAPI()
         .then((data)=>{
-          console.log("user정보 들어오는지 테스트 : ",data);
+          queryClient.setQueryData('user', data);
         })
         .catch((error) => {
           console.error(error);

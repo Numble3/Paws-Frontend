@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import style from "styles/profile.module.css";
 import { NextPageWithLayout } from "types/common";
 
@@ -16,11 +16,14 @@ const ProfilePage: NextPageWithLayout = () => {
   const userInfo = false;
   /* 벡엔드연동 시 user 정보를 받아옴 */
 
-  
+  const queryClient = useQueryClient();
+  const userquery = queryClient.getQueryData('user');
+  console.log("etstL", userquery);
+
 
   useEffect(() => {
     //user 정보가 없으면 로그인 페이지로 이동
-    if (!userInfo) {
+    if (!userquery) {
       Router.replace("/login");
     }
   }, []);

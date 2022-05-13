@@ -1,10 +1,14 @@
-import { useState, useRef } from "react";
+import { useState, useRef, Dispatch, SetStateAction } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
 import { CautionIcon } from "components/icons";
 
-const PreviewVideo = () => {
+interface VideoType {
+  setVideoFile: Dispatch<SetStateAction<File | null>>;
+  isError?: boolean;
+}
+const PreviewVideo = ({ setVideoFile, isError = false }: VideoType) => {
   const [videoSrc, setVideoSrc] = useState<string | null>("");
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -16,6 +20,7 @@ const PreviewVideo = () => {
     } else {
       setCanUpload(true);
     }
+    setVideoFile(fileBlob);
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
@@ -29,6 +34,9 @@ const PreviewVideo = () => {
   return (
     <div className={styles.thumbnail}>
       <p className={styles.title}>영상 업로드</p>
+      {isError && (
+        <span className={styles.error}>비디오를 업로드 해주세요.</span>
+      )}
       <div>
         <div className={styles.preview_row}>
           <div

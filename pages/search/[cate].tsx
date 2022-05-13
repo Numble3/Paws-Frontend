@@ -7,6 +7,10 @@ import SelectBox from "components/custom/select-box";
 import { NextPageWithLayout } from "types/common";
 import BackIcon from "components/icons/back";
 import InfiniteScroll from "components/custom/infinite-scroll";
+import { getVideos } from "apis/get-video";
+import { useQuery } from "react-query";
+import { AxiosError } from "axios";
+import { VideoType } from "types/video";
 const Category: NextPageWithLayout = () => {
   const router = useRouter();
   const { cate } = router.query;
@@ -79,7 +83,27 @@ const Category: NextPageWithLayout = () => {
     )
       return true;
   }, [cate]);
+  type VideoParams = {
+    category?: string;
+    page: number;
+    size: number;
+    sortCondition?: string;
+    title?: string;
+  };
 
+  const query: VideoParams = {
+    category: cate as string,
+    page: 1,
+    size: 10,
+  };
+
+  const {
+    data: { contents, hasNext },
+  } = useQuery(["video", query], () => getVideos(query), {
+    onError: (error) => {
+      console.log(error);
+    },
+  });
   return (
     <>
       <header className={`${styles[`cate_${cate}`]} ${styles.header}`}>

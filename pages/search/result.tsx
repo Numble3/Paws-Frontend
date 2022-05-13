@@ -8,6 +8,9 @@ import NoResult from "components/custom/no-result";
 import { VideoList } from "components/custom";
 import { NextPageWithLayout } from "types/common";
 import BackIcon from "components/icons/back";
+import { getVideos } from "apis/get-video";
+import InfiniteScroll from "components/custom/infinite-scroll";
+import { VideoParams } from "types/video";
 
 const noSearchResult = {
   title: "검색 결과 없음",
@@ -17,8 +20,13 @@ const noSearchResult = {
 const Result: NextPageWithLayout = () => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const router = useRouter();
-  const { query } = router.query;
-
+  const { query: search } = router.query;
+  const query: VideoParams = {
+    page: 1,
+    size: 10,
+    sortCondition: selectedCategory,
+    title: search as string,
+  };
   return (
     <>
       <section className={styles.header}>
@@ -30,26 +38,24 @@ const Result: NextPageWithLayout = () => {
             <Image src={ICONS.SEARCH} width={12} height={12} />
           </div>
           <input
-            value={query}
+            value={search}
             disabled
             className={`${styles.input} ${styles.input_focused}`}
           />
         </div>
       </section>
-      {true ? (
-        <>
-          <div className={styles.select_container}>
-            <SelectBox setSelectedCategory={setSelectedCategory} />
-          </div>
-          <section className={styles.thumbnail_container}>
-            <ul className={styles.thumbnail_row}>
-              <VideoList datas={[]} />
-            </ul>
-          </section>
-        </>
-      ) : (
-        <NoResult {...noSearchResult} />
-      )}
+      <div className={styles.select_container}>
+        <SelectBox setSelectedCategory={setSelectedCategory} />
+      </div>
+      <section className={styles.thumbnail_container}>
+        <ul className={styles.thumbnail_row}>
+          <InfiniteScroll
+            noResult={noSearchResult}
+            query={query}
+            fetchFunc={getVideos}
+          />
+        </ul>
+      </section>
     </>
   );
 };

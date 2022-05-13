@@ -3,9 +3,10 @@ import Link from "next/link";
 import styles from "styles/custom/video-list.module.css";
 import Image from "next/image";
 import { CSSProperties, MouseEvent } from "react";
+import { VideoListType } from "types/video";
 
 interface Props {
-  videoCnt?: number;
+  datas: VideoListType[];
   noDot?: boolean;
   noInfo?: boolean;
   onEdit?: (e: MouseEvent) => void;
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const VideoList = ({
-  videoCnt = 10,
+  datas,
   noDot = true,
   noInfo = false,
   onEdit,
@@ -21,12 +22,15 @@ const VideoList = ({
 }: Props) => {
   return (
     <section className={styles.videos} style={style}>
-      {Array.from(Array(videoCnt).keys()).map((v) => (
-        <Link key={v} href={`/video/${123}`}>
+      {datas.map((video) => (
+        <Link key={video.videoId} href={`/video/${video.videoId}`}>
           <div className={styles["video-container"]}>
-            {/* TODO: div -> fetch video thumbnail */}
             <div>
-              <Image src={`/images/temp.png`} layout="fill" objectFit="cover" />
+              <Image
+                src={`${video.thumbnailPath}`}
+                layout="fill"
+                objectFit="cover"
+              />
             </div>
             {!noDot && (
               <div onClick={onEdit} className={styles["dot-icon"]}>
@@ -36,20 +40,19 @@ const VideoList = ({
             {!noInfo && (
               <aside className={styles["video-desc"]}>
                 <article>
-                  <h4
-                    className={styles.title}
-                  >{`발로 꼬리 밟아서 화난 고양이 장수`}</h4>
+                  <h4 className={styles.title}>{video.title}</h4>
                   {/* profile Image */}
                   <div className={styles.info}>
                     <div className={styles.profile} />
-                    <span>{`다희네우당탕3묘`}</span>
-                    <span>{`4년 전`}</span>
-                    <span>조회수{`1348`}만 회</span>
+                    <span>{video.nickname}</span>
+                    {/* To Do: 날짜 형식 바꾸기 */}
+                    <span>{video.createdAt}`</span>
+                    <span>조회수`${video.view}` 회</span>
                   </div>
                 </article>
                 <article>
                   <HeartIcon isLike={true} />
-                  <span>38만</span>
+                  <span>{video.like}</span>
                 </article>
               </aside>
             )}

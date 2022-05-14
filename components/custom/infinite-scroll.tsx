@@ -22,19 +22,39 @@ function InfiniteScroll({
     title: "검색 결과 없음",
     content: "아직 등록된 동영상이 없어요",
   },
-  query = { page: 1, size: 10 },
+  query = { page: 0, size: 10 },
   fetchFunc,
 }: Props) {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   // const [datas, setDatas] = useState<VideoProps>({});
+  const fetchList = async ({ query, page }) => {
+    const newQuery = { ...query, page };
+    const response = await fetchFunc(newQuery);
+
+    return {
+      contents: response.contents,
+      query: { ...query, page: page + 1 },
+      hasNext: response.hasNext,
+      nextId: page + 1,
+    };
+  };
 
   const { isLoading, data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ["video", query],
-    () => fetchFunc(query),
+    ["video"],
+    async ({ pageParam = { query, page: 0 } }) => {
+      return await fetchList({ query: pageParam.query, page: pageParam.page });
+    },
     {
       getNextPageParam: (lastPage) => {
-        return lastPage.hasNext;
+        if (lastPage.hasNext) {
+          return {
+            query: query,
+            page: lastPage.nextId,
+          };
+        } else {
+          return undefined;
+        }
       },
       refetchOnMount: false,
       refetchOnWindowFocus: false,
@@ -62,13 +82,14 @@ function InfiniteScroll({
     [entry]: any,
     observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void }
   ) => {
-    if (entry.isIntersecting && !isLoaded) {
+    if (entry.isIntersecting) {
       observer.unobserve(entry.target);
       // getMoreItem();
-      if (hasNextPage) {
-        fetchNextPage();
-      }
+      console.log("intersect");
+      setIsLoaded(true);
+      fetchNextPage();
       observer.observe(entry.target);
+      setIsLoaded(false);
     }
   };
 
@@ -94,7 +115,7 @@ function InfiniteScroll({
               return <VideoList key={i} datas={videoList.contents} />;
             })}
           <div ref={setTarget} id="loading">
-            {isLoading && (
+            {isLoaded && (
               <div>
                 <Image src={ICONS.LOADING} width={25} height={25} />
               </div>

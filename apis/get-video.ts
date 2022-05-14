@@ -1,6 +1,5 @@
 import { VideoParams } from "./../types/video.d";
 import axios from "axios";
-import { variables } from "lib/variables";
 axios.defaults.baseURL = "http://3.36.157.185:80/api";
 
 export async function getVideos(params: VideoParams) {
@@ -8,7 +7,7 @@ export async function getVideos(params: VideoParams) {
 
   let videoQuery: VideoParams = {
     page,
-    size,
+    size: 2,
   };
   if (category && category !== "whole") {
     if (category === "etc") category = "OTHERS";

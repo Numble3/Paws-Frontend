@@ -17,11 +17,16 @@ client.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       const originalRequest = error.config;
       console.log(originalRequest);
+      const reresh = localStorage.getItem("refresh");
       const data = await axios
-        .get("/refresh-token")
+        .get("/refresh-token", {
+          headers:{
+            "Authorization" : reresh!,
+          }
+        })
         .then((response) => response.data);
       const { accessToken } = data;
-      originalRequest.headers.authorization = `Bearer ${accessToken}`;
+      originalRequest.headers.Authorization = `${accessToken}`;
       return client(originalRequest);
     }
   }

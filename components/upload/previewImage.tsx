@@ -1,10 +1,14 @@
-import { useState, useRef } from "react";
+import { useState, useRef, Dispatch, SetStateAction } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
 import { CautionIcon } from "components/icons";
 
-const PreviewImage = () => {
+interface ImageType {
+  setImageFile: Dispatch<SetStateAction<File | null>>;
+  isError?: boolean;
+}
+const PreviewImage = ({ setImageFile, isError = false }: ImageType) => {
   const [imageSrc, setImageSrc] = useState<string | null>();
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -12,10 +16,10 @@ const PreviewImage = () => {
     if (fileBlob.size > 10 * 1024 * 1024) {
       setImageSrc("");
       setCanUpload(false);
-      // return;
     } else {
       setCanUpload(true);
     }
+    setImageFile(fileBlob);
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {
@@ -28,7 +32,12 @@ const PreviewImage = () => {
 
   return (
     <div className={styles.thumbnail}>
-      <p className={styles.title}>썸네일 이미지</p>
+      <p className={styles.title}>
+        썸네일 이미지
+        {isError && (
+          <span className={styles.error}>이미지를 업로드 해주세요.</span>
+        )}
+      </p>
       <div>
         <div className={styles.preview_row}>
           <div

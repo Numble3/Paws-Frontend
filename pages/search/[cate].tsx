@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import { IMAGES } from "lib/assets";
 import styles from "styles/search/cate.module.css";
@@ -7,10 +7,18 @@ import SelectBox from "components/custom/select-box";
 import { NextPageWithLayout } from "types/common";
 import BackIcon from "components/icons/back";
 import InfiniteScroll from "components/custom/infinite-scroll";
+import { getVideos } from "apis/get-video";
+import { VideoParams } from "types/video";
+
+const noCateResult = {
+  title: "카테고리 영상 없음",
+  content: "아직 등록된 동영상이 없어요",
+};
+
 const Category: NextPageWithLayout = () => {
   const router = useRouter();
   const { cate } = router.query;
-
+  const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const imageCate = cate ? (cate as string) : "";
   const changeName = (cate: string) => {
     switch (cate) {
@@ -80,6 +88,13 @@ const Category: NextPageWithLayout = () => {
       return true;
   }, [cate]);
 
+  const query: VideoParams = {
+    category: cate as string,
+    page: 0,
+    size: 10,
+    sortCondition: selectedCategory,
+  };
+
   return (
     <>
       <header className={`${styles[`cate_${cate}`]} ${styles.header}`}>
@@ -100,11 +115,15 @@ const Category: NextPageWithLayout = () => {
         <span className={styles.cate_name}>{cateObj.name}</span>
       </header>
       <div className={styles.select_container}>
-        <SelectBox />
+        <SelectBox setSelectedCategory={setSelectedCategory} />
       </div>
       <section className={styles.thumbnail_container}>
         <ul className={styles.thumbnail_row}>
-          <InfiniteScroll />
+          <InfiniteScroll
+            noResult={noCateResult}
+            query={query}
+            fetchFunc={getVideos}
+          />
         </ul>
       </section>
     </>

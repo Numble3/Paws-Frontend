@@ -58,5 +58,10 @@
 .category .title span {
   font-size: 10px;
   padding-left: 4px;
+}
+.category .title span:not(.error) {
   color: #828385;
+}
+.error {
+  color: #f17971;
 }

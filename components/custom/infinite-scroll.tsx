@@ -1,40 +1,73 @@
 import VideoList from "components/custom/video-list";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { ICONS } from "lib/assets";
+import { VideoListType, VideoParams } from "types/video";
+import { useQuery, useInfiniteQuery } from "react-query";
+import NoResult from "components/custom/no-result";
 
-type VideoProps = {
-  [key: number]: number[]; // 추후 number[]을 video type[]으로 수정. + common.ts로 보내기
-};
+// type VideoProps = {
+//   [key: number]: VideoListType[];
+// };
 
 interface Props {
+  noResult: { title: string; content: string };
   videoCnt?: number;
+  query?: VideoParams;
+  fetchFunc: (params: VideoParams) => Promise<any>;
 }
 
-function InfiniteScroll({ videoCnt = 10 }: Props) {
+function InfiniteScroll({
+  noResult = {
+    title: "검색 결과 없음",
+    content: "아직 등록된 동영상이 없어요",
+  },
+  query = { page: 1, size: 10 },
+  fetchFunc,
+}: Props) {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState<VideoProps>({});
+  // const [datas, setDatas] = useState<VideoProps>({});
 
-  const getMoreItem = async () => {
-    setIsLoaded(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setData((prev) => {
-      const newData = { ...prev };
-      const key = Object.keys(prev).length;
-      const range = [...Array(videoCnt)].map((v, i) => key * 10 + i); // range를 데이터 배열로 바꾼다.
-      newData[key] = range;
-      return newData;
-    });
+  const { isLoading, data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    ["video", query],
+    () => fetchFunc(query),
+    {
+      getNextPageParam: (lastPage) => {
+        return lastPage.hasNext;
+      },
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+  // const getMoreItem = () => {
+  //   // infinite query 안되면 다시 쓰기...
+  //   setIsLoaded(true);
 
-    setIsLoaded(false);
-  };
+  //   if (hasNextPage) {
+  //     fetchNextPage();
+  //   }
 
-  const onIntersect = async (
+  //   setDatas((prev) => {
+  //     const newData = { ...prev };
+  //     const key = Object.keys(prev).length;
+  //     newData[key] = dummy; //dummy or data.contents
+  //     return newData;
+  //   });
+
+  //   setIsLoaded(false);
+  // };
+
+  const onIntersect = (
     [entry]: any,
     observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void }
   ) => {
     if (entry.isIntersecting && !isLoaded) {
       observer.unobserve(entry.target);
-      await getMoreItem();
+      // getMoreItem();
+      if (hasNextPage) {
+        fetchNextPage();
+      }
       observer.observe(entry.target);
     }
   };
@@ -49,16 +82,27 @@ function InfiniteScroll({ videoCnt = 10 }: Props) {
     }
     return () => observer && observer.disconnect();
   }, [target]);
+
   return (
-    <section style={{ display: "grid", gap: "20px" }}>
-      {Object.keys(data).map((key, i) => {
-        // 추후 data[i]를 video List에 전달
-        return <VideoList key={i} videoCnt={videoCnt} />;
-      })}
-      <div ref={setTarget} className="Loading">
-        {isLoaded && "Loading..."}
-      </div>
-    </section>
+    <>
+      {data?.pages[0].contents.length === 0 ? (
+        <NoResult {...noResult} />
+      ) : (
+        <section style={{ display: "grid", gap: "20px" }}>
+          {data?.pages &&
+            data?.pages.map((videoList, i) => {
+              return <VideoList key={i} datas={videoList.contents} />;
+            })}
+          <div ref={setTarget} id="loading">
+            {isLoading && (
+              <div>
+                <Image src={ICONS.LOADING} width={25} height={25} />
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+    </>
   );
 }
 

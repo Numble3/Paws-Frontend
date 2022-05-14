@@ -4,9 +4,14 @@ import styles from "styles/upload/videoCategory.module.css";
 interface Props {
   selectedCategory: string;
   setSelectedCategory: Dispatch<SetStateAction<string>>;
+  isError?: boolean;
 }
 
-const VideoCategory = ({ selectedCategory, setSelectedCategory }: Props) => {
+const VideoCategory = ({
+  selectedCategory,
+  setSelectedCategory,
+  isError = false,
+}: Props) => {
   const category = [
     { name: "강아지", val: "dog" },
     { name: "고양이", val: "cat" },
@@ -20,6 +25,9 @@ const VideoCategory = ({ selectedCategory, setSelectedCategory }: Props) => {
     <div className={styles.category}>
       <p className={styles.title}>
         카테고리 <span>중복 선택 불가</span>
+        {isError && (
+          <span className={styles.error}>카테고리를 입력해주세요.</span>
+        )}
       </p>
       <ul>
         {category.map((v, i) => (

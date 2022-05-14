@@ -19,6 +19,7 @@ export const ICONS = {
   WATCH: getIconPath("watch.svg"),
   TIME: getIconPath("time.svg"),
   MSG_SEND: getIconPath("msg-send.svg"),
+  LOADING: getIconPath("loading.svg"),
   GOOGLE: getIconPath("google.svg"),
   NAVER: getIconPath("naver.svg"),
   KAKAO: getIconPath("kakao.svg"),

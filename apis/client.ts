@@ -18,7 +18,6 @@ client.interceptors.response.use(
       const originalRequest = error.config;
       console.log(originalRequest);
       const reresh = localStorage.getItem("refresh");
-
       const data = await axios
         .get("/refresh-token", {
           headers:{
@@ -27,7 +26,7 @@ client.interceptors.response.use(
         })
         .then((response) => response.data);
       const { accessToken } = data;
-      originalRequest.headers.authorization = `${accessToken}`;
+      originalRequest.headers.Authorization = `${accessToken}`;
       return client(originalRequest);
     }
   }

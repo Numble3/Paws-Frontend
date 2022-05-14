@@ -27,7 +27,6 @@ function InfiniteScroll({
   const fetchList = async ({ query, page }) => {
     const newQuery = { ...query, page };
     const response = await fetchFunc(newQuery);
-    console.log("hasNext: ", response.hasNext);
     return {
       contents: response.contents,
       query: { ...query, page: page + 1 },
@@ -39,15 +38,13 @@ function InfiniteScroll({
   const { isLoading, data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
       ["video", query],
-      async ({ pageParam = { query, page: 0 } }) => {
-        return await fetchList({
+      ({ pageParam = { query, page: 0 } }) =>
+        fetchList({
           query: pageParam.query,
           page: pageParam.page,
-        });
-      },
+        }),
       {
         getNextPageParam: (lastPage) => {
-          console.log("lastPage: ", lastPage);
           if (lastPage.hasNext) {
             return {
               query: query,
@@ -66,11 +63,11 @@ function InfiniteScroll({
   ) => {
     if (entry.isIntersecting && !isFetchingNextPage) {
       observer.unobserve(entry.target);
-      console.log("intersect");
 
       fetchNextPage();
       //console.log(data);
       //console.log(hasNextPage);
+      observer.observe(entry.target);
     }
   };
 

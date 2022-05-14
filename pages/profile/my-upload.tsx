@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "reducers";
 import CustomMessage from "components/custom/message";
 import useMessage from "hooks/use-message";
+import { getUsaerDetailAPI, getUserVideosAPI } from 'apis/accounts';
+import { useQuery } from 'react-query';
 
 const MyUploadPage: NextPageWithLayout = () => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
@@ -21,12 +23,16 @@ const MyUploadPage: NextPageWithLayout = () => {
 
   const { getMessage, error } = useMessage();
 
+  const { data } = useQuery("videos", getUserVideosAPI);
+  
+  console.log("videos: ", data);
+
   return (
     <div className={style.wrapper}>
       <div className={style["select-container"]}>
         <SelectBox setSelectedCategory={setSelectedCategory} />
       </div>
-      <VideoList noDot={false} onEdit={onEditHandler} />
+      <VideoList  noDot={false} onEdit={onEditHandler} />
       {isOpen && <VideoEditBox onClose={onClose} />}
       {getMessage && <CustomMessage isError={error} />}
     </div>

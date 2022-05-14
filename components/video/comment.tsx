@@ -9,7 +9,7 @@ interface Props {
   nickname: string;
   createAt: string;
   like: string;
-  commentId?: number;
+  commentId?: string;
   content: string;
   category: string;
 }
@@ -32,11 +32,11 @@ const VideoComment = ({
     setActive(!active);
     //좋아요, 좋아요 취소 순서 헷갈림
     if (!active) {
-      await likeComment(pid as string, category).then((res) => {
+      await likeComment(pid as string, commentId as string).then((res) => {
         console.log(res);
       });
     } else {
-      await dislikeComment(pid as string).then((res) => {
+      await dislikeComment(pid as string, commentId as string).then((res) => {
         console.log(res);
       });
     }

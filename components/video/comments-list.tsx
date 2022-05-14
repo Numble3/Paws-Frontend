@@ -4,7 +4,7 @@ import { ICONS, IMAGES } from "lib/assets";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "styles/video.module.css";
-import { CommentParams } from "types/comment";
+import { CommentParams, CommentType } from "types/comment";
 import VideoComment from "./comment";
 import { useRouter } from "next/router";
 
@@ -12,15 +12,6 @@ interface Props {
   videoId: string;
   category: string;
 }
-
-type CommentType = {
-  profilePath?: string;
-  nickname: string;
-  createAt: string;
-  like: string;
-  commentId?: number;
-  content: string;
-};
 const VideoCommentsList = ({ videoId, category }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const [target, setTarget] = useState<HTMLDivElement | null>(null);

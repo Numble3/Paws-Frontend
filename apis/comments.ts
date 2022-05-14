@@ -37,24 +37,23 @@ export async function postComments(videoId: string, content: string) {
   }
 }
 
-export async function likeComment(videoId: string, category: string) {
+export async function likeComment(videoId: string, commentId: string) {
   try {
-    const response = await client.post(`/likes/add`, null, {
-      params: {
-        category,
-        id: videoId,
-      },
-    });
+    const response = await client.post(
+      `/videos/${videoId}/comments/${commentId}/likes`
+    );
     //console.log(response);
     return response.data;
   } catch (e) {
     console.log(e);
   }
 }
-export async function dislikeComment(videoId: string) {
+export async function dislikeComment(videoId: string, commentId: string) {
   try {
-    const response = await client.delete(`/likes/delete?id=${videoId}`);
-    console.log(response);
+    const response = await client.delete(
+      `/videos/${videoId}/comments/${commentId}/likes`
+    );
+    //console.log(response);
     return response;
   } catch (e) {
     console.log(e);

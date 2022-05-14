@@ -19,7 +19,7 @@ const VideoCategory = ({
     { name: "햄스터", val: "hamster" },
     { name: "새", val: "bird" },
     { name: "도마뱀", val: "lizard" },
-    { name: "기타", val: "etc" },
+    { name: "기타", val: "others" },
   ];
   return (
     <div className={styles.category}>
@@ -33,11 +33,9 @@ const VideoCategory = ({
         {category.map((v, i) => (
           <li
             className={`${styles.category__not_selected}
-              ${
-                selectedCategory === v.name ? styles[`category__${v.val}`] : ""
-              } 
+              ${selectedCategory === v.val ? styles[`category__${v.val}`] : ""} 
             `}
-            onClick={() => setSelectedCategory(v.name)}
+            onClick={() => setSelectedCategory(v.val)}
             key={i}
           >
             {v.name}

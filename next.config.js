@@ -2,10 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['dimg.donga.com', 'upload.wikimedia.org',
-      'w.namu.la', "img.insight.co.kr"
-    ]
+    domains: [
+      "dimg.donga.com",
+      "upload.wikimedia.org",
+      "w.namu.la",
+      "img.insight.co.kr",
+      "d2yok33re0ydfm.cloudfront.net",
+    ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

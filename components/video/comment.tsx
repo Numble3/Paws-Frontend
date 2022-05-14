@@ -2,7 +2,7 @@ import { LikeIcon } from "components/icons";
 import { useState } from "react";
 import styles from "styles/video.module.css";
 import { useRouter } from "next/router";
-import { likeComment } from "apis/comments";
+import { likeComment, dislikeComment } from "apis/comments";
 
 interface Props {
   profilePath?: string;
@@ -30,10 +30,16 @@ const VideoComment = ({
   const { pid } = router.query;
   const handleClick = async () => {
     setActive(!active);
-    //pid랑
-    await likeComment(pid as string, category).then((res) => {
-      console.log(res);
-    });
+    //좋아요, 좋아요 취소 순서 헷갈림
+    if (!active) {
+      await likeComment(pid as string, category).then((res) => {
+        console.log(res);
+      });
+    } else {
+      await dislikeComment(pid as string).then((res) => {
+        console.log(res);
+      });
+    }
   };
   return (
     <div className={styles.comment}>

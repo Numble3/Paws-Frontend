@@ -51,3 +51,12 @@ export async function likeComment(videoId: string, category: string) {
     console.log(e);
   }
 }
+export async function dislikeComment(videoId: string) {
+  try {
+    const response = await client.delete(`/likes/delete?id=${videoId}`);
+    console.log(response);
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+}

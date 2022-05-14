@@ -13,8 +13,8 @@ import NoResult from "components/custom/no-result";
 interface Props {
   noResult: { title: string; content: string };
   videoCnt?: number;
-  query?: VideoParams;
-  fetchFunc: (params: VideoParams) => Promise<any>;
+  query?: any;
+  fetchFunc: (params: any) => Promise<any>;
 }
 
 function InfiniteScroll({

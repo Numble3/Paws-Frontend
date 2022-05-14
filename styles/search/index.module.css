@@ -67,7 +67,6 @@
   grid-template-columns: 1fr 1fr;
   grid-gap: 12px;
   height: 100%;
-  padding-bottom: 56px;
 }
 
 .cate {

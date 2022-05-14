@@ -5,14 +5,14 @@ import { ICONS } from "lib/assets";
 import { CautionIcon } from "components/icons";
 
 interface ImageType {
-  setImageFile: Dispatch<SetStateAction<File | null>>;
+  setImageFile: Dispatch<SetStateAction<Blob | string>>;
   isError?: boolean;
 }
 const PreviewImage = ({ setImageFile, isError = false }: ImageType) => {
   const [imageSrc, setImageSrc] = useState<string | null>();
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
-  const encodeFileToBase64 = (fileBlob: File) => {
+  const encodeFileToBase64 = (fileBlob: Blob) => {
     if (fileBlob.size > 10 * 1024 * 1024) {
       setImageSrc("");
       setCanUpload(false);
@@ -20,6 +20,7 @@ const PreviewImage = ({ setImageFile, isError = false }: ImageType) => {
       setCanUpload(true);
     }
     setImageFile(fileBlob);
+    console.log(fileBlob);
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {

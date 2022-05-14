@@ -28,11 +28,12 @@ const Home: NextPageWithLayout = () => {
       <div className="layout-p">
         <h3 id="sub-title">일일 인기 동영상</h3>
         <div style={{ marginTop: "64px" }}>
-          {data.length !== 0 ? (
-            <VideoList datas={data} />
-          ) : (
-            <NoResult {...noPopularResult} />
-          )}{" "}
+          {data &&
+            (data.length !== 0 ? (
+              <VideoList datas={data} />
+            ) : (
+              <NoResult {...noPopularResult} />
+            ))}
         </div>
       </div>
     </>

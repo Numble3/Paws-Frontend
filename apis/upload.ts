@@ -1,6 +1,6 @@
-import client from "./client";
 import { VideoType } from "types/video";
 import axios from "axios";
+import client from "apis/client";
 
 export async function checkEmbedLink(link: string) {
   const URL = "https://www.youtube.com/oembed?url=";
@@ -14,11 +14,17 @@ export async function checkEmbedLink(link: string) {
   }
 }
 
-// accessToken 필요
-export async function imageResize(image: File) {
+export async function imageResize(image: FormData) {
   try {
-    const { data } = await client.post("/images/resize", image);
-    return data;
+    console.log("here");
+    const response = await client.post("/images/resize", image, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+
+    console.log(response.data.message);
+    return response.data;
   } catch (e) {
     console.log(e);
   }
@@ -26,16 +32,21 @@ export async function imageResize(image: File) {
 
 export async function videoTransform(video: File) {
   try {
-    const { data } = await client.post("/video/storage", video);
-    return data;
+    const response = await client.post("/video/storage", video, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    return response.data;
   } catch (e) {
     console.log(e);
   }
 }
-export async function createEmbedVideo(datas: VideoType) {
+
+export async function createEmbedVideo(params: VideoType) {
   try {
-    const { data } = await client.post("/videos", datas);
-    return data;
+    const response = await client.post("/videos", params);
+    return response.data;
   } catch (e) {
     console.log(e);
   }

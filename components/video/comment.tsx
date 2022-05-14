@@ -3,21 +3,21 @@ import styles from "styles/video.module.css";
 
 interface Props {
   // profile: string;
-  name: string;
-  timeline: string;
-  totalLike: string;
-  comment: string;
+  nickname: string;
+  createAt: string;
+  like: string;
+  content: string;
   // isLike: boolean;
 }
 
 /** 동영상 댓글 */
 const VideoComment = ({
-  // profile,
-  comment,
-  // isLike,
-  name,
-  timeline,
-  totalLike,
+  profilePath,
+  content,
+  like,
+  createAt,
+  commentId,
+  nickname,
 }: Props) => {
   //TODO: 각 댓글마다 좋아요 관리하기
   return (
@@ -27,11 +27,11 @@ const VideoComment = ({
       </section>
       <section>
         <div className={styles["comment-info"]}>
-          <span>{name}</span>
-          <span>{timeline}</span>
-          <span>{totalLike}</span>
+          <span>{nickname}</span>
+          <span>{createAt}</span>
+          <span>{like}</span>
         </div>
-        <p className={styles["comment-text"]}>{comment}</p>
+        <p className={styles["comment-text"]}>{content}</p>
       </section>
       <aside className={styles["comment-like"]}>
         <LikeIcon isActive={false} svgProps={{ width: 12, height: 12 }} />

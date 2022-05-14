@@ -18,7 +18,7 @@ export async function getComments(params: CommentParams) {
     const response = await axios.get(`/videos/${videoId}/comments`, {
       params: commentQuery,
     });
-    // console.log("결과: ", response);
+    //console.log("결과: ", response);
 
     return response.data;
   } catch (e) {

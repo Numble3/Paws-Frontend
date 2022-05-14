@@ -1,9 +1,9 @@
 import { getComments } from "apis/comments";
 import { CustomSelectBox } from "components/custom";
-import { IMAGES } from "lib/assets";
+import { ICONS, IMAGES } from "lib/assets";
 import Image from "next/image";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import styles from "styles/video.module.css";
 import { CommentParams } from "types/comment";
 import VideoComment from "./comment";
@@ -57,11 +57,21 @@ const VideoCommentsList = (props: Props) => {
     page: 0,
     size: 10,
   };
-  const { data } = useQuery(["video", query], () => getComments(query), {
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  console.log(props.videoId);
+  const { isLoading, data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(["comment", query], () => getComments(query), {
+      getNextPageParam: (lastPage) => {
+        console.log(lastPage);
+        if (lastPage.hasNext) {
+          return {
+            page: lastPage.contents.length,
+          };
+        } else {
+          return undefined;
+        }
+      },
+      refetchOnWindowFocus: false,
+    });
 
   return (
     <section className={styles["comments-list"]}>
@@ -72,10 +82,28 @@ const VideoCommentsList = (props: Props) => {
       <article className={styles["comments-filter"]}>
         <CustomSelectBox setSelectedCategory={setSelectedCategory} />
       </article>
-      {dummy2.length !== 0 ? (
-        dummy2.map(({ comment, id, name, timeline, totalLike }) => (
-          <VideoComment key={id} {...{ comment, name, timeline, totalLike }} />
-        ))
+      {isFetchingNextPage ? (
+        <div>
+          <Image src={ICONS.LOADING} width={25} height={25} />
+        </div>
+      ) : data?.pages[0].length !== 0 ? (
+        data?.pages.map((comments) =>
+          comments.contents.map(
+            ({ profilePath, content, like, createAt, commentId, nickname }) => (
+              <VideoComment
+                key={commentId}
+                {...{
+                  profilePath,
+                  content,
+                  like,
+                  createAt,
+                  commentId,
+                  nickname,
+                }}
+              />
+            )
+          )
+        )
       ) : (
         <article className={styles.empty}>
           <Image src={IMAGES.MESSAGE} width={20} height={20} />

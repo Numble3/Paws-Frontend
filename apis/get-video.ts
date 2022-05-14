@@ -7,7 +7,7 @@ export async function getVideos(params: VideoParams) {
 
   let videoQuery: VideoParams = {
     page,
-    size: 2,
+    size: 1,
   };
   if (category && category !== "whole") {
     if (category === "etc") category = "OTHERS";

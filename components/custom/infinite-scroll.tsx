@@ -6,10 +6,6 @@ import { VideoListType, VideoParams } from "types/video";
 import { useQuery, useInfiniteQuery } from "react-query";
 import NoResult from "components/custom/no-result";
 
-// type VideoProps = {
-//   [key: number]: VideoListType[];
-// };
-
 interface Props {
   noResult: { title: string; content: string };
   videoCnt?: number;
@@ -27,11 +23,11 @@ function InfiniteScroll({
 }: Props) {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  // const [datas, setDatas] = useState<VideoProps>({});
+
   const fetchList = async ({ query, page }) => {
     const newQuery = { ...query, page };
     const response = await fetchFunc(newQuery);
-
+    console.log("hasNext: ", response.hasNext);
     return {
       contents: response.contents,
       query: { ...query, page: page + 1 },
@@ -40,56 +36,41 @@ function InfiniteScroll({
     };
   };
 
-  const { isLoading, data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ["video"],
-    async ({ pageParam = { query, page: 0 } }) => {
-      return await fetchList({ query: pageParam.query, page: pageParam.page });
-    },
-    {
-      getNextPageParam: (lastPage) => {
-        if (lastPage.hasNext) {
-          return {
-            query: query,
-            page: lastPage.nextId,
-          };
-        } else {
-          return undefined;
-        }
+  const { isLoading, data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      ["video", query],
+      async ({ pageParam = { query, page: 0 } }) => {
+        return await fetchList({
+          query: pageParam.query,
+          page: pageParam.page,
+        });
       },
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-  // const getMoreItem = () => {
-  //   // infinite query 안되면 다시 쓰기...
-  //   setIsLoaded(true);
-
-  //   if (hasNextPage) {
-  //     fetchNextPage();
-  //   }
-
-  //   setDatas((prev) => {
-  //     const newData = { ...prev };
-  //     const key = Object.keys(prev).length;
-  //     newData[key] = dummy; //dummy or data.contents
-  //     return newData;
-  //   });
-
-  //   setIsLoaded(false);
-  // };
+      {
+        getNextPageParam: (lastPage) => {
+          console.log("lastPage: ", lastPage);
+          if (lastPage.hasNext) {
+            return {
+              query: query,
+              page: lastPage.nextId,
+            };
+          } else {
+            return undefined;
+          }
+        },
+      }
+    );
 
   const onIntersect = (
     [entry]: any,
     observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void }
   ) => {
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && !isFetchingNextPage) {
       observer.unobserve(entry.target);
-      // getMoreItem();
       console.log("intersect");
-      setIsLoaded(true);
+
       fetchNextPage();
-      observer.observe(entry.target);
-      setIsLoaded(false);
+      //console.log(data);
+      //console.log(hasNextPage);
     }
   };
 
@@ -115,7 +96,7 @@ function InfiniteScroll({
               return <VideoList key={i} datas={videoList.contents} />;
             })}
           <div ref={setTarget} id="loading">
-            {isLoaded && (
+            {isFetchingNextPage && (
               <div>
                 <Image src={ICONS.LOADING} width={25} height={25} />
               </div>

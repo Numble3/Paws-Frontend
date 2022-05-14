@@ -3,30 +3,44 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 import styles from "styles/video.module.css";
 import VideoInfoButton from "./info-button";
-
+import { addLikeVideo, deleteLikeVideo } from "apis/interest";
 interface Props {
+  category: string;
   nickname: string;
   like: number;
   view: number;
   title: string;
   content: string;
   createdAt: string;
+  videoId: string;
 }
 
 const VideoDescription = ({
+  category,
   nickname,
   title,
   view,
   createdAt,
   content,
   like,
+  videoId,
 }: Props) => {
   const [showDetail, setShowDetail] = useState(false);
   const [heartActive, setHeartActive] = useState(false);
 
-  const onToggleHeart = useCallback(() => {
+  const onToggleHeart = useCallback(async () => {
     //TODO: 동영상 좋아요 api 연동
     setHeartActive((p) => !p);
+
+    if (!heartActive) {
+      await addLikeVideo(videoId, category).then((res) => {
+        console.log(res);
+      });
+    } else {
+      await deleteLikeVideo(videoId).then((res) => {
+        console.log(res);
+      });
+    }
   }, []);
 
   return (

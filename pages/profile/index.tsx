@@ -43,6 +43,7 @@ const ProfilePage: NextPageWithLayout = () => {
     e.stopPropagation();
     setIsOpen(true);
   }, []);
+  
   return (
     <div className={style.wrapper}>
       <section className={style["profile-section"]}>

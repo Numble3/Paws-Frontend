@@ -26,7 +26,7 @@ const VideoCommentsList = ({ videoId }: Props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState([]);
   const router = useRouter();
-  const { id } = router.query;
+  const { pid: id } = router.query;
   let temp;
   if (videoId) temp = videoId;
   else {

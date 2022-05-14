@@ -24,7 +24,6 @@ export async function getComments(params: CommentParams) {
 }
 
 export async function postComments(videoId: string, content: string) {
-  console.log(videoId, content);
   try {
     const response = await client.post(`/videos/${videoId}/comments`, content, {
       headers: {
@@ -32,6 +31,21 @@ export async function postComments(videoId: string, content: string) {
       },
     });
     console.log(response);
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function likeComment(videoId: string, category: string) {
+  try {
+    const response = await client.post(`/likes/add`, null, {
+      params: {
+        category,
+        id: videoId,
+      },
+    });
+    //console.log(response);
     return response.data;
   } catch (e) {
     console.log(e);

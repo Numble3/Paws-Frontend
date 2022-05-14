@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 
 interface Props {
   videoId: string;
+  category: string;
 }
 
 type CommentType = {
@@ -20,7 +21,7 @@ type CommentType = {
   commentId?: number;
   content: string;
 };
-const VideoCommentsList = ({ videoId }: Props) => {
+const VideoCommentsList = ({ videoId, category }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -94,7 +95,7 @@ const VideoCommentsList = ({ videoId }: Props) => {
       ) : (
         <>
           {data.map((value: CommentType, index) => (
-            <VideoComment key={index} {...value} />
+            <VideoComment category={category} key={index} {...value} />
           ))}
         </>
       )}

@@ -2,7 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['dimg.donga.com', 'localhost']
+    domains: ['dimg.donga.com', 'upload.wikimedia.org',
+      'w.namu.la', "img.insight.co.kr"
+    ]
   },
 }
 

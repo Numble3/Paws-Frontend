@@ -22,7 +22,7 @@ const Result: NextPageWithLayout = () => {
   const router = useRouter();
   const { query: search } = router.query;
   const query: VideoParams = {
-    page: 1,
+    page: 0,
     size: 10,
     sortCondition: selectedCategory,
     title: search as string,

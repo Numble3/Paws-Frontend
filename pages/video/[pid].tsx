@@ -27,7 +27,7 @@ const VideoPage: NextPageWithLayout = () => {
         <>
           <div className={styles.container}>
             {data.type === "EMBEDDED" ? (
-              <EmbedPlayer height={"211"} videoSrc={data.videoUrl} />
+              <EmbedPlayer videoSrc={data.videoUrl} />
             ) : (
               <div style={{ height: "211px", background: "green" }}></div>
             )}

@@ -1,11 +1,12 @@
 import LayoutContainer from "components/layout";
 import { DefaultSeo } from "next-seo";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import wrapper from "store/store";
 import "styles/globals.css";
 import { AppPropsWithLayout } from "types/common";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { useRouter } from "next/router";
 
 const DEFAULT_SEO = {
   title: "Paws🐾",
@@ -17,6 +18,7 @@ const DEFAULT_SEO = {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const router = useRouter();
   const layoutHeader = Component.header;
   const hasBack = Component.back;
   const noNav = Component.noNav;
@@ -25,6 +27,17 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   if (!queryClientRef.current) {
     queryClientRef.current = new QueryClient();
   }
+  // MOBILE
+  useEffect(() => {
+    const UserAgent = navigator.userAgent;
+    const isMobile =
+      UserAgent.match(
+        /iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i
+      ) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null;
+
+    //TODO: mobile error page
+    if (!isMobile && router.asPath !== "/404") router.replace("/404");
+  }, []);
 
   return (
     <>

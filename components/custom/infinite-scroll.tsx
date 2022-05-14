@@ -1,9 +1,8 @@
-import VideoList from "components/custom/video-list";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
-import { useInfiniteQuery } from "react-query";
-import NoResult from "components/custom/no-result";
+import Video from "./video";
+import { VideoListType } from "types/video";
 
 interface Props {
   noResult: { title: string; content: string };
@@ -21,52 +20,36 @@ function InfiniteScroll({
   fetchFunc,
 }: Props) {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
-
-  const fetchList = async ({ query, page }) => {
-    const newQuery = { ...query, page };
-    const response = await fetchFunc(newQuery);
-    return {
-      contents: response.contents,
-      query: { ...query, page: page + 1 },
-      hasNext: response.hasNext,
-      nextId: page + 1,
-    };
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [data, setData] = useState<any>([]);
+  let page = query.page;
+  let hasNext = true;
+  const getMoreItem = async () => {
+    setIsLoaded(true);
+    await fetchFunc({ ...query, page: page }).then((res) => {
+      hasNext = res.hasNext;
+      setData((prev: VideoListType[]) => {
+        const newData = prev.concat(res.contents);
+        return newData;
+      });
+    });
+    page++;
+    setIsLoaded(false);
   };
 
-  const { isLoading, data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      ["video", query],
-      ({ pageParam = { query, page: 0 } }) =>
-        fetchList({
-          query: pageParam.query,
-          page: pageParam.page,
-        }),
-      {
-        getNextPageParam: (lastPage) => {
-          if (lastPage.hasNext) {
-            return {
-              query: query,
-              page: lastPage.nextId,
-            };
-          } else {
-            return undefined;
-          }
-        },
-        refetchOnWindowFocus: false,
-      }
-    );
-
-  const onIntersect = (
+  const onIntersect = async (
     [entry]: any,
     observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void }
   ) => {
-    if (entry.isIntersecting && !isFetchingNextPage) {
+    if (entry.isIntersecting && !isLoaded) {
       observer.unobserve(entry.target);
-      fetchNextPage();
+      await getMoreItem();
+      if (!hasNext) {
+        return;
+      }
       observer.observe(entry.target);
     }
   };
-
   useEffect(() => {
     let observer: IntersectionObserver;
     if (target) {
@@ -77,26 +60,20 @@ function InfiniteScroll({
     }
     return () => observer && observer.disconnect();
   }, [target]);
-
   return (
     <>
-      {data?.pages[0].contents.length === 0 ? (
-        <NoResult {...noResult} />
-      ) : (
-        <section style={{ display: "grid", gap: "20px" }}>
-          {data?.pages &&
-            data?.pages.map((videoList, i) => {
-              return <VideoList key={i} datas={videoList.contents} />;
-            })}
-          <div ref={setTarget} id="loading">
-            {isFetchingNextPage && (
-              <div>
-                <Image src={ICONS.LOADING} width={25} height={25} />
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+      <section style={{ display: "grid", gap: "20px" }}>
+        {data.map((value: VideoListType, index: any) => {
+          return <Video key={index} data={value} />;
+        })}
+        <div ref={setTarget} id="loading">
+          {isLoaded && (
+            <div>
+              <Image src={ICONS.LOADING} width={25} height={25} />
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }

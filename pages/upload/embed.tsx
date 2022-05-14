@@ -141,7 +141,7 @@ const Embed: NextPageWithLayout = () => {
     console.log("data: ", data);
     await createEmbedVideo(data).then((res) => {
       console.log(res);
-      router.replace("/");
+      router.replace("/profile/my-upload");
     });
     setLoading(false);
   };

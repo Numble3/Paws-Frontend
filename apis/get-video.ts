@@ -54,3 +54,13 @@ export async function todayRanking({
     console.log(e);
   }
 }
+
+export async function getVideoDetail(videoId: string) {
+  try {
+    const response = await axios.get(`/videos/${videoId}`);
+
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
+}

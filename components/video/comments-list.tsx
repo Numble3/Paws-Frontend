@@ -43,8 +43,6 @@ const dummy = [
   },
 ];
 
-const dummy2: typeof dummy = [];
-
 interface Props {
   videoId: number;
 }

@@ -4,9 +4,23 @@ import { useCallback, useState } from "react";
 import styles from "styles/video.module.css";
 import VideoInfoButton from "./info-button";
 
-interface Props {}
+interface Props {
+  nickname: string;
+  like: number;
+  view: number;
+  title: string;
+  content: string;
+  createdAt: string;
+}
 
-const VideoDescription = (props: Props) => {
+const VideoDescription = ({
+  nickname,
+  title,
+  view,
+  createdAt,
+  content,
+  like,
+}: Props) => {
   const [showDetail, setShowDetail] = useState(false);
   const [heartActive, setHeartActive] = useState(false);
 
@@ -19,24 +33,27 @@ const VideoDescription = (props: Props) => {
     <section>
       <article className={styles.header}>
         <div className={styles.profile} />
-        <h4>{`다희네우당탕3묘`}</h4>
+        <h4>{nickname}</h4>
       </article>
 
       <article className={styles.info}>
         <div className={styles["info-detail"]}>
-          <h2>{`[우당탕 3묘] 발로 꼬리 밟아서 화난 고양이 장수`}</h2>
+          <h2>{title}</h2>
           <aside
             className={`${styles["detail-info"]} ${
               showDetail ? styles["show-detail"] : ""
             }`}
           >
-            {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ipsam nobis incidunt veniam a asperiores, suscipit esse ipsum? Ratione necessitatibus dolore ipsa nobis, reiciendis numquam iure et voluptas ut esse?`}
+            {content}
           </aside>
           <div>
-            <VideoInfoButton iconPath={ICONS.WATCH} text={`1348만 회`} />
-            <VideoInfoButton iconPath={ICONS.TIME} text={`4년 전`} />
+            <VideoInfoButton iconPath={ICONS.WATCH} text={view.toString()} />
             <VideoInfoButton
-              text={`38만`}
+              iconPath={ICONS.TIME}
+              text={createdAt.split(" ")[0]}
+            />
+            <VideoInfoButton
+              text={like.toString()}
               isHeartActive={heartActive}
               onClickHeart={onToggleHeart}
             />

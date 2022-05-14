@@ -63,8 +63,6 @@ function InfiniteScroll({
     if (entry.isIntersecting && !isFetchingNextPage) {
       observer.unobserve(entry.target);
       fetchNextPage();
-      console.log("here");
-
       observer.observe(entry.target);
     }
   };

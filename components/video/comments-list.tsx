@@ -1,8 +1,11 @@
+import { getComments } from "apis/comments";
 import { CustomSelectBox } from "components/custom";
 import { IMAGES } from "lib/assets";
 import Image from "next/image";
 import { useState } from "react";
+import { useQuery } from "react-query";
 import styles from "styles/video.module.css";
+import { CommentParams } from "types/comment";
 import VideoComment from "./comment";
 
 const dummy = [
@@ -42,10 +45,23 @@ const dummy = [
 
 const dummy2: typeof dummy = [];
 
-interface Props {}
+interface Props {
+  videoId: number;
+}
 
 const VideoCommentsList = (props: Props) => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
+  const query: CommentParams = {
+    sort: selectedCategory,
+    videoId: props.videoId,
+    page: 0,
+    size: 10,
+  };
+  const { data } = useQuery(["video", query], () => getComments(query), {
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   return (
     <section className={styles["comments-list"]}>

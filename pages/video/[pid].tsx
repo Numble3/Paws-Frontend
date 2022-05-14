@@ -34,7 +34,7 @@ const VideoPage: NextPageWithLayout = () => {
             <VideoDescription {...data} />
             <VideoCommentsList videoId={parseInt(pid as string)} />
           </div>
-          <VideoMyComment />
+          <VideoMyComment videoId={pid as string} />
         </>
       ) : (
         <Loading />

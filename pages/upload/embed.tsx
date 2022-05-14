@@ -11,21 +11,11 @@ import {
 } from "apis/upload";
 import CustomTextArea from "components/custom/textarea";
 import { NextPageWithLayout } from "types/common";
+import { useRouter } from "next/router";
 
 const Embed: NextPageWithLayout = () => {
-  console.log(
-    //test
-    createEmbedVideo({
-      category: "",
-      content: "",
-      embeddedUrl: "",
-      thumbnailUrl: "",
-      title: "",
-      type: "EMBEDDED",
-      videoDuration: 0,
-      videoUrl: "",
-    })
-  );
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   //link
   const [linkInfo, setLinkInfo] = useState({
@@ -40,7 +30,8 @@ const Embed: NextPageWithLayout = () => {
     title: "",
   });
   //image
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<Blob | string>("");
+  const [imageSrc, setImageSrc] = useState("");
   const [imageError, setImageError] = useState(false);
   //category
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -90,62 +81,74 @@ const Embed: NextPageWithLayout = () => {
   };
 
   const postEmbed = async () => {
+    console.log("file", imageFile);
     //입력 체크
-    if (loading) return;
-    if (linkInfo.link === "") {
-      setLinkInfo((prev) => {
-        return {
-          ...prev,
-          linkError: { message: "링크 주소를 입력해주세요.", isError: true },
-        };
-      });
-    }
-    if (titleInfo.title === "") {
-      setTitleInfo((prev) => {
-        return {
-          ...prev,
-          titleError: { ...prev.titleError, isError: true },
-        };
-      });
-    }
-    if (imageFile === null) {
-      setImageError(true);
-    }
-    if (descriptionInfo.description === "") {
-      setDescriptionInfo((prev) => {
-        return {
-          ...prev,
-          descriptionError: { ...prev.descriptionError, isError: true },
-        };
-      });
-    }
-    if (selectedCategory === "") {
-      setCategoryError(true);
-    }
+    // if (loading) return;
+    // if (linkInfo.link === "") {
+    //   setLinkInfo((prev) => {
+    //     return {
+    //       ...prev,
+    //       linkError: { message: "링크 주소를 입력해주세요.", isError: true },
+    //     };
+    //   });
+    // }
+    // if (titleInfo.title === "") {
+    //   setTitleInfo((prev) => {
+    //     return {
+    //       ...prev,
+    //       titleError: { ...prev.titleError, isError: true },
+    //     };
+    //   });
+    // }
+    // if (imageFile === null) {
+    //   setImageError(true);
+    // }
+    // if (descriptionInfo.description === "") {
+    //   setDescriptionInfo((prev) => {
+    //     return {
+    //       ...prev,
+    //       descriptionError: { ...prev.descriptionError, isError: true },
+    //     };
+    //   });
+    // }
+    // if (selectedCategory === "") {
+    //   setCategoryError(true);
+    // }
 
-    if (
-      linkInfo.link === "" ||
-      titleInfo.title === "" ||
-      imageFile === null ||
-      descriptionInfo.description === "" ||
-      selectedCategory === ""
-    )
-      return;
-    //1. 이미지 폼 데이터 넣어서 image size 변환 => image src get
-    // const ImageSrc = imageResize() ...
-    //2. 변환된 image src를 data에 넣음
+    // if (
+    //   linkInfo.link === "" ||
+    //   titleInfo.title === "" ||
+    //   imageFile === null ||
+    //   descriptionInfo.description === "" ||
+    //   selectedCategory === ""
+    // )
+    //   return;
+    console.log("file", imageFile);
+
+    const image = new FormData();
+    image.append("file", imageFile);
+    image.append("height", "180");
+    image.append("width", "320");
+    image.append("type", "thumbnail");
+    await imageResize(image).then((response) => {
+      console.log(response);
+      setImageSrc(response.url);
+    });
     const data = {
       category: selectedCategory,
       content: descriptionInfo.description,
-      embeddedUrl: linkInfo.link,
-      thumbnailUrl: imageFile,
+      thumbnailUrl: imageSrc,
       title: titleInfo.title,
       type: "EMBEDDED",
       videoDuration: 0,
-      videoUrl: "",
+      videoUrl: linkInfo.link,
     };
-    console.log(data);
-    // 3. createEmbedVideo(data)
+    //console.log("data: ", data);
+    //return;
+    // await createEmbedVideo(data).then((res) => {
+    //   console.log(res);
+    //   router.replace("/");
+    // });
   };
 
   return (

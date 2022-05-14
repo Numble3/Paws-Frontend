@@ -22,7 +22,6 @@ const Home: NextPageWithLayout = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(data);
   return (
     <>
       <HomeCategory setCategory={setCategory} />

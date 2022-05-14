@@ -2,12 +2,12 @@ import { LikeIcon } from "components/icons";
 import styles from "styles/video.module.css";
 
 interface Props {
-  // profile: string;
+  profilePath?: string;
   nickname: string;
   createAt: string;
   like: string;
+  commentId?: number;
   content: string;
-  // isLike: boolean;
 }
 
 /** 동영상 댓글 */

@@ -2,7 +2,7 @@ import { getComments } from "apis/comments";
 import { CustomSelectBox } from "components/custom";
 import { ICONS, IMAGES } from "lib/assets";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
 import styles from "styles/video.module.css";
 import { CommentParams } from "types/comment";
@@ -50,6 +50,8 @@ interface Props {
 }
 
 const VideoCommentsList = (props: Props) => {
+  const [target, setTarget] = useState<HTMLDivElement | null>(null);
+
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const query: CommentParams = {
     sort: selectedCategory,
@@ -57,21 +59,61 @@ const VideoCommentsList = (props: Props) => {
     page: 0,
     size: 10,
   };
-  console.log(props.videoId);
+  const fetchList = async ({ query, page }) => {
+    const newQuery = { ...query, page };
+    const response = await getComments(newQuery);
+    return {
+      contents: response.contents,
+      query: { ...query, page: page + 1 },
+      hasNext: response.hasNext,
+      nextId: page + 1,
+    };
+  };
+
   const { isLoading, data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(["comment", query], () => getComments(query), {
-      getNextPageParam: (lastPage) => {
-        console.log(lastPage);
-        if (lastPage.hasNext) {
-          return {
-            page: lastPage.contents.length,
-          };
-        } else {
-          return undefined;
-        }
-      },
-      refetchOnWindowFocus: false,
-    });
+    useInfiniteQuery(
+      ["video", query],
+      ({ pageParam = { query, page: 0 } }) =>
+        fetchList({
+          query: pageParam.query,
+          page: pageParam.page,
+        }),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage.hasNext) {
+            return {
+              query: query,
+              page: lastPage.nextId,
+            };
+          } else {
+            return undefined;
+          }
+        },
+        refetchOnWindowFocus: false,
+      }
+    );
+
+  const onIntersect = (
+    [entry]: any,
+    observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void }
+  ) => {
+    if (entry.isIntersecting && !isFetchingNextPage) {
+      observer.unobserve(entry.target);
+      fetchNextPage();
+      observer.observe(entry.target);
+    }
+  };
+
+  useEffect(() => {
+    let observer: IntersectionObserver;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
 
   return (
     <section className={styles["comments-list"]}>
@@ -82,33 +124,52 @@ const VideoCommentsList = (props: Props) => {
       <article className={styles["comments-filter"]}>
         <CustomSelectBox setSelectedCategory={setSelectedCategory} />
       </article>
-      {isFetchingNextPage ? (
-        <div>
-          <Image src={ICONS.LOADING} width={25} height={25} />
-        </div>
-      ) : data?.pages[0].length !== 0 ? (
-        data?.pages.map((comments) =>
-          comments.contents.map(
-            ({ profilePath, content, like, createAt, commentId, nickname }) => (
-              <VideoComment
-                key={commentId}
-                {...{
-                  profilePath,
-                  content,
-                  like,
-                  createAt,
-                  commentId,
-                  nickname,
-                }}
-              />
-            )
-          )
-        )
-      ) : (
+      {data?.pages[0].contents.length === 0 ? (
         <article className={styles.empty}>
           <Image src={IMAGES.MESSAGE} width={20} height={20} />
           <p>첫 번째 댓글을 남겨주세요!</p>
         </article>
+      ) : (
+        <>
+          {data?.pages.map((comments) =>
+            comments.contents.map(
+              ({
+                profilePath,
+                content,
+                like,
+                createAt,
+                commentId,
+                nickname,
+              }: {
+                profilePath?: string;
+                nickname: string;
+                createAt: string;
+                like: string;
+                commentId?: number;
+                content: string;
+              }) => (
+                <VideoComment
+                  key={commentId}
+                  {...{
+                    profilePath,
+                    content,
+                    like,
+                    createAt,
+                    commentId,
+                    nickname,
+                  }}
+                />
+              )
+            )
+          )}
+          <div ref={setTarget} id="loading">
+            {isFetchingNextPage && (
+              <div>
+                <Image src={ICONS.LOADING} width={25} height={25} />
+              </div>
+            )}
+          </div>
+        </>
       )}
     </section>
   );

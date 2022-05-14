@@ -2,8 +2,7 @@ import VideoList from "components/custom/video-list";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
-import { VideoListType, VideoParams } from "types/video";
-import { useQuery, useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import NoResult from "components/custom/no-result";
 
 interface Props {
@@ -22,7 +21,6 @@ function InfiniteScroll({
   fetchFunc,
 }: Props) {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const fetchList = async ({ query, page }) => {
     const newQuery = { ...query, page };
@@ -54,6 +52,7 @@ function InfiniteScroll({
             return undefined;
           }
         },
+        refetchOnWindowFocus: false,
       }
     );
 
@@ -63,10 +62,9 @@ function InfiniteScroll({
   ) => {
     if (entry.isIntersecting && !isFetchingNextPage) {
       observer.unobserve(entry.target);
-
       fetchNextPage();
-      //console.log(data);
-      //console.log(hasNextPage);
+      console.log("here");
+
       observer.observe(entry.target);
     }
   };

@@ -1,27 +1,11 @@
 import React from "react";
+import ReactPlayer from "react-player";
 
 interface PlayerProps {
-  width?: string;
-  height?: string;
   videoSrc: string;
 }
-const EmbedPlayer = ({
-  width = "100%",
-  height = "auto",
-  videoSrc,
-}: PlayerProps) => {
-  const videoId = videoSrc.replace("https://youtu.be/", "");
-  const URL = "https://www.youtube.com/embed/" + videoId;
-  return (
-    <iframe
-      width={width}
-      height={height}
-      src={URL}
-      title="YouTube video player"
-      frameBorder="0"
-      allowFullScreen
-    ></iframe>
-  );
+const EmbedPlayer = ({ videoSrc }: PlayerProps) => {
+  return <ReactPlayer url={videoSrc} width={"100%"} height={211} />;
 };
 
 export default EmbedPlayer;

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ICONS } from "lib/assets";
 import Video from "./video";
 import { VideoListType } from "types/video";
+import NoResult from "./no-result";
 
 interface Props {
   noResult: { title: string; content: string };
@@ -63,9 +64,11 @@ function InfiniteScroll({
   return (
     <>
       <section style={{ display: "grid", gap: "20px" }}>
-        {data.map((value: VideoListType, index: any) => {
-          return <Video key={index} data={value} />;
-        })}
+        {data && data.length !== 0
+          ? data.map((value: VideoListType, index: any) => {
+              return <Video key={index} data={value} />;
+            })
+          : !isLoaded && <NoResult {...noResult} />}
         <div ref={setTarget} id="loading">
           {isLoaded && (
             <div>

@@ -32,7 +32,7 @@ const VideoPage: NextPageWithLayout = () => {
               <div style={{ height: "211px", background: "green" }}></div>
             )}
             <VideoDescription {...data} />
-            <VideoCommentsList videoId={parseInt(pid as string)} />
+            <VideoCommentsList videoId={pid as string} />
           </div>
           <VideoMyComment videoId={pid as string} />
         </>

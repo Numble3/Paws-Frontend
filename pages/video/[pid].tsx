@@ -1,6 +1,7 @@
 import { getVideoDetail } from "apis/get-video";
 import { Loading } from "components/custom";
 import EmbedPlayer from "components/custom/embed-player";
+import HlsPlayer from "components/custom/hls-player";
 import {
   VideoCommentsList,
   VideoDescription,
@@ -21,6 +22,8 @@ const VideoPage: NextPageWithLayout = () => {
   if (isLoading) {
     return <Loading />;
   }
+  console.log("ㅁ?");
+
   return (
     <>
       {data ? (
@@ -29,7 +32,9 @@ const VideoPage: NextPageWithLayout = () => {
             {data.type === "EMBEDDED" ? (
               <EmbedPlayer videoSrc={data.videoUrl} />
             ) : (
-              <div style={{ height: "211px", background: "green" }}></div>
+              <div style={{ height: "211px", background: "green" }}>
+                <HlsPlayer videoSrc={data.videoUrl} />
+              </div>
             )}
             <VideoDescription {...data} />
             <VideoCommentsList

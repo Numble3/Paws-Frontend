@@ -3,8 +3,8 @@ import axios from "axios";
 axios.defaults.baseURL = "http://3.36.157.185:80/api";
 
 export async function getVideos(params: VideoParams) {
-  let { category, page, size, sortCondition, title } = params;
-
+  let { category, page, size, sort, title } = params;
+  console.log(params);
   let videoQuery: VideoParams = {
     page,
     size,
@@ -13,14 +13,14 @@ export async function getVideos(params: VideoParams) {
     if (category === "etc") category = "OTHERS";
     videoQuery["category"] = category.toUpperCase();
   }
-  if (sortCondition) {
-    videoQuery["sortCondition"] = sortCondition.toUpperCase();
+  if (sort) {
+    videoQuery["sort"] = sort.toUpperCase();
   }
   if (title) {
     videoQuery["title"] = title.toUpperCase();
   }
 
-  //  console.log(videoQuery);
+  //console.log(videoQuery);
   try {
     const response = await axios.get("/videos", {
       params: videoQuery,
@@ -29,7 +29,7 @@ export async function getVideos(params: VideoParams) {
 
     return response.data;
   } catch (e) {
-    console.log(e);
+    //console.log(e);
   }
 }
 
@@ -51,7 +51,7 @@ export async function todayRanking({
       return response.data.ranking;
     }
   } catch (e) {
-    console.log(e);
+    //console.log(e);
   }
 }
 
@@ -61,6 +61,6 @@ export async function getVideoDetail(videoId: string) {
 
     return response.data;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 }

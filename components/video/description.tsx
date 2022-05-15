@@ -4,6 +4,11 @@ import { useCallback, useState } from "react";
 import styles from "styles/video.module.css";
 import VideoInfoButton from "./info-button";
 import { addLikeVideo, deleteLikeVideo } from "apis/interest";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
+dayjs.extend(relativeTime);
 interface Props {
   category: string;
   nickname: string;
@@ -29,16 +34,15 @@ const VideoDescription = ({
   const [heartActive, setHeartActive] = useState(false);
 
   const onToggleHeart = useCallback(async () => {
-    //TODO: 동영상 좋아요 api 연동
     setHeartActive((p) => !p);
 
     if (!heartActive) {
       await addLikeVideo(videoId, category).then((res) => {
-        console.log(res);
+        //      console.log(res);
       });
     } else {
       await deleteLikeVideo(videoId).then((res) => {
-        console.log(res);
+        //      console.log(res);
       });
     }
   }, []);
@@ -64,7 +68,7 @@ const VideoDescription = ({
             <VideoInfoButton iconPath={ICONS.WATCH} text={view.toString()} />
             <VideoInfoButton
               iconPath={ICONS.TIME}
-              text={createdAt.split(" ")[0]}
+              text={dayjs(createdAt).fromNow()}
             />
             <VideoInfoButton
               text={like.toString()}

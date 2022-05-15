@@ -16,6 +16,7 @@ const PreviewImage = ({ setImageFile, isError = false }: ImageType) => {
     if (fileBlob.size > 10 * 1024 * 1024) {
       setImageSrc("");
       setCanUpload(false);
+      return;
     } else {
       setCanUpload(true);
     }

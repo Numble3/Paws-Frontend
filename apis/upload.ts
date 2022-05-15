@@ -10,6 +10,7 @@ export async function checkEmbedLink(link: string) {
       return true;
     }
   } catch (e) {
+    console.log(e);
     return false;
   }
 }

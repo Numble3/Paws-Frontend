@@ -16,7 +16,7 @@ const PreviewVideo = ({ setVideoFile, isError = false }: VideoType) => {
     if (fileBlob.size > 100 * 1024 * 1024) {
       setVideoSrc("");
       setCanUpload(false);
-      // return;
+      return;
     } else {
       setCanUpload(true);
     }

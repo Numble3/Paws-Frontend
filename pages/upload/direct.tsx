@@ -33,18 +33,6 @@ const Direct: NextPageWithLayout = () => {
   });
 
   const postDirect = async () => {
-    let videoSrc = "";
-    let duration = 0;
-    const video = new FormData();
-    video.append("file", videoFile);
-    await videoTransform(video).then((response) => {
-      videoSrc = response.url;
-      duration = response.duration;
-      console.log("videoSrc: ", videoSrc, ", duration: ", duration);
-    });
-
-    return;
-    //To do: post direct
     if (titleInfo.title === "") {
       setTitleInfo((prev) => {
         return {
@@ -91,30 +79,34 @@ const Direct: NextPageWithLayout = () => {
       imageSrc = response.url;
     });
 
-    // let videoSrc = "";
-    // let duration = 0;
-    // const video = new FormData();
-    // video.append("file", videoFile);
-    // await videoTransform(video).then((response) => {
-    //   videoSrc = response.url;
-    //   duration = response.duration;
-    // });
+    let videoSrc = "";
+    let duration = 0;
+    const video = new FormData();
+    video.append("file", videoFile);
+    await videoTransform(video).then((response) => {
+      videoSrc = response.url;
+      duration = response.duration;
+      console.log("videoSrc: ", videoSrc, ", duration: ", duration);
+    });
 
     const data = {
       category: selectedCategory,
       content: descriptionInfo.description,
       thumbnailUrl: imageSrc,
       title: titleInfo.title,
-      type: "DIRECT",
+      type: "VIDEO",
       videoDuration: duration,
       videoUrl: videoSrc,
     };
 
-    console.log("data: ", data);
-    await createEmbedVideo(data).then((res) => {
-      console.log(res);
-      router.replace("/profile/my-upload");
-    });
+    await createEmbedVideo(data)
+      .then((res) => {
+        router.replace("/profile/my-upload");
+        //To Do: 성공 메세지 훅
+      })
+      .catch(() => {
+        //To Do: 실패 메세지 훅
+      });
     setLoading(false);
   };
   return (

@@ -139,10 +139,13 @@ const Embed: NextPageWithLayout = () => {
     };
 
     console.log("data: ", data);
-    await createEmbedVideo(data).then((res) => {
-      console.log(res);
-      router.replace("/profile/my-upload");
-    });
+    await createEmbedVideo(data)
+      .then((res) => {
+        router.replace("/profile/my-upload");
+      })
+      .catch(() => {
+        //To Do: 실패 메세지 훅
+      });
     setLoading(false);
   };
 

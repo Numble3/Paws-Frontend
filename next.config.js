@@ -7,6 +7,7 @@ const nextConfig = {
       "upload.wikimedia.org",
       "w.namu.la",
       "img.insight.co.kr",
+      "i.pinimg.com",
       "d2yok33re0ydfm.cloudfront.net",
     ],
   },

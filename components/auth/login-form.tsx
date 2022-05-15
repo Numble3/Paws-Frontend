@@ -2,19 +2,14 @@ import { getUserInfoAPI, logInAPI } from "apis/auth";
 import client from "apis/client";
 import { AxiosError } from "axios";
 import { CustomInput } from "components/custom";
-import CustomMessage from "components/custom/message";
 import useInput from "hooks/use-input";
-import useMessage from "hooks/use-message";
 import { ICONS } from "lib/assets";
+import { QUERY_KEY } from "lib/query-key";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { MouseEvent, useCallback, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { RootState } from "reducers";
-import modalSlice from "reducers/modal";
+import { useMutation, useQueryClient } from "react-query";
 import style from "styles/loginform.module.css";
 type User = {
   email: string;
@@ -25,6 +20,7 @@ type User = {
 const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
+  //TODO: delete
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -33,7 +29,7 @@ const LoginForm = () => {
     { accessToken: string; refreshToken: string },
     AxiosError,
     { email: string; password: string }
-  >("login", logInAPI, {
+  >(QUERY_KEY.login.key, QUERY_KEY.login.api, {
     onMutate: () => {
       setIsLoading(true);
     },
@@ -73,7 +69,6 @@ const LoginForm = () => {
     },
     [email, password, mutation]
   );
-
 
   return (
     <>

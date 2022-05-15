@@ -14,13 +14,14 @@ import { getUserInfoAPI, logOutAPI, withDrawAPI } from "apis/auth";
 import Router from "next/router";
 import useInput from "hooks/use-input";
 import { imageResizeAPI, userUpdateAPI } from "apis/accounts";
+import { QUERY_KEY } from "lib/query-key";
 
 const ProfileEdit: NextPageWithLayout = () => {
   const [editOpen, onEditClose, setIsOpen] = useModal("edit");
   const [alertOpen, onAlertClose, AlertHandler, alertType] = useModal("alert");
 
   const queryClient = useQueryClient();
-  const { data: user } = useQuery("user", getUserInfoAPI);
+  const { data: user } = useQuery(QUERY_KEY.user.key, QUERY_KEY.user.api);
 
   const [loading, setLoading] = useState(false);
 
@@ -28,11 +29,11 @@ const ProfileEdit: NextPageWithLayout = () => {
   const [profile, setProfile] = useState("");
   const [email, setEmail] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     setNickname(sessionStorage.getItem("nickname")!);
     setEmail(sessionStorage.getItem("email")!);
     setProfile(sessionStorage.getItem("profile")!);
-  },[]);
+  }, []);
   const [nicknameValue, onChangeNickname] = useInput("");
 
   const inputRef = useRef<HTMLInputElement>(null);

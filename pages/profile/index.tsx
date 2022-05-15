@@ -1,6 +1,7 @@
+import { getUsaerDetailAPI } from 'apis/accounts';
 import { getUserInfoAPI } from "apis/auth";
-import client from 'apis/client';
-import { VideoList } from "components/custom";
+import client from "apis/client";
+import { Loading, VideoList } from "components/custom";
 import VideoEditBox from "components/custom/video-edit-box";
 import useModal from "hooks/use-modal";
 import { ICONS } from "lib/assets";
@@ -11,52 +12,58 @@ import { MouseEvent, useCallback, useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import style from "styles/profile.module.css";
 import { NextPageWithLayout } from "types/common";
-interface User{
+interface User {
   email: string;
   profile: string;
   nickanme: string;
 }
 const ProfilePage: NextPageWithLayout = () => {
   const [isOpen, onClose, setIsOpen] = useModal("edit");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { data: user } = useQuery("user", getUserInfoAPI, {
+  const { data} = useQuery("user", getUsaerDetailAPI, {
     retry: false,
+    onSuccess: () => {
+      setIsLoading(false);
+    },
     onError: () => {
-      Router.replace("/login");
+      setTimeout(() => {
+        Router.replace("/login");
+      }, 1000);
       console.error("에러발생");
     },
   });
-
-   console.log("query data: ", user);
-  
-  const isError = true;
-
-  // useEffect(() => {
-  //   //user 정보가 없으면 로그인 페이지로 이동
-  //   if (isError) {
-  //     Router.replace("/login");
-  //   }
-  // }, []);
-
-
   const onEditHandler = useCallback((e: MouseEvent) => {
     e.stopPropagation();
     setIsOpen(true);
   }, []);
+
+  if (isLoading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
   
+  const user = data.accountDto;
+  const videoList = data.videoDtos;
+  console.log("user : ", user);
+  console.log("videoList : ",videoList);
+  
+
+
   return (
     <div className={style.wrapper}>
       <section className={style["profile-section"]}>
-        {/* {user.profile ? (
-          <Image src={user.profile} width={72} height={72} />
+        {user.profile ? (
+          <img src={user.profile} style={{ width: "72px", height: "72px" }} />
         ) : (
           <Image src={ICONS.PAW} width={72} height={72} />
-        )} */}
-        <Image src={ICONS.PAW} width={72} height={72} />
-        {/* <div className={style.nickname}>{user.nickname}</div>
-        <div className={style.email}>{user.email}</div> */}
-          <div className={style.nickname}>test</div>
-        <div className={style.email}>test</div>
+        )}
+        {/* <Image src={ICONS.PAW} width={72} height={72} /> */}
+        <div className={style.nickname}>{user.nickname}</div>
+        <div className={style.email}>{user.email}</div>
         <Link href="profile/edit">
           <button className={style.button}>프로필 수정</button>
         </Link>
@@ -73,7 +80,7 @@ const ProfilePage: NextPageWithLayout = () => {
           </span>
         </div>
         <VideoList
-          videoCnt={6}
+          datas={videoList}
           noInfo={true}
           noDot={false}
           onEdit={onEditHandler}
@@ -86,6 +93,5 @@ const ProfilePage: NextPageWithLayout = () => {
 
 ProfilePage.header = { title: "마이 페이지" };
 ProfilePage.back = { color: "gray" };
-
 
 export default ProfilePage;

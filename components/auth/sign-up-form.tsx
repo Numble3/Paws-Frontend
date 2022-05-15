@@ -2,7 +2,7 @@ import { signUpAPI } from 'apis/auth';
 import { CustomInput } from "components/custom";
 import useInput from "hooks/use-input";
 import Router from 'next/router';
-import React, { ChangeEvent, MouseEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useState } from "react";
 import style from "styles/signup.module.css";
 
 const SignUpForm = () => {
@@ -13,6 +13,9 @@ const SignUpForm = () => {
 
   const [passwordChk, setPasswordChk] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [nicknameError, setNicknameError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onChangePasswordChk = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +28,19 @@ const SignUpForm = () => {
     [passwordChk]
   );
 
+  useEffect(()=>{
+    if(emailError){
+      setTimeout(()=>{
+        setEmailError(false);
+      },2000);
+    }
+    if(nicknameError){
+      setTimeout(()=>{
+        setNicknameError(false);
+      },2000);
+    }
+  },[emailError, nicknameError]);
+
   const onSubmit = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
@@ -35,7 +51,16 @@ const SignUpForm = () => {
           Router.replace('/login');
         })
         .catch((error) => {
-          alert(error.response?.data);
+          console.log(error.response);
+          if(error.response.status === 409){
+            if(error.response.data.message === "이미 존재하는 이메일입니다."){
+              setEmailError(true);
+              setErrorMessage(error.response.data.message);
+            }else{
+              setNicknameError(true);
+              setErrorMessage(error.response.data.message);
+            }
+          }
         })
         .finally(() => {
           setIsLoading(false);
@@ -52,6 +77,10 @@ const SignUpForm = () => {
           value={email}
           onChange={onChangeEmail}
           placeHolderMessage="이메일 입력"
+          error={{
+            isError: emailError,
+            message: errorMessage,
+          }}
         />
         <CustomInput
           inputType="password"
@@ -75,6 +104,10 @@ const SignUpForm = () => {
           value={nickname}
           onChange={onChangeNickname}
           placeHolderMessage="닉네임 입력"
+          error={{
+            isError: nicknameError,
+            message: errorMessage,
+          }}
         />
         <button
           className={`${style.button} ${

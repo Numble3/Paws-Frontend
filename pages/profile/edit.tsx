@@ -21,15 +21,19 @@ const ProfileEdit: NextPageWithLayout = () => {
 
   const queryClient = useQueryClient();
   const { data: user } = useQuery("user", getUserInfoAPI);
+
   const [loading, setLoading] = useState(false);
 
-  const [nickname, setNickname] = useState(
-    user.nickname !== null ? user.nickname : ""
-  );
-  const [profile, setProfile] = useState(user.profile ? user.profile : "");
-  const [email, setEmail] = useState(user.email ? user.email : "");
+  const [nickname, setNickname] = useState("");
+  const [profile, setProfile] = useState("");
+  const [email, setEmail] = useState("");
 
-  const [nicknameValue, onChangeNickname, setNicknameValue] = useInput("");
+  useEffect(()=>{
+    setNickname(sessionStorage.getItem("nickname")!);
+    setEmail(sessionStorage.getItem("email")!);
+    setProfile(sessionStorage.getItem("profile")!);
+  },[]);
+  const [nicknameValue, onChangeNickname] = useInput("");
 
   const inputRef = useRef<HTMLInputElement>(null);
   const imageUploadHandler = useCallback(() => {
@@ -66,6 +70,9 @@ const ProfileEdit: NextPageWithLayout = () => {
       Router.replace("/");
       localStorage.removeItem("refresh");
       localStorage.removeItem("access");
+      sessionStorage.removeItem("email");
+      sessionStorage.removeItem("profile");
+      sessionStorage.removeItem("nickname");
       queryClient.setQueryData("user", "");
     },
     onSettled: () => {
@@ -123,14 +130,14 @@ const ProfileEdit: NextPageWithLayout = () => {
     console.log("update mutate");
     updateMutaion.mutate({ nickname, profile });
   }, [updateMutaion]);
-
+  console.log("proflie", profile);
   return (
     <div className={style.wrapper}>
       <div className={headerStyle.complete}>
         <span onClick={onUpdate}>완료</span>
       </div>
       <section className={style["img-section"]}>
-        {profile ? (
+        {profile !== "null" ? (
           <img src={`${profile}`} style={{ width: "72px", height: "72px" }} />
         ) : (
           <Image src={ICONS.PAW} width={72} height={72} />

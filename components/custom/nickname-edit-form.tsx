@@ -15,6 +15,7 @@ const NicknameEditForm = ({ onClose, onClick, onChange, nickname }: { onClose: (
               type="text"
               value={nickname}
               onChange={onChange}
+              maxLength={10}
             />
             <div className={style.message}>
               <span>최대 10자</span>

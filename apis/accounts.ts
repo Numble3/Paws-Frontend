@@ -14,3 +14,11 @@ export function imageResizeAPI(data: FormData) {
 export function userUpdateAPI(data:{nickname: string, profile:string}){
   return client.post('/accounts/update', data).then((response)=> response.data);
 }
+
+export function getUsaerDetailAPI() {
+  return client.get('/accounts/detail').then((response) => response.data);
+}
+
+export function getUserVideosAPI() {
+  return client.get('/accounts/videos').then((response)=> response.data);
+}

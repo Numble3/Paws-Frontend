@@ -38,6 +38,7 @@ const LoginForm = () => {
       setIsLoading(true);
     },
     onError: (error) => {
+      console.error(error);
       alert(error.response?.data);
     },
     onSuccess: (token) => {
@@ -49,6 +50,9 @@ const LoginForm = () => {
 
       getUserInfoAPI()
         .then((data) => {
+          sessionStorage.setItem("email", data.email);
+          sessionStorage.setItem("profile", data.profile);
+          sessionStorage.setItem("nickname", data.nickname);
           queryClient.setQueryData("user", data);
         })
         .catch((error) => {

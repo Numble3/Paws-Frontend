@@ -5,6 +5,12 @@ import Image from "next/image";
 import { CSSProperties, MouseEvent } from "react";
 import { VideoListType } from "types/video";
 
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
+
 interface Props {
   datas: VideoListType[];
   noDot?: boolean;
@@ -93,7 +99,7 @@ const VideoList = ({
                     <div className={styles.profile} />
                     <span>{video.nickname}</span>
                     {/* To Do: 날짜 형식 바꾸기 */}
-                    <span>{video.createdAt.split(" ")[0]}</span>
+                    <span>{dayjs(video.createdAt).fromNow()}</span>
                     <span>조회수 {video.view}회</span>
                   </div>
                 </article>

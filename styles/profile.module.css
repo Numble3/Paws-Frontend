@@ -58,6 +58,7 @@
 .video-section > section {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 16px;
   align-items: center;
   justify-items: center;

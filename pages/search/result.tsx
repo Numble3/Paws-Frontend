@@ -24,7 +24,7 @@ const Result: NextPageWithLayout = () => {
   const query: VideoParams = {
     page: 0,
     size: 10,
-    sortCondition: selectedCategory,
+    sort: selectedCategory,
     title: search as string,
   };
   return (
@@ -53,6 +53,7 @@ const Result: NextPageWithLayout = () => {
             noResult={noSearchResult}
             query={query}
             fetchFunc={getVideos}
+            selectedCategory={selectedCategory}
           />
         </ul>
       </section>

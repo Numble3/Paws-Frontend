@@ -25,6 +25,6 @@ export type VideoParams = {
   category?: string;
   page: number;
   size: number;
-  sortCondition?: string;
+  sort?: string;
   title?: string;
 };

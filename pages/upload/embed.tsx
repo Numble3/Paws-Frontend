@@ -48,31 +48,39 @@ const Embed: NextPageWithLayout = () => {
       return;
     }
 
-    setLinkLoading(true);
-    setLinkInfo({
+    //CORS 해결될때까지 무조건 성공.
+    newLinkInfo = {
       link,
-      isSuccess: false,
-      linkError: { isError: true, message: "링크를 확인하는 중입니다..." },
-    });
-    const result = await checkEmbedLink(link);
-    if (result) {
-      newLinkInfo = {
-        link,
-        isSuccess: true,
-        linkError: { ...linkInfo.linkError, isError: false },
-      };
-    } else {
-      newLinkInfo = {
-        link,
-        isSuccess: false,
-        linkError: {
-          isError: true,
-          message: "임베드 불가능한 링크 주소입니다.",
-        },
-      };
-    }
+      isSuccess: true,
+      linkError: { ...linkInfo.linkError, isError: false },
+    };
     setLinkInfo(newLinkInfo);
-    setLinkLoading(false);
+
+    // setLinkLoading(true);
+    // setLinkInfo({
+    //   link,
+    //   isSuccess: false,
+    //   linkError: { isError: true, message: "링크를 확인하는 중입니다..." },
+    // });
+    // const result = await checkEmbedLink(link);
+    // if (result) {
+    //   newLinkInfo = {
+    //     link,
+    //     isSuccess: true,
+    //     linkError: { ...linkInfo.linkError, isError: false },
+    //   };
+    // } else {
+    //   newLinkInfo = {
+    //     link,
+    //     isSuccess: false,
+    //     linkError: {
+    //       isError: true,
+    //       message: "임베드 불가능한 링크 주소입니다.",
+    //     },
+    //   };
+    // }
+    // setLinkInfo(newLinkInfo);
+    // setLinkLoading(false);
   };
 
   const postEmbed = async () => {
@@ -139,10 +147,13 @@ const Embed: NextPageWithLayout = () => {
     };
 
     console.log("data: ", data);
-    await createEmbedVideo(data).then((res) => {
-      console.log(res);
-      router.replace("/profile/my-upload");
-    });
+    await createEmbedVideo(data)
+      .then((res) => {
+        router.replace("/profile/my-upload");
+      })
+      .catch(() => {
+        //To Do: 실패 메세지 훅
+      });
     setLoading(false);
   };
 

@@ -10,6 +10,7 @@ interface Props {
   videoCnt?: number;
   query?: any;
   fetchFunc: (params: any) => Promise<any>;
+  selectedCategory: any;
 }
 
 function InfiniteScroll({
@@ -19,6 +20,7 @@ function InfiniteScroll({
   },
   query = { page: 0, size: 10 },
   fetchFunc,
+  selectedCategory,
 }: Props) {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +28,7 @@ function InfiniteScroll({
   let page = query.page;
   let hasNext = true;
   const getMoreItem = async () => {
+    console.log(query);
     setIsLoaded(true);
     await fetchFunc({ ...query, page: page }).then((res) => {
       hasNext = res.hasNext;
@@ -37,7 +40,10 @@ function InfiniteScroll({
     page++;
     setIsLoaded(false);
   };
-
+  useEffect(() => {
+    setData([]);
+    query = { ...query, sort: selectedCategory };
+  }, [selectedCategory]);
   const onIntersect = async (
     [entry]: any,
     observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void }
@@ -60,7 +66,7 @@ function InfiniteScroll({
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
+  }, [target, selectedCategory]);
   return (
     <>
       <section style={{ display: "grid", gap: "20px" }}>

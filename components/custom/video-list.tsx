@@ -10,6 +10,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 dayjs.locale('ko');
 dayjs.extend(relativeTime);
+
 interface Props {
   datas: VideoListType[];
   noDot?: boolean;

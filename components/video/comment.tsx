@@ -1,15 +1,18 @@
 import { LikeIcon } from "components/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "styles/video.module.css";
 import { useRouter } from "next/router";
 import { likeComment, dislikeComment } from "apis/comments";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "reducers";
+import likeSlice from "reducers/like";
 
 interface Props {
   profilePath?: string;
   nickname: string;
   createAt: string;
   like: string;
-  commentId?: string;
+  commentId: string;
   content: string;
   category: string;
 }
@@ -24,21 +27,33 @@ const VideoComment = ({
   nickname,
   category,
 }: Props) => {
-  //TODO: 각 댓글마다 좋아요 관리하기
-  const [active, setActive] = useState(false);
   const router = useRouter();
   const { pid } = router.query;
+  const { commentLike } = useSelector((state: RootState) => state.like);
+  const [active, setActive] = useState(() => {
+    if (commentLike[pid as string])
+      return commentLike[pid as string][commentId];
+    else return false;
+  });
+  useEffect(() => {}, []);
+  const dispatch = useDispatch();
   const handleClick = async () => {
     setActive(!active);
     //좋아요, 좋아요 취소 순서 헷갈림
     if (!active) {
       await likeComment(pid as string, commentId as string).then((res) => {
-        console.log(res);
+        //console.log(res);
       });
+      dispatch(
+        likeSlice.actions.commentActive({ videoId: pid as string, commentId })
+      );
     } else {
       await dislikeComment(pid as string, commentId as string).then((res) => {
-        console.log(res);
+        //console.log(res);
       });
+      dispatch(
+        likeSlice.actions.commentInactive({ videoId: pid as string, commentId })
+      );
     }
   };
   return (

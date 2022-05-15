@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: { [key: string]: any } = {
   videoLike: {},
+  commentLike: {},
 };
 
 const likeSlice = createSlice({
@@ -13,6 +14,24 @@ const likeSlice = createSlice({
     },
     inactive(state, action: PayloadAction<string>) {
       state.videoLike[action.payload] = false;
+    },
+    commentActive(
+      state,
+      action: PayloadAction<{ videoId: string; commentId: string }>
+    ) {
+      const vId = action.payload.videoId;
+      const cId = action.payload.commentId;
+      if (!state.commentLike[vId]) state.commentLike[vId] = {};
+      state.commentLike[vId][cId] = true;
+    },
+    commentInactive(
+      state,
+      action: PayloadAction<{ videoId: string; commentId: string }>
+    ) {
+      const vId = action.payload.videoId;
+      const cId = action.payload.commentId;
+      if (!state.commentLike[vId]) state.commentLike[vId] = {};
+      state.commentLike[vId][cId] = false;
     },
   },
 });

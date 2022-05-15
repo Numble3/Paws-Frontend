@@ -7,6 +7,10 @@ import { VideoListType } from "types/video";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "reducers";
+import likeSlice from "reducers/like";
+
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 interface Props {
@@ -24,6 +28,8 @@ const Video = ({
   onEdit,
   style,
 }: Props) => {
+  const dispatch = useDispatch();
+  const { videoLike } = useSelector((state: RootState) => state.like);
   return (
     <Link key={data.videoId} href={`/video/${data.videoId}`}>
       <div className={styles["video-container"]}>
@@ -53,7 +59,11 @@ const Video = ({
               </div>
             </article>
             <article>
-              <HeartIcon isLike={true} />
+              <HeartIcon
+                isLike={
+                  videoLike[data.videoId] ? !videoLike[data.videoId] : true
+                }
+              />
               <span>{data.like}</span>
             </article>
           </aside>

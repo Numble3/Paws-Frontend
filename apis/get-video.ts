@@ -4,7 +4,7 @@ axios.defaults.baseURL = "http://3.36.157.185:80/api";
 
 export async function getVideos(params: VideoParams) {
   let { category, page, size, sort, title } = params;
-  console.log(params);
+  //console.log(params);
   let videoQuery: VideoParams = {
     page,
     size,

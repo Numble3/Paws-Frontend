@@ -86,8 +86,8 @@ const VideoList = ({
               />
             </div>
             {!noDot && (
-              <div onClick={onEdit} className={styles["dot-icon"]}>
-                <DotIcon />
+              <div id={video.videoId+""}  onClick={onEdit} className={styles["dot-icon"]}>
+                <DotIcon id={video.videoId+""}/>
               </div>
             )}
             {!noInfo && (

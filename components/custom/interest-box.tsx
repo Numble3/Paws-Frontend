@@ -1,12 +1,10 @@
-import { IMAGES } from "lib/assets";
 import Link from "next/link";
 import style from "styles/interest/interested.module.css";
 import VideoList from "./video-list";
-
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
-import Image from 'next/image';
+import { categories } from 'lib/variables';
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
@@ -15,23 +13,16 @@ interface Props {
   label: string;
 }
 const InterestBox = ({ datas, label }: Props) => {
-  console.log("Idatas", datas);
-  const list = datas.slice(0, 3).map((v) => {
+  const [{ value }] = categories.filter(
+    (v) => v.label === label
+  );
+  const list = datas.slice(0, 3).map((v: any) => {
     return v.getVideoDto;
   });
-
   return datas.length !== 0 ? (
-    <Link href={`interestVideo/${label}`}>
+    <Link href={`interestVideo/${value}`}>
       <article className={style.box}>
-        <section>
-          <div>
-            <Image
-              src={`${list[0].thumbnailPath}`}
-              layout="fill"
-              objectFit="cover"
-            />
-          </div>
-        </section>
+        <VideoList datas={list} noInfo={true} />
         <div className={style.title}>{label}</div>
         <div className={style.info}>
           <span>동영상 {datas.length}개</span>

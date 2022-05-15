@@ -31,7 +31,7 @@ const Video = ({
           />
         </div>
         {!noDot && (
-          <div onClick={onEdit} className={styles["dot-icon"]}>
+          <div  onClick={onEdit} className={styles["dot-icon"]}>
             <DotIcon />
           </div>
         )}

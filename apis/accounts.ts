@@ -28,3 +28,9 @@ export async function getUsaerDetailAPI() {
 export async function getUserVideosAPI() {
   return await client.get("/accounts/videos").then((response) => response.data);
 }
+
+
+export async function deleteVideoAPI({id}:{id:number}) {
+  return await client.delete(`/videos/${id}`).then((response) => response.data);
+  
+}

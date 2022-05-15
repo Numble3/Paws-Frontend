@@ -11,6 +11,7 @@ import CustomMessage from "components/custom/message";
 import useMessage from "hooks/use-message";
 import { useQuery } from "react-query";
 import { QUERY_KEY } from "lib/query-key";
+import { getUserVideosAPI } from 'apis/accounts';
 
 const MyUploadPage: NextPageWithLayout = () => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
@@ -23,7 +24,7 @@ const MyUploadPage: NextPageWithLayout = () => {
 
   const { getMessage, error } = useMessage();
 
-  const { isLoading,data } = useQuery("videos", getUserVideosAPI);
+  const { isLoading,data } = useQuery(QUERY_KEY.videos.key, QUERY_KEY.videos.api);
   
   if(isLoading) {
     return <Loading />

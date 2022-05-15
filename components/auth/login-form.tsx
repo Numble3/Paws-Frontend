@@ -2,7 +2,9 @@ import { getUserInfoAPI, logInAPI } from "apis/auth";
 import client from "apis/client";
 import { AxiosError } from "axios";
 import { CustomInput } from "components/custom";
+import CustomMessage from "components/custom/message";
 import useInput from "hooks/use-input";
+import useMessage from "hooks/use-message";
 import { ICONS } from "lib/assets";
 import { QUERY_KEY } from "lib/query-key";
 import Image from "next/image";
@@ -10,6 +12,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { MouseEvent, useCallback, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
+import modalSlice from "reducers/modal";
 import style from "styles/loginform.module.css";
 type User = {
   email: string;
@@ -24,6 +28,10 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const { getMessage, error } = useMessage();
+  const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState("");
+
   const queryClient = useQueryClient();
   const mutation = useMutation<
     { accessToken: string; refreshToken: string },
@@ -34,8 +42,13 @@ const LoginForm = () => {
       setIsLoading(true);
     },
     onError: (error) => {
-      console.error(error);
-      alert(error.response?.data);
+      console.error("login error catch: ", error);
+      dispatch(modalSlice.actions.isError({ isError: true }));
+      dispatch(modalSlice.actions.open({}));
+      setTimeout(() => {
+        dispatch(modalSlice.actions.close({}));
+      }, 3000);
+      setErrorMessage("로그인 실패");
     },
     onSuccess: (token) => {
       console.log("access token 들어오는지 확인 : ", token);
@@ -53,7 +66,6 @@ const LoginForm = () => {
         })
         .catch((error) => {
           console.error(error);
-          alert(error.response?.data);
         });
       router.replace("/");
     },
@@ -110,6 +122,9 @@ const LoginForm = () => {
         <Link href="/sign-up">
           <a className={style.signup}>회원가입</a>
         </Link>
+        {getMessage && (
+          <CustomMessage isError={error} ErrorMessage={errorMessage}  />
+        )}
       </section>
     </>
   );

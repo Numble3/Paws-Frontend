@@ -1,7 +1,15 @@
 import { CautionIcon, SuccessIcon } from "components/icons";
 import style from "styles/custom/message.module.css";
 
-const CustomMessage = ({isError}:{isError:boolean}) => {
+const CustomMessage = ({
+  isError,
+  ErrorMessage="오류가 발생했어요 :(",
+  SuccessMessage="저장이 완료되었어요!",
+}: {
+  isError: boolean;
+  ErrorMessage?: string;
+  SuccessMessage?: string;
+}) => {
   const err = false;
   return (
     <div className={style.background}>
@@ -14,7 +22,7 @@ const CustomMessage = ({isError}:{isError:boolean}) => {
               <SuccessIcon width={12} height={12} fill="#ffffff" />
             )}
           </div>
-          {isError ? "오류가 발생했어요 :(" : "저장이 완료되었어요!"}
+          {isError ? ErrorMessage : SuccessMessage}
         </div>
       </div>
     </div>

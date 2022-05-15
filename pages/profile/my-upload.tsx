@@ -3,7 +3,7 @@ import { NextPageWithLayout } from "types/common";
 import style from "styles/my-upload.module.css";
 import useModal from "hooks/use-modal";
 import VideoEditBox from "components/custom/video-edit-box";
-import { VideoList } from "components/custom";
+import { Loading, VideoList } from "components/custom";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducers";
@@ -26,7 +26,7 @@ const MyUploadPage: NextPageWithLayout = () => {
   const { isLoading,data } = useQuery("videos", getUserVideosAPI);
   
   if(isLoading) {
-    return <div>dsf</div>
+    return <Loading />
   }
   console.log(data);
   return (

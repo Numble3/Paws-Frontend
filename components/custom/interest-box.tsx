@@ -1,23 +1,47 @@
-import Link from 'next/link';
+import { IMAGES } from "lib/assets";
+import Link from "next/link";
 import style from "styles/interest/interested.module.css";
-import VideoList from './video-list';
-interface Props{
-  label:string;
-  value:string;
+import VideoList from "./video-list";
+
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+import Image from 'next/image';
+dayjs.locale("ko");
+dayjs.extend(relativeTime);
+
+interface Props {
+  datas: any;
+  label: string;
 }
-const InterestBox = ({value, label}:Props) => {
-  return (
-    <Link key={value} href={`interestVideo/${value}`}>
+const InterestBox = ({ datas, label }: Props) => {
+  console.log("Idatas", datas);
+  const list = datas.slice(0, 3).map((v) => {
+    return v.getVideoDto;
+  });
+
+  return datas.length !== 0 ? (
+    <Link href={`interestVideo/${label}`}>
       <article className={style.box}>
-        <VideoList videoCnt={3} noInfo={true} />
+        <section>
+          <div>
+            <Image
+              src={`${list[0].thumbnailPath}`}
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+        </section>
         <div className={style.title}>{label}</div>
         <div className={style.info}>
-          <span>동영상 38개</span>
+          <span>동영상 {datas.length}개</span>
           <span className={style.space}>•</span>
-          <span>3일 전</span>
+          <span>{dayjs(datas[0].createdAt).fromNow()}</span>
         </div>
       </article>
     </Link>
+  ) : (
+    <></>
   );
 };
 

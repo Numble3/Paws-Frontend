@@ -20,7 +20,6 @@ const PreviewImage = ({ setImageFile, isError = false }: ImageType) => {
       setCanUpload(true);
     }
     setImageFile(fileBlob);
-    console.log(fileBlob);
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise<void>((resolve) => {

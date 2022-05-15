@@ -141,7 +141,7 @@ const Embed: NextPageWithLayout = () => {
     console.log("data: ", data);
     await createEmbedVideo(data).then((res) => {
       console.log(res);
-      router.replace("/");
+      router.replace("/profile/my-upload");
     });
     setLoading(false);
   };
@@ -161,7 +161,7 @@ const Embed: NextPageWithLayout = () => {
               isSuccess={linkInfo.isSuccess}
               error={linkInfo.linkError}
               inputType={"text"}
-              placeHolderMessage={"유튜브 공유하기 주소를 입력해주세요"}
+              placeHolderMessage={"유튜브 영상 주소를 입력해주세요"}
               onChange={checkURL}
             />
           </div>

@@ -30,13 +30,15 @@ export async function imageResize(image: FormData) {
   }
 }
 
-export async function videoTransform(video: File) {
+export async function videoTransform(video: FormData) {
   try {
-    const response = await client.post("/video/storage", video, {
+    const response = await client.post("/videos/storage", video, {
       headers: {
         "content-type": "multipart/form-data",
       },
     });
+    console.log(response.data);
+
     return response.data;
   } catch (e) {
     console.log(e);

@@ -2,27 +2,27 @@ import styles from "styles/upload/direct.module.css";
 import PreviewImage from "components/upload/previewImage";
 import PreviewVideo from "components/upload/previewVideo";
 import VideoCategory from "components/upload/videoCategory";
-import { CustomInput } from "components/custom";
+import { CustomInput, Loading } from "components/custom";
 import { useState } from "react";
 import CustomTextArea from "components/custom/textarea";
 import { NextPageWithLayout } from "types/common";
+import { useRouter } from "next/router";
+import { createEmbedVideo, imageResize, videoTransform } from "apis/upload";
 
 const Direct: NextPageWithLayout = () => {
-  //title
-  const [titleError, setTitleError] = useState({
-    isError: false,
-    message: "제목을 입력해주세요.",
-  });
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
   //title
   const [titleInfo, setTitleInfo] = useState({
     titleError: { isError: false, message: "제목을 입력해주세요." },
     title: "",
   });
   //video
-  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [videoFile, setVideoFile] = useState<Blob | string>("");
   const [videoError, setVideoError] = useState(false);
   //image
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<Blob | string>("");
   const [imageError, setImageError] = useState(false);
   //category
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -32,55 +32,143 @@ const Direct: NextPageWithLayout = () => {
     description: "",
   });
 
-  const postDirect = () => {
+  const postDirect = async () => {
+    let videoSrc = "";
+    let duration = 0;
+    const video = new FormData();
+    video.append("file", videoFile);
+    await videoTransform(video).then((response) => {
+      videoSrc = response.url;
+      duration = response.duration;
+      console.log("videoSrc: ", videoSrc, ", duration: ", duration);
+    });
+
+    return;
     //To do: post direct
+    if (titleInfo.title === "") {
+      setTitleInfo((prev) => {
+        return {
+          ...prev,
+          titleError: { ...prev.titleError, isError: true },
+        };
+      });
+    }
+    if (videoFile === null) {
+      setImageError(true);
+    }
+    if (imageFile === null) {
+      setImageError(true);
+    }
+    if (descriptionInfo.description === "") {
+      setDescriptionInfo((prev) => {
+        return {
+          ...prev,
+          descriptionError: { ...prev.descriptionError, isError: true },
+        };
+      });
+    }
+    if (selectedCategory === "") {
+      setCategoryError(true);
+    }
+
+    if (
+      titleInfo.title === "" ||
+      videoFile === null ||
+      imageFile === null ||
+      descriptionInfo.description === "" ||
+      selectedCategory === ""
+    )
+      return;
+    setLoading(true);
+
+    let imageSrc = "";
+    const image = new FormData();
+    image.append("file", imageFile);
+    image.append("height", "180");
+    image.append("width", "320");
+    image.append("type", "thumbnail");
+    await imageResize(image).then((response) => {
+      imageSrc = response.url;
+    });
+
+    // let videoSrc = "";
+    // let duration = 0;
+    // const video = new FormData();
+    // video.append("file", videoFile);
+    // await videoTransform(video).then((response) => {
+    //   videoSrc = response.url;
+    //   duration = response.duration;
+    // });
+
+    const data = {
+      category: selectedCategory,
+      content: descriptionInfo.description,
+      thumbnailUrl: imageSrc,
+      title: titleInfo.title,
+      type: "DIRECT",
+      videoDuration: duration,
+      videoUrl: videoSrc,
+    };
+
+    console.log("data: ", data);
+    await createEmbedVideo(data).then((res) => {
+      console.log(res);
+      router.replace("/profile/my-upload");
+    });
+    setLoading(false);
   };
-  const [title, setTitle] = useState("");
   return (
-    <form className={styles.wrap}>
-      <header className={`${styles.complete} ${styles.complete__orange}`}>
-        <span onClick={postDirect}>완료</span>
-      </header>
-      <PreviewVideo isError={videoError} setImageFile={setVideoFile} />
-      <div className="border-gray"></div>
-      <PreviewImage isError={imageError} setImageFile={setImageFile} />
-      <div className="border-gray"></div>
-      <div className={styles.video_name}>
-        <p className={styles.title}>영상 제목</p>
-        <CustomInput
-          error={titleInfo.titleError}
-          inputType={"text"}
-          placeHolderMessage={"영상 제목을 입력해주세요"}
-          onChange={(e) => {
-            const newTitle = e.target.value;
-            setTitleInfo({ ...titleInfo, title: newTitle });
-          }}
-        />
-      </div>
-      <div className="border-gray"></div>
-      <div className={styles.description}>
-        <p className={styles.title}>설명</p>
-        <CustomTextArea
-          height={120}
-          error={descriptionInfo.descriptionError}
-          maxLength={300}
-          placeHolderMessage="설명 내용을 입력해주세요 (최대 300자)"
-          onChange={(e) =>
-            setDescriptionInfo((prev) => {
-              return {
-                ...prev,
-                description: e.target.value,
-              };
-            })
-          }
-        />
-      </div>
-      <VideoCategory
-        isError={categoryError}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-      />
-    </form>
+    <>
+      {loading ? (
+        <Loading />
+      ) : (
+        <form className={styles.wrap}>
+          <header className={`${styles.complete} ${styles.complete__orange}`}>
+            <span onClick={postDirect}>완료</span>
+          </header>
+          <PreviewVideo isError={videoError} setVideoFile={setVideoFile} />
+          <div className="border-gray"></div>
+          <PreviewImage isError={imageError} setImageFile={setImageFile} />
+          <div className="border-gray"></div>
+          <div className={styles.video_name}>
+            <p className={styles.title}>영상 제목</p>
+            <CustomInput
+              error={titleInfo.titleError}
+              inputType={"text"}
+              placeHolderMessage={"영상 제목을 입력해주세요"}
+              onChange={(e) => {
+                const newTitle = e.target.value;
+                setTitleInfo({ ...titleInfo, title: newTitle });
+              }}
+            />
+          </div>
+          <div className="border-gray"></div>
+          <div className={styles.description}>
+            <p className={styles.title}>설명</p>
+            <CustomTextArea
+              height={120}
+              error={descriptionInfo.descriptionError}
+              maxLength={300}
+              placeHolderMessage="설명 내용을 입력해주세요 (최대 300자)"
+              onChange={(e) =>
+                setDescriptionInfo((prev) => {
+                  return {
+                    ...prev,
+                    description: e.target.value,
+                  };
+                })
+              }
+            />
+          </div>
+          <div className="border-gray"></div>
+          <VideoCategory
+            isError={categoryError}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
+        </form>
+      )}
+    </>
   );
 };
 

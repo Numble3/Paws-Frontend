@@ -7,7 +7,7 @@ export async function getVideos(params: VideoParams) {
 
   let videoQuery: VideoParams = {
     page,
-    size: 1,
+    size,
   };
   if (category && category !== "whole") {
     if (category === "etc") category = "OTHERS";
@@ -20,7 +20,7 @@ export async function getVideos(params: VideoParams) {
     videoQuery["title"] = title.toUpperCase();
   }
 
-  //console.log(videoQuery);
+  //  console.log(videoQuery);
   try {
     const response = await axios.get("/videos", {
       params: videoQuery,

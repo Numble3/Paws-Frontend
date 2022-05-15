@@ -5,14 +5,14 @@ import { ICONS } from "lib/assets";
 import { CautionIcon } from "components/icons";
 
 interface VideoType {
-  setVideoFile: Dispatch<SetStateAction<File | null>>;
+  setVideoFile: Dispatch<SetStateAction<Blob | string>>;
   isError?: boolean;
 }
 const PreviewVideo = ({ setVideoFile, isError = false }: VideoType) => {
   const [videoSrc, setVideoSrc] = useState<string | null>("");
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
-  const encodeFileToBase64 = (fileBlob: File) => {
+  const encodeFileToBase64 = (fileBlob: Blob) => {
     if (fileBlob.size > 100 * 1024 * 1024) {
       setVideoSrc("");
       setCanUpload(false);

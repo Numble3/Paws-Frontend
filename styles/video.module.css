@@ -216,3 +216,25 @@
   font-weight: 500;
     font-size: 12px;
 }
+
+/* hls player */
+.hls-player{
+  position: relative;
+}
+
+.pause{
+  --size: 30px;
+
+  background: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  width: 0;
+  height: 0;
+  border-top: var(--size) solid transparent;
+  border-left: calc(var(--size)*2) solid var(--primary);
+  border-bottom: var(--size) solid transparent;
+  opacity: 60%;
+}

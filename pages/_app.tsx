@@ -36,7 +36,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       ) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null;
 
     //TODO: mobile error page
-    if (!isMobile && router.asPath !== "/404") router.replace("/404");
+    if (!isMobile && router.asPath !== "/mobile") router.replace("/mobile");
+    if (isMobile && router.asPath === "/mobile") router.replace("/");
   }, []);
 
   return (

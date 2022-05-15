@@ -24,12 +24,16 @@ const VideoCommentsList = ({ videoId, category }: Props) => {
   else {
     if (id) temp = id as string;
   }
-  const query: CommentParams = {
+  let query: CommentParams = {
     sort: selectedCategory,
     videoId: temp as string,
     page: 0,
     size: 10,
   };
+  useEffect(() => {
+    setData([]);
+    query = { ...query, sort: selectedCategory };
+  }, [selectedCategory]);
 
   let page = query.page;
   let hasNext = true;
@@ -68,7 +72,7 @@ const VideoCommentsList = ({ videoId, category }: Props) => {
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
+  }, [target, selectedCategory]);
   return (
     <section className={styles["comments-list"]}>
       <article className={styles["comments-header"]}>

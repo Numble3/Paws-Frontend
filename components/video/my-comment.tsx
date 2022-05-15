@@ -13,8 +13,10 @@ const VideoMyComment = ({ videoId }: Props) => {
   const [comment, setComment] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { pid } = router.query;
+  if (!videoId) videoId = pid as string;
   const handleClick = () => {
-    postComments(videoId, comment).then((res) => console.log(res));
+    postComments(videoId, comment);
     if (inputRef.current) inputRef.current.value = "";
     router.reload();
   };

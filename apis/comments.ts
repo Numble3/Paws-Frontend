@@ -30,7 +30,7 @@ export async function postComments(videoId: string, content: string) {
         "content-type": "application/json",
       },
     });
-    console.log(response);
+    //console.log(response);
     return response.data;
   } catch (e) {
     console.log(e);

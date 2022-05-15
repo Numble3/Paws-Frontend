@@ -133,9 +133,15 @@ const Embed: NextPageWithLayout = () => {
     image.append("height", "180");
     image.append("width", "320");
     image.append("type", "thumbnail");
-    await imageResize(image).then((response) => {
-      imageSrc = response.url;
-    });
+    await imageResize(image)
+      .then((response) => {
+        imageSrc = response.url;
+      })
+      .catch((e) => {
+        //error message
+        setLoading(false);
+        router.replace("/");
+      });
     const data = {
       category: selectedCategory,
       content: descriptionInfo.description,

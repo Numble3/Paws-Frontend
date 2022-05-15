@@ -75,19 +75,31 @@ const Direct: NextPageWithLayout = () => {
     image.append("height", "180");
     image.append("width", "320");
     image.append("type", "thumbnail");
-    await imageResize(image).then((response) => {
-      imageSrc = response.url;
-    });
+    await imageResize(image)
+      .then((response) => {
+        imageSrc = response.url;
+      })
+      .catch((e) => {
+        //error message
+        setLoading(false);
+        router.replace("/");
+      });
 
     let videoSrc = "";
     let duration = 0;
     const video = new FormData();
     video.append("file", videoFile);
-    await videoTransform(video).then((response) => {
-      videoSrc = response.url;
-      duration = response.duration;
-      console.log("videoSrc: ", videoSrc, ", duration: ", duration);
-    });
+    await videoTransform(video)
+      .then((response) => {
+        videoSrc = response.url;
+        duration = response.duration;
+        console.log("videoSrc: ", videoSrc, ", duration: ", duration);
+      })
+      .catch((e) => {
+        //error message
+        setLoading(false);
+        router.replace("/");
+      });
 
     const data = {
       category: selectedCategory,

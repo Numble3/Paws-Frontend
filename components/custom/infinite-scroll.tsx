@@ -28,7 +28,7 @@ function InfiniteScroll({
   let page = query.page;
   let hasNext = true;
   const getMoreItem = async () => {
-    console.log(query);
+    //console.log(query);
     setIsLoaded(true);
     await fetchFunc({ ...query, page: page }).then((res) => {
       hasNext = res.hasNext;

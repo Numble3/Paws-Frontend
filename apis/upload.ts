@@ -24,7 +24,7 @@ export async function imageResize(image: FormData) {
       },
     });
 
-    console.log(response.data.message);
+    //console.log(response.data.message);
     return response.data;
   } catch (e) {
     console.log(e);
@@ -38,7 +38,7 @@ export async function videoTransform(video: FormData) {
         "content-type": "multipart/form-data",
       },
     });
-    console.log(response.data);
+    //console.log(response.data);
 
     return response.data;
   } catch (e) {

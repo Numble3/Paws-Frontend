@@ -20,16 +20,16 @@ export async function getVideos(params: VideoParams) {
     videoQuery["title"] = title.toUpperCase();
   }
 
-  console.log(videoQuery);
+  //console.log(videoQuery);
   try {
     const response = await axios.get("/videos", {
       params: videoQuery,
     });
-    console.log("결과: ", response);
+    //console.log("결과: ", response);
 
     return response.data;
   } catch (e) {
-    console.log(e);
+    //console.log(e);
   }
 }
 
@@ -51,7 +51,7 @@ export async function todayRanking({
       return response.data.ranking;
     }
   } catch (e) {
-    console.log(e);
+    //console.log(e);
   }
 }
 
@@ -61,6 +61,6 @@ export async function getVideoDetail(videoId: string) {
 
     return response.data;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
 }

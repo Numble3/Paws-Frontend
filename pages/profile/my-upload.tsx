@@ -23,16 +23,18 @@ const MyUploadPage: NextPageWithLayout = () => {
 
   const { getMessage, error } = useMessage();
 
-  const { data } = useQuery("videos", getUserVideosAPI);
+  const { isLoading,data } = useQuery("videos", getUserVideosAPI);
   
-  console.log("videos: ", data);
-
+  if(isLoading) {
+    return <div>dsf</div>
+  }
+  console.log(data);
   return (
     <div className={style.wrapper}>
       <div className={style["select-container"]}>
         <SelectBox setSelectedCategory={setSelectedCategory} />
       </div>
-      <VideoList  noDot={false} onEdit={onEditHandler} />
+      <VideoList datas={data.videos}  noDot={false} onEdit={onEditHandler} />
       {isOpen && <VideoEditBox onClose={onClose} />}
       {getMessage && <CustomMessage isError={error} />}
     </div>

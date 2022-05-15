@@ -4,6 +4,11 @@ import { useCallback, useState } from "react";
 import styles from "styles/video.module.css";
 import VideoInfoButton from "./info-button";
 import { addLikeVideo, deleteLikeVideo } from "apis/interest";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
+dayjs.extend(relativeTime);
 interface Props {
   category: string;
   nickname: string;
@@ -63,7 +68,7 @@ const VideoDescription = ({
             <VideoInfoButton iconPath={ICONS.WATCH} text={view.toString()} />
             <VideoInfoButton
               iconPath={ICONS.TIME}
-              text={createdAt.split(" ")[0]}
+              text={dayjs(createdAt).fromNow()}
             />
             <VideoInfoButton
               text={like.toString()}

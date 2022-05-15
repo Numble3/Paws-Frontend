@@ -123,6 +123,7 @@ const Category: NextPageWithLayout = () => {
             noResult={noCateResult}
             query={query}
             fetchFunc={getVideos}
+            selectedCategory={selectedCategory}
           />
         </ul>
       </section>

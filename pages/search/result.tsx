@@ -53,6 +53,7 @@ const Result: NextPageWithLayout = () => {
             noResult={noSearchResult}
             query={query}
             fetchFunc={getVideos}
+            selectedCategory={selectedCategory}
           />
         </ul>
       </section>

@@ -33,11 +33,11 @@ const VideoDescription = ({
 
     if (!heartActive) {
       await addLikeVideo(videoId, category).then((res) => {
-        console.log(res);
+        //      console.log(res);
       });
     } else {
       await deleteLikeVideo(videoId).then((res) => {
-        console.log(res);
+        //      console.log(res);
       });
     }
   }, []);

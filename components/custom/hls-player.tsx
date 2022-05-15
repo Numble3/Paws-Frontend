@@ -30,7 +30,6 @@ const HlsPlayer = ({ videoSrc }: Props) => {
 
   useEffect(() => {
     videoPlay();
-    // console.log("videoSrc", videoSrc);
   }, [videoSrc]);
 
   // useEffect(() => {

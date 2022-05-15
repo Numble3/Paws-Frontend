@@ -93,7 +93,6 @@ const Direct: NextPageWithLayout = () => {
       .then((response) => {
         videoSrc = response.url;
         duration = response.duration;
-        console.log("videoSrc: ", videoSrc, ", duration: ", duration);
       })
       .catch((e) => {
         //error message

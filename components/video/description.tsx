@@ -37,20 +37,16 @@ const VideoDescription = ({
   const [showDetail, setShowDetail] = useState(false);
   const dispatch = useDispatch();
   const { videoLike } = useSelector((state: RootState) => state.like);
-  const [heartActive, setHeartActive] = useState(videoLike[videoId]);
+  const [heartActive, setHeartActive] = useState<boolean>(videoLike[videoId]);
 
   const onToggleHeart = useCallback(async () => {
     setHeartActive((p) => !p);
 
     if (!heartActive) {
-      await addLikeVideo(videoId, category).then((res) => {
-        //      console.log(res);
-      });
+      await addLikeVideo(videoId, category).then((res) => {});
       dispatch(likeSlice.actions.active(videoId));
     } else {
-      await deleteLikeVideo(videoId).then((res) => {
-        //      console.log(res);
-      });
+      await deleteLikeVideo(videoId).then((res) => {});
       dispatch(likeSlice.actions.inactive(videoId));
     }
   }, []);

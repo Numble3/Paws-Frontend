@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = 'http://3.36.157.185:80/api';
+axios.defaults.baseURL = "http://3.36.157.185:80/api";
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
@@ -13,25 +13,20 @@ client.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log("intercepter error catch : ",error.response);
     if (error.response && error.response.status === 401) {
       const originalRequest = error.config;
-      console.log(originalRequest);
       const refresh = localStorage.getItem("refresh");
-      console.log("refresh 확인 : ", refresh);
-      if(!refresh){
+      if (!refresh) {
         return Promise.reject(error);
       }
       const data = await axios
         .get("/refresh-token", {
-          headers:{
-            "Authorization" : refresh!,
-          }
+          headers: {
+            Authorization: refresh!,
+          },
         })
         .then((response) => response.data);
       const { accessToken, refreshToken } = data;
-      console.log("access 재발급 :", accessToken);
-      console.log("refresh 재발급 :", refreshToken);
       localStorage.setItem("access", accessToken);
       localStorage.setItem("refresh", refreshToken);
       client.defaults.headers.common.Authorization = `${accessToken}`;

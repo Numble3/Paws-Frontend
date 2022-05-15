@@ -18,9 +18,7 @@ export async function getComments(params: CommentParams) {
       params: commentQuery,
     });
     return response.data;
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 }
 
 export async function postComments(videoId: string, content: string) {
@@ -30,11 +28,8 @@ export async function postComments(videoId: string, content: string) {
         "content-type": "application/json",
       },
     });
-    //console.log(response);
     return response.data;
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 }
 
 export async function likeComment(videoId: string, commentId: string) {
@@ -42,20 +37,14 @@ export async function likeComment(videoId: string, commentId: string) {
     const response = await client.post(
       `/videos/${videoId}/comments/${commentId}/likes`
     );
-    //console.log(response);
     return response.data;
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 }
 export async function dislikeComment(videoId: string, commentId: string) {
   try {
     const response = await client.delete(
       `/videos/${videoId}/comments/${commentId}/likes`
     );
-    //console.log(response);
     return response;
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 }

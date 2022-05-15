@@ -89,9 +89,18 @@ const VideoCommentsList = ({ videoId, category }: Props) => {
         </article>
       ) : (
         <>
-          {data.map((value: CommentType, index) => (
-            <VideoComment  key={index} {...value} />
-          ))}
+          {data.map(
+            (
+              { content, createAt, like, nickname, commentId }: CommentType,
+              index
+            ) => (
+              <VideoComment
+                key={index}
+                commentId={commentId ?? ""}
+                {...{ content, createAt, like, nickname }}
+              />
+            )
+          )}
         </>
       )}
       <div ref={setTarget} id="loading">

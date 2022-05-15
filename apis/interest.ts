@@ -8,18 +8,12 @@ export async function addLikeVideo(videoId: string, category: string) {
         id: videoId,
       },
     });
-    //console.log(response);
     return response.data;
-  } catch (e) {
-    //console.log(e);
-  }
+  } catch (e) {}
 }
 export async function deleteLikeVideo(videoId: string) {
   try {
     const response = await client.delete(`/likes/delete?id=${videoId}`);
-    //console.log(response);
     return response;
-  } catch (e) {
-    //console.log(e);
-  }
+  } catch (e) {}
 }

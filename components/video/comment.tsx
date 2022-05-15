@@ -8,18 +8,15 @@ import { RootState } from "reducers";
 import likeSlice from "reducers/like";
 
 interface Props {
-  profilePath?: string;
   nickname: string;
   createAt: string;
   like: string;
   commentId: string;
   content: string;
-  
 }
 
 /** 동영상 댓글 */
 const VideoComment = ({
-  profilePath,
   content,
   like,
   createAt,
@@ -40,16 +37,14 @@ const VideoComment = ({
     setActive(!active);
     //좋아요, 좋아요 취소 순서 헷갈림
     if (!active) {
-      await likeComment(pid as string, commentId as string).then((res) => {
-        //console.log(res);
-      });
+      await likeComment(pid as string, commentId as string).then((res) => {});
       dispatch(
         likeSlice.actions.commentActive({ videoId: pid as string, commentId })
       );
     } else {
-      await dislikeComment(pid as string, commentId as string).then((res) => {
-        //console.log(res);
-      });
+      await dislikeComment(pid as string, commentId as string).then(
+        (res) => {}
+      );
       dispatch(
         likeSlice.actions.commentInactive({ videoId: pid as string, commentId })
       );

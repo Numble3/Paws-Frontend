@@ -15,8 +15,8 @@ import Router, { useRouter } from "next/router";
 import useInput from "hooks/use-input";
 import { imageResizeAPI, userUpdateAPI } from "apis/accounts";
 import { QUERY_KEY } from "lib/query-key";
-import { useDispatch } from 'react-redux';
-import modalSlice from 'reducers/modal';
+import { useDispatch } from "react-redux";
+import modalSlice from "reducers/modal";
 
 const ProfileEdit: NextPageWithLayout = () => {
   const [editOpen, onEditClose, setIsOpen] = useModal("edit");
@@ -37,7 +37,11 @@ const ProfileEdit: NextPageWithLayout = () => {
       router.replace("/");
       dispatch(modalSlice.actions.isError({ isError: true }));
       dispatch(modalSlice.actions.open({}));
-      dispatch(modalSlice.actions.setErrorMessage({errorMessage: "로그인이 필요합니다."}));
+      dispatch(
+        modalSlice.actions.setErrorMessage({
+          errorMessage: "로그인이 필요합니다.",
+        })
+      );
       setTimeout(() => {
         dispatch(modalSlice.actions.close({}));
       }, 3000);
@@ -55,7 +59,6 @@ const ProfileEdit: NextPageWithLayout = () => {
 
   const changeNickname = useCallback(() => {
     setNickname(nicknameValue);
-    console.log(nickname);
     onEditClose();
   }, [nicknameValue]);
 
@@ -67,7 +70,6 @@ const ProfileEdit: NextPageWithLayout = () => {
     imgaeFormData.append("height", "72");
     imgaeFormData.append("type", "profile");
     imageResizeAPI(imgaeFormData).then((response) => {
-      console.log("resize result : ", response);
       setProfile(response.url);
     });
   }, []);
@@ -122,29 +124,23 @@ const ProfileEdit: NextPageWithLayout = () => {
     onError: (error) => {
       alert(error.response?.data);
     },
-    onSuccess: () => {
-      console.log("suucess");
-    },
+    onSuccess: () => {},
     onSettled: () => {
       setLoading(false);
     },
   });
 
   const onLogOut = useCallback(() => {
-    console.log("logout mutate");
     logoutMutation.mutate();
   }, [logoutMutation]);
 
   const onWithdraw = useCallback(() => {
-    console.log("withdraw mutate");
     withdrawMutation.mutate();
   }, [withdrawMutation]);
 
   const onUpdate = useCallback(() => {
-    console.log("update mutate");
     updateMutaion.mutate({ nickname, profile });
   }, [updateMutaion]);
-  console.log("proflie", profile);
 
   return (
     <div className={style.wrapper}>

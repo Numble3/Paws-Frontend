@@ -4,20 +4,20 @@ import style from "styles/my-upload.module.css";
 import useModal from "hooks/use-modal";
 import VideoEditBox from "components/custom/video-edit-box";
 import { Loading, VideoList } from "components/custom";
-import {  useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CustomMessage from "components/custom/message";
 import useMessage from "hooks/use-message";
-import {  useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { QUERY_KEY } from "lib/query-key";
-import { deleteVideoAPI } from 'apis/accounts';
-import { AxiosError } from 'axios';
-import { useDispatch } from 'react-redux';
-import modalSlice from 'reducers/modal';
-import  Router  from 'next/router';
+import { deleteVideoAPI } from "apis/accounts";
+import { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
+import modalSlice from "reducers/modal";
+import Router from "next/router";
 
 const MyUploadPage: NextPageWithLayout = () => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
-  
+
   const [target, setTarget] = useState("");
   const queryClient = useQueryClient();
 
@@ -31,37 +31,44 @@ const MyUploadPage: NextPageWithLayout = () => {
 
   const { getMessage, error } = useMessage();
 
-  const { isLoading,data } = useQuery(QUERY_KEY.videos.key, QUERY_KEY.videos.api);
+  const { isLoading, data } = useQuery(
+    QUERY_KEY.videos.key,
+    QUERY_KEY.videos.api
+  );
 
-  const deleteMutation = useMutation<void, AxiosError, {id: number}>(deleteVideoAPI,{
-    onSuccess: (data) =>{
-      console.log(data);
-      queryClient.invalidateQueries('user');
+  const deleteMutation = useMutation<void, AxiosError, { id: number }>(
+    deleteVideoAPI,
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries("user");
+      },
     }
-  });
+  );
 
-  const onDelete = useCallback(()=>{
-    console.log("delete mutate");
-    deleteMutation.mutate({id:parseInt(target)});
+  const onDelete = useCallback(() => {
+    deleteMutation.mutate({ id: parseInt(target) });
     onClose();
-  },[deleteMutation]);
-  
+  }, [deleteMutation]);
+
   useEffect(() => {
     const email = sessionStorage.getItem("email");
     if (!email) {
       Router.replace("/");
       dispatch(modalSlice.actions.isError({ isError: true }));
       dispatch(modalSlice.actions.open({}));
-      dispatch(modalSlice.actions.setErrorMessage({errorMessage: "로그인이 필요합니다."}));
+      dispatch(
+        modalSlice.actions.setErrorMessage({
+          errorMessage: "로그인이 필요합니다.",
+        })
+      );
       setTimeout(() => {
         dispatch(modalSlice.actions.close({}));
       }, 3000);
     }
   }, []);
-  if(isLoading) {
-    return <Loading />
+  if (isLoading) {
+    return <Loading />;
   }
-  console.log(data);
   return (
     <div className={style.wrapper}>
       <div className={style["select-container"]}>

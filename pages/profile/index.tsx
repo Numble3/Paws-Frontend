@@ -1,5 +1,9 @@
-import { deleteVideoAPI, getUsaerDetailAPI, getUserVideosAPI } from "apis/accounts";
-import { AxiosError } from 'axios';
+import {
+  deleteVideoAPI,
+  getUsaerDetailAPI,
+  getUserVideosAPI,
+} from "apis/accounts";
+import { AxiosError } from "axios";
 import { Loading, VideoList } from "components/custom";
 import VideoEditBox from "components/custom/video-edit-box";
 import useModal from "hooks/use-modal";
@@ -17,7 +21,7 @@ const ProfilePage: NextPageWithLayout = () => {
   const [isOpen, onClose, setIsOpen] = useModal("edit");
   const [isLoading, setIsLoading] = useState(true);
   const [target, setTarget] = useState("");
-  
+
   const queryClient = useQueryClient();
 
   const { data } = useQuery(
@@ -37,14 +41,15 @@ const ProfilePage: NextPageWithLayout = () => {
     }
   );
   const { data: videoData } = useQuery("videos", getUserVideosAPI);
-  console.log("videoData", videoData);
 
-  const deleteMutation = useMutation<void, AxiosError, {id: number}>(deleteVideoAPI,{
-    onSuccess: (data) =>{
-      console.log(data);
-      queryClient.invalidateQueries('user');
+  const deleteMutation = useMutation<void, AxiosError, { id: number }>(
+    deleteVideoAPI,
+    {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries("user");
+      },
     }
-  });
+  );
 
   const onEditHandler = useCallback((e: any) => {
     e.stopPropagation();
@@ -52,11 +57,10 @@ const ProfilePage: NextPageWithLayout = () => {
     setIsOpen(true);
   }, []);
 
-  const onDelete = useCallback(()=>{
-    console.log("delete mutate");
-    deleteMutation.mutate({id:parseInt(target)});
+  const onDelete = useCallback(() => {
+    deleteMutation.mutate({ id: parseInt(target) });
     onClose();
-  },[deleteMutation]);
+  }, [deleteMutation]);
 
   if (isLoading) {
     return (
@@ -68,8 +72,6 @@ const ProfilePage: NextPageWithLayout = () => {
 
   const user = data.accountDto;
   const videoList = data.videoDtos;
-  console.log("user : ", user);
-  console.log("videoList : ", videoList);
 
   return (
     <div className={style.wrapper}>
@@ -104,7 +106,7 @@ const ProfilePage: NextPageWithLayout = () => {
           onEdit={onEditHandler}
         />
       </section>
-      {isOpen && <VideoEditBox onClose={onClose} onDelete={onDelete}  />}
+      {isOpen && <VideoEditBox onClose={onClose} onDelete={onDelete} />}
     </div>
   );
 };

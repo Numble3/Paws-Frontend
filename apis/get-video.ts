@@ -4,7 +4,6 @@ axios.defaults.baseURL = "http://3.36.157.185:80/api";
 
 export async function getVideos(params: VideoParams) {
   let { category, page, size, sort, title } = params;
-  //console.log(params);
   let videoQuery: VideoParams = {
     page,
     size,
@@ -20,17 +19,13 @@ export async function getVideos(params: VideoParams) {
     videoQuery["title"] = title.toUpperCase();
   }
 
-  //console.log(videoQuery);
   try {
     const response = await axios.get("/videos", {
       params: videoQuery,
     });
-    //console.log("결과: ", response);
 
     return response.data;
-  } catch (e) {
-    //console.log(e);
-  }
+  } catch (e) {}
 }
 
 export async function todayRanking({
@@ -50,9 +45,7 @@ export async function todayRanking({
       const response = await axios.get("/likes/rank/day");
       return response.data.ranking;
     }
-  } catch (e) {
-    //console.log(e);
-  }
+  } catch (e) {}
 }
 
 export async function getVideoDetail(videoId: string) {
@@ -60,7 +53,5 @@ export async function getVideoDetail(videoId: string) {
     const response = await axios.get(`/videos/${videoId}`);
 
     return response.data;
-  } catch (e) {
-    // console.log(e);
-  }
+  } catch (e) {}
 }

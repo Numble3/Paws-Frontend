@@ -16,8 +16,6 @@ export default function LayoutContainer({
   noNav?: boolean;
   hasBack?: LayoutBackArrow;
 }) {
-  console.log("hasBack", hasBack);
-
   return (
     <div className={styles.wrapper}>
       {layoutHeader && <Header {...layoutHeader} />}

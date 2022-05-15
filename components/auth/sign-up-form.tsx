@@ -1,8 +1,14 @@
-import { signUpAPI } from 'apis/auth';
+import { signUpAPI } from "apis/auth";
 import { CustomInput } from "components/custom";
 import useInput from "hooks/use-input";
-import Router from 'next/router';
-import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useState } from "react";
+import Router from "next/router";
+import React, {
+  ChangeEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import style from "styles/signup.module.css";
 
 const SignUpForm = () => {
@@ -28,35 +34,34 @@ const SignUpForm = () => {
     [passwordChk]
   );
 
-  useEffect(()=>{
-    if(emailError){
-      setTimeout(()=>{
+  useEffect(() => {
+    if (emailError) {
+      setTimeout(() => {
         setEmailError(false);
-      },2000);
+      }, 2000);
     }
-    if(nicknameError){
-      setTimeout(()=>{
+    if (nicknameError) {
+      setTimeout(() => {
         setNicknameError(false);
-      },2000);
+      }, 2000);
     }
-  },[emailError, nicknameError]);
+  }, [emailError, nicknameError]);
 
   const onSubmit = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      console.log('회원가입');
       setIsLoading(true);
-      signUpAPI({email, nickname, password })
-        .then(()=>{
-          Router.replace('/login');
+      signUpAPI({ email, nickname, password })
+        .then(() => {
+          Router.replace("/login");
         })
         .catch((error) => {
-          console.log(error.response);
-          if(error.response.status === 409){
-            if(error.response.data.message === "이미 존재하는 이메일입니다."){
+          error.response;
+          if (error.response.status === 409) {
+            if (error.response.data.message === "이미 존재하는 이메일입니다.") {
               setEmailError(true);
               setErrorMessage(error.response.data.message);
-            }else{
+            } else {
               setNicknameError(true);
               setErrorMessage(error.response.data.message);
             }
@@ -121,10 +126,7 @@ const SignUpForm = () => {
           type="submit"
           onClick={onSubmit}
           disabled={
-            passwordError ||
-            nickname == "" ||
-            email == "" ||
-            passwordChk == ""
+            passwordError || nickname == "" || email == "" || passwordChk == ""
           }
         >
           회원가입 하기

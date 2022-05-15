@@ -46,7 +46,6 @@ const LoginForm = () => {
       setErrorMessage("로그인 실패");
     },
     onSuccess: (token) => {
-      console.log("access token 들어오는지 확인 : ", token);
       const { accessToken } = token;
       const { refreshToken } = token;
       localStorage.setItem("access", accessToken);
@@ -118,7 +117,7 @@ const LoginForm = () => {
           <a className={style.signup}>회원가입</a>
         </Link>
         {getMessage && (
-          <CustomMessage isError={error} ErrorMessage={errorMessage}  />
+          <CustomMessage isError={error} ErrorMessage={errorMessage} />
         )}
       </section>
     </>

@@ -9,7 +9,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "reducers";
-import likeSlice from "reducers/like";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
@@ -28,7 +27,6 @@ const Video = ({
   onEdit,
   style,
 }: Props) => {
-  const dispatch = useDispatch();
   const { videoLike } = useSelector((state: RootState) => state.like);
   return (
     <Link key={data.videoId} href={`/video/${data.videoId}`}>

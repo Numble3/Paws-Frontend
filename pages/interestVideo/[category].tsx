@@ -5,7 +5,6 @@ import Istyle from "styles/interest/interested.module.css";
 import { categories } from "lib/variables";
 import InterestVideo from "components/custom/interset-video";
 import { useQuery } from "react-query";
-import { QUERY_KEY } from "lib/query-key";
 import { getLikeVideosAPI } from "apis/like";
 import { Loading } from "components/custom";
 import { VideoListType } from 'types/video';

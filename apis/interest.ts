@@ -1,4 +1,3 @@
-import axios from "axios";
 import client from "apis/client";
 
 export async function addLikeVideo(videoId: string, category: string) {

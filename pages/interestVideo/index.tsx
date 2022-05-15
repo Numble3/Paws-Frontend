@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { NextPageWithLayout } from "types/common";
 import style from "styles/interest/interested.module.css";
-import { categories } from "lib/variables";
 import InterestBox from "components/custom/interest-box";
 import { useQuery } from "react-query";
-import { getAllLikeVideosAPI } from "apis/like";
 import NoResult from "components/custom/no-result";
 import { Loading } from "components/custom";
 import { QUERY_KEY } from "lib/query-key";

@@ -4,8 +4,6 @@ import { useState } from "react";
 import styles from "styles/search/result.module.css";
 import { ICONS } from "lib/assets";
 import SelectBox from "components/custom/select-box";
-import NoResult from "components/custom/no-result";
-import { VideoList } from "components/custom";
 import { NextPageWithLayout } from "types/common";
 import BackIcon from "components/icons/back";
 import { getVideos } from "apis/get-video";

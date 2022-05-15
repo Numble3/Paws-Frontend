@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from "react";
+import React, { useState } from "react";
 import style from "styles/edit-form.module.css";
 
 const NicknameEditForm = ({ onClose, onClick, onChange, nickname }: { onClose: () => void, onClick: ()=> void, onChange: (e:any)=> void, nickname: string }) => {

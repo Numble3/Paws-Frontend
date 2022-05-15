@@ -1,8 +1,7 @@
 import { RootState } from './../reducers/index';
-import { Dispatch, MouseEvent, SetStateAction, useCallback, useEffect } from "react";
+import {  useEffect } from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import modalSlice from 'reducers/modal';
+import { useSelector } from 'react-redux';
 
 type ReturnType = {
   getMessage:boolean,

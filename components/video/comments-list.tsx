@@ -90,7 +90,7 @@ const VideoCommentsList = ({ videoId, category }: Props) => {
       ) : (
         <>
           {data.map((value: CommentType, index) => (
-            <VideoComment category={category} key={index} {...value} />
+            <VideoComment  key={index} {...value} />
           ))}
         </>
       )}

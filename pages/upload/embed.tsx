@@ -3,7 +3,7 @@ import PreviewImage from "components/upload/previewImage";
 import VideoCategory from "components/upload/videoCategory";
 import { ChangeEvent, useState, useEffect } from "react";
 import { CustomInput, Loading } from "components/custom";
-import { createEmbedVideo, checkEmbedLink, imageResize } from "apis/upload";
+import { createEmbedVideo, imageResize } from "apis/upload";
 import CustomTextArea from "components/custom/textarea";
 import { NextPageWithLayout } from "types/common";
 import { useRouter } from "next/router";

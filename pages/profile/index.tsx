@@ -8,7 +8,7 @@ import { QUERY_KEY } from "lib/query-key";
 import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
-import { MouseEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import style from "styles/profile.module.css";
 import { NextPageWithLayout } from "types/common";

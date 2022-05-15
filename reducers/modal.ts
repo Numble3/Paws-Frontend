@@ -10,10 +10,10 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers:{
-    open(state,action) {
+    open(state, action) {
       state.messageOpen = true;
     },
-    close(state,action){
+    close(state, action){
       state.messageOpen = false;
     },
     isError(state, action){

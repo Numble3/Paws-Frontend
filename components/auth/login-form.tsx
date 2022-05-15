@@ -1,5 +1,4 @@
-import { getUserInfoAPI, logInAPI } from "apis/auth";
-import client from "apis/client";
+import { getUserInfoAPI } from "apis/auth";
 import { AxiosError } from "axios";
 import { CustomInput } from "components/custom";
 import CustomMessage from "components/custom/message";
@@ -15,11 +14,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useDispatch } from "react-redux";
 import modalSlice from "reducers/modal";
 import style from "styles/loginform.module.css";
-type User = {
-  email: string;
-  profile: string;
-  nickanme: string;
-};
+
 
 const LoginForm = () => {
   const [email, onChangeEmail] = useInput("");

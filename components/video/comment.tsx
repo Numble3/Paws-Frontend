@@ -14,7 +14,7 @@ interface Props {
   like: string;
   commentId: string;
   content: string;
-  category: string;
+  
 }
 
 /** 동영상 댓글 */
@@ -25,7 +25,6 @@ const VideoComment = ({
   createAt,
   commentId,
   nickname,
-  category,
 }: Props) => {
   const router = useRouter();
   const { pid } = router.query;

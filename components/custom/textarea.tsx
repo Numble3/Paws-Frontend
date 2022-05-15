@@ -1,6 +1,3 @@
-import { CautionIcon } from "components/icons";
-import { ICONS } from "lib/assets";
-import Image from "next/image";
 import { ChangeEvent, useMemo } from "react";
 import style from "styles/custom/custom-input.module.css";
 import textarea from "styles/upload/embed.module.css";
@@ -24,12 +21,6 @@ const CustomTextArea = ({
   placeHolderMessage,
   onChange,
 }: Props) => {
-  const iconPosition = useMemo(
-    () => ({
-      transform: `translate(-20px,${(height - 20) / 2}px)`,
-    }),
-    []
-  );
 
   return (
     <div className={`${style.container} ${textarea.description}`}>

@@ -10,7 +10,7 @@ import EditIcon from "components/icons/edit";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { AxiosError } from "axios";
-import { getUserInfoAPI, logOutAPI, withDrawAPI } from "apis/auth";
+import { logOutAPI, withDrawAPI } from "apis/auth";
 import Router, { useRouter } from "next/router";
 import useInput from "hooks/use-input";
 import { imageResizeAPI, userUpdateAPI } from "apis/accounts";

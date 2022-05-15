@@ -14,7 +14,7 @@ const CONTENTS = `관심 영상이 없어요 :(
 
 const InterestVideo: NextPageWithLayout = () => {
   const [noResult, setNoResult] = useState(true);
-  const { isLoading, data } = useQuery("likesAll", getAllLikeVideosAPI, {
+  const { data } = useQuery(QUERY_KEY.likesAll.key, QUERY_KEY.likesAll.api, {
     onSuccess: (data) => {
       Object.keys(data.likes).map((v) => {
         if (data.likes[v].getLikeVideoDtos.length !== 0) {

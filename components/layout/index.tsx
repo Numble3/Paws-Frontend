@@ -26,7 +26,7 @@ export default function LayoutContainer({
         style={{
           paddingTop: layoutHeader && "56px",
           paddingBottom: !noNav ? "56px" : "0",
-          overflow: "auto",
+          // overflow: "auto",
           height: "100%",
         }}
       >

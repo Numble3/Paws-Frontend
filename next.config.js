@@ -8,6 +8,7 @@ const nextConfig = {
       "w.namu.la",
       "img.insight.co.kr",
       "d2yok33re0ydfm.cloudfront.net",
+      "i.pinimg.com",
     ],
   },
 };

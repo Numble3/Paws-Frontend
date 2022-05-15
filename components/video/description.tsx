@@ -6,7 +6,11 @@ import VideoInfoButton from "./info-button";
 import { addLikeVideo, deleteLikeVideo } from "apis/interest";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import likeSlice from "reducers/like";
 import "dayjs/locale/ko";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "reducers";
+
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 interface Props {
@@ -31,7 +35,9 @@ const VideoDescription = ({
   videoId,
 }: Props) => {
   const [showDetail, setShowDetail] = useState(false);
-  const [heartActive, setHeartActive] = useState(false);
+  const dispatch = useDispatch();
+  const { videoLike } = useSelector((state: RootState) => state.like);
+  const [heartActive, setHeartActive] = useState(videoLike[videoId]);
 
   const onToggleHeart = useCallback(async () => {
     setHeartActive((p) => !p);
@@ -40,10 +46,12 @@ const VideoDescription = ({
       await addLikeVideo(videoId, category).then((res) => {
         //      console.log(res);
       });
+      dispatch(likeSlice.actions.active(videoId));
     } else {
       await deleteLikeVideo(videoId).then((res) => {
         //      console.log(res);
       });
+      dispatch(likeSlice.actions.inactive(videoId));
     }
   }, []);
 
@@ -89,3 +97,6 @@ const VideoDescription = ({
 };
 
 export default VideoDescription;
+function useAppDispatch() {
+  throw new Error("Function not implemented.");
+}

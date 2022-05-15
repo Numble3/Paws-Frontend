@@ -74,7 +74,7 @@ const ProfileEdit: NextPageWithLayout = () => {
       sessionStorage.removeItem("email");
       sessionStorage.removeItem("profile");
       sessionStorage.removeItem("nickname");
-      queryClient.setQueryData("user", "");
+      queryClient.invalidateQueries();
     },
     onSettled: () => {
       setLoading(false);

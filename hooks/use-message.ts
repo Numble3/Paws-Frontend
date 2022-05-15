@@ -15,8 +15,6 @@ const useMessage = (): ReturnType => {
   const {messageOpen} = useSelector((state:RootState)=> state.modal);
 
   useEffect(()=>{
-    console.log("useEffect 실행");
-    console.log(messageOpen);
     if(messageOpen){
         setMassage(true);
     }else{

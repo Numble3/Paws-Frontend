@@ -1,28 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPageWithLayout } from "types/common";
 import style from "styles/interest/interested.module.css";
 import { categories } from "lib/variables";
 import InterestBox from "components/custom/interest-box";
 import { useQuery } from "react-query";
+import { getAllLikeVideosAPI } from "apis/like";
 import NoResult from "components/custom/no-result";
-import { QUERY_KEY } from "lib/query-key";
+import { Loading } from "components/custom";
+import { QUERY_KEY } from 'lib/query-key';
 
 const TITLE = "관심 영상 없음";
 const CONTENTS = `관심 영상이 없어요 :( 
   마음에 드는 영상을 저장해 보세요`;
 
 const InterestVideo: NextPageWithLayout = () => {
-  const { data } = useQuery(QUERY_KEY.likesAll.key, QUERY_KEY.likesAll.api);
+  const [noResult, setNoResult] = useState(true);
+  const { isLoading, data } = useQuery(QUERY_KEY.likesAll.key, QUERY_KEY.likesAll.api, {
+    onSuccess: (data) => {
+      Object.keys(data.likes).map((v) => {
+        if (data.likes[v].getLikeVideoDtos.length !== 0) {
+          setNoResult(false);
+          return;
+        }
+      });
+    },
+  });
 
   console.log("likesAll : ", data);
-  const flag = true;
-  return flag ? (
+  if (isLoading) return <Loading />;
+  return noResult ? (
     <NoResult title={TITLE} content={CONTENTS} />
   ) : (
+    
     <div className={style.wrapper}>
-      {categories.map((v) => {
-        if (v.value)
-          return <InterestBox key={v.value} value={v.value} label={v.label} />;
+      {Object.keys(data.likes).map((v, i) => {
+        return (
+          data.likes[v].getLikeVideoDtos.length !== 0 &&
+          <InterestBox
+            key={i}
+            datas={data.likes[v].getLikeVideoDtos}
+            label={v}
+          />
+        );
       })}
     </div>
   );

@@ -3,23 +3,34 @@ import boxStyle from "styles/interest/interested.module.css";
 import style from "styles/interest/category.module.css";
 import Image from "next/image";
 import { HeartIcon } from 'components/icons';
+import { VideoListType } from 'types/video';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
+dayjs.extend(relativeTime);
 
-const InterestVideo = () => {
+/* videoId, title, 업로더 닉네임, */
+interface Props {
+  videoData: VideoListType
+}
+
+const InterestVideo = ({videoData}:Props) => {
   return (
-    <Link href={`/video/${123}`}>
+    <Link href={`/video/${videoData.videoId}`}>
       <article className={style.box}>
         <div className={style.img}>
           <Image src={`/images/temp.png`} layout="fill" objectFit="cover" />
         </div>
         <section className={style["text-container"]}>
-          <div className={style["sub-title"]}>영상제목</div>
+          <div className={style["sub-title"]}>{videoData.title}</div>
           <div className={boxStyle.info}>
-            <span>영상 작성자</span>
+            <span>{videoData.nickname}</span>
           </div>
           <div className={boxStyle.info}>
-            <span>동영상 38개</span>
+            <span>{dayjs(videoData.createdAt).fromNow()}</span>
             <span className={boxStyle.space}>•</span>
-            <span>3일 전</span>
+            <span>{videoData.view}</span>
           </div>
         </section>
         <div className={style.icon}>

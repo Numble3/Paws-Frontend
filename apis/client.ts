@@ -13,12 +13,15 @@ client.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log(error.response.status);
+    console.log("intercepter error catch : ",error.response);
     if (error.response && error.response.status === 401) {
       const originalRequest = error.config;
       console.log(originalRequest);
       const refresh = localStorage.getItem("refresh");
       console.log("refresh 확인 : ", refresh);
+      if(!refresh){
+        return Promise.reject(error);
+      }
       const data = await axios
         .get("/refresh-token", {
           headers:{
@@ -26,7 +29,8 @@ client.interceptors.response.use(
           }
         })
         .then((response) => response.data);
-      const { accessToken } = data;
+      const { accessToken, refreshToken } = data;
+      localStorage.setItem("refresh", refreshToken);
       client.defaults.headers.common.Authorization = `${accessToken}`;
       originalRequest.headers.Authorization = `${accessToken}`;
       return client(originalRequest);

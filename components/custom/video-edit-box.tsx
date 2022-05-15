@@ -4,7 +4,7 @@ import editStyle from "styles/edit-form.module.css";
 import style from "styles/video-edit-box.module.css";
 import AlertModal from './alert-modal';
 
-const VideoEditBox = ({ onClose }: { onClose: () => void }) => {
+const VideoEditBox = ({ onClose, onDelete }: { onClose: () => void, onDelete: () => void }) => {
   const [alertOpen, onAlertClose, AlertHandler, alertType] = useModal("alert");
   document.body.style.overflow = "hidden";
   return (
@@ -20,7 +20,7 @@ const VideoEditBox = ({ onClose }: { onClose: () => void }) => {
           </div>
         </div>
       </div>
-      {alertOpen && <AlertModal alertType={alertType!} onClose={onAlertClose} />}
+      {alertOpen && <AlertModal alertType={alertType!} onClose={onAlertClose} onDelete={onDelete} />}
     </div>
   );
 };

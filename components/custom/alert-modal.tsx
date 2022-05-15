@@ -26,13 +26,13 @@ const variable: {
   onSubmit: null!,
 };
 
-const WITH_DRAW_MESSAGE =
+const DELETE_MESSAGE =
  `삭제 이후 해당 영상 관련 모든 정보가 폐기되며,
  모든 데이터는 복구가 불가능 합니다.`;
 const LOG_OUT_MESSAGE =
   `'paws'앱에서 로그아웃 합니다.
   로그 아웃 후 혜당 계정으로 재로그인이 가능합니다.`;
-const DELETE_MESSAGE =
+const WITH_DRAW_MESSAGE =
   `회원 탈퇴 이후 회원 정보는 모두 삭제 되며,
   모든 데이터는 복구가 불가능합니다.`;
 

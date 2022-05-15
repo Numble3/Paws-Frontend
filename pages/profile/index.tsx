@@ -1,4 +1,5 @@
-import { getUsaerDetailAPI, getUserVideosAPI } from "apis/accounts";
+import { deleteVideoAPI, getUsaerDetailAPI, getUserVideosAPI } from "apis/accounts";
+import { AxiosError } from 'axios';
 import { Loading, VideoList } from "components/custom";
 import VideoEditBox from "components/custom/video-edit-box";
 import useModal from "hooks/use-modal";
@@ -8,13 +9,16 @@ import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import style from "styles/profile.module.css";
 import { NextPageWithLayout } from "types/common";
 
 const ProfilePage: NextPageWithLayout = () => {
   const [isOpen, onClose, setIsOpen] = useModal("edit");
   const [isLoading, setIsLoading] = useState(true);
+  const [target, setTarget] = useState("");
+  
+  const queryClient = useQueryClient();
 
   const { data } = useQuery(
     QUERY_KEY.userDetail.key,
@@ -35,10 +39,23 @@ const ProfilePage: NextPageWithLayout = () => {
   const { data: videoData } = useQuery("videos", getUserVideosAPI);
   console.log("videoData", videoData);
 
+  const deleteMutation = useMutation<void, AxiosError, {id: number}>(deleteVideoAPI,{
+    onSuccess: (data) =>{
+      console.log(data);
+      queryClient.invalidateQueries('user');
+    }
+  });
+
   const onEditHandler = useCallback((e: MouseEvent) => {
     e.stopPropagation();
+    setTarget(e.target.id);
     setIsOpen(true);
   }, []);
+
+  const onDelete = useCallback(()=>{
+    console.log("delete mutate");
+    deleteMutation.mutate({id:parseInt(target)})
+  },[deleteMutation]);
 
   if (isLoading) {
     return (
@@ -86,7 +103,7 @@ const ProfilePage: NextPageWithLayout = () => {
           onEdit={onEditHandler}
         />
       </section>
-      {isOpen && <VideoEditBox onClose={onClose} />}
+      {isOpen && <VideoEditBox onClose={onClose} onDelete={onDelete}  />}
     </div>
   );
 };

@@ -12,15 +12,15 @@ export async function addLikeVideo(videoId: string, category: string) {
     //console.log(response);
     return response.data;
   } catch (e) {
-    console.log(e);
+    //console.log(e);
   }
 }
 export async function deleteLikeVideo(videoId: string) {
   try {
     const response = await client.delete(`/likes/delete?id=${videoId}`);
-    console.log(response);
+    //console.log(response);
     return response;
   } catch (e) {
-    console.log(e);
+    //console.log(e);
   }
 }

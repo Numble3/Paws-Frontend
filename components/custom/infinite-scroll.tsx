@@ -41,9 +41,8 @@ function InfiniteScroll({
     setIsLoaded(false);
   };
   useEffect(() => {
-    console.log(selectedCategory);
     setData([]);
-    query = { ...query, sortCondition: selectedCategory };
+    query = { ...query, sort: selectedCategory };
   }, [selectedCategory]);
   const onIntersect = async (
     [entry]: any,

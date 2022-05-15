@@ -92,7 +92,7 @@ const Category: NextPageWithLayout = () => {
     category: cate as string,
     page: 0,
     size: 10,
-    sortCondition: selectedCategory,
+    sort: selectedCategory,
   };
 
   return (

@@ -22,7 +22,6 @@ const VideoPage: NextPageWithLayout = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log("ㅁ?");
 
   return (
     <>

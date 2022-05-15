@@ -29,7 +29,6 @@ const VideoDescription = ({
   const [heartActive, setHeartActive] = useState(false);
 
   const onToggleHeart = useCallback(async () => {
-    //TODO: 동영상 좋아요 api 연동
     setHeartActive((p) => !p);
 
     if (!heartActive) {

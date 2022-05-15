@@ -16,14 +16,13 @@ const HlsPlayer = ({ videoSrc }: Props) => {
 
     //TODO: check buffer error
     if (video && video.current) {
-      console.log("video", video);
       video.current.src = videoSrc;
 
       hls.loadSource(videoSrc);
       hls.attachMedia(video.current);
-      // hls.on(Hls.Events.MANIFEST_PARSED, async () => {
-      // await video?.current?.play();
-      // });
+      hls.on(Hls.Events.MANIFEST_PARSED, async () => {
+        await video?.current?.play();
+      });
     }
   };
 
@@ -31,11 +30,12 @@ const HlsPlayer = ({ videoSrc }: Props) => {
 
   useEffect(() => {
     videoPlay();
+    // console.log("videoSrc", videoSrc);
   }, [videoSrc]);
 
-  useEffect(() => {
-    play ? video?.current?.pause() : video?.current?.play();
-  }, [play]);
+  // useEffect(() => {
+  //   play ? video?.current?.play() : video?.current?.pause();
+  // }, [play]);
 
   return (
     <div className={styles["hls-player"]} onClick={handleVideo}>

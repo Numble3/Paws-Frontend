@@ -31,9 +31,9 @@ const VideoPage: NextPageWithLayout = () => {
             {data.type === "임베딩 영상" ? (
               <EmbedPlayer videoSrc={data.videoUrl} />
             ) : (
-              <div style={{ height: "211px", background: "green" }}>
-                <HlsPlayer videoSrc={data.videoUrl} />
-              </div>
+              // <div style={{ height: "211px", background: "green" }}>
+              <HlsPlayer videoSrc={data.videoUrl} />
+              // </div>
             )}
             <VideoDescription {...data} />
             <VideoCommentsList

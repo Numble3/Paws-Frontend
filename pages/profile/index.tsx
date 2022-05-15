@@ -1,38 +1,40 @@
-import { getUsaerDetailAPI } from 'apis/accounts';
-import { getUserInfoAPI } from "apis/auth";
-import client from "apis/client";
+import { getUsaerDetailAPI, getUserVideosAPI } from "apis/accounts";
 import { Loading, VideoList } from "components/custom";
 import VideoEditBox from "components/custom/video-edit-box";
 import useModal from "hooks/use-modal";
 import { ICONS } from "lib/assets";
+import { QUERY_KEY } from "lib/query-key";
 import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
 import { MouseEvent, useCallback, useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import style from "styles/profile.module.css";
 import { NextPageWithLayout } from "types/common";
-interface User {
-  email: string;
-  profile: string;
-  nickanme: string;
-}
+
 const ProfilePage: NextPageWithLayout = () => {
   const [isOpen, onClose, setIsOpen] = useModal("edit");
   const [isLoading, setIsLoading] = useState(true);
 
-  const { data} = useQuery("user", getUsaerDetailAPI, {
-    retry: false,
-    onSuccess: () => {
-      setIsLoading(false);
-    },
-    onError: () => {
-      setTimeout(() => {
-        Router.replace("/login");
-      }, 1000);
-      console.error("에러발생");
-    },
-  });
+  const { data } = useQuery(
+    QUERY_KEY.userDetail.key,
+    QUERY_KEY.userDetail.api,
+    {
+      retry: false,
+      onSuccess: () => {
+        setIsLoading(false);
+      },
+      onError: () => {
+        setTimeout(() => {
+          Router.replace("/login");
+        }, 1000);
+        console.error("에러발생");
+      },
+    }
+  );
+  const { data: videoData } = useQuery("videos", getUserVideosAPI);
+  console.log("videoData", videoData);
+
   const onEditHandler = useCallback((e: MouseEvent) => {
     e.stopPropagation();
     setIsOpen(true);
@@ -45,13 +47,11 @@ const ProfilePage: NextPageWithLayout = () => {
       </div>
     );
   }
-  
+
   const user = data.accountDto;
   const videoList = data.videoDtos;
   console.log("user : ", user);
-  console.log("videoList : ",videoList);
-  
-
+  console.log("videoList : ", videoList);
 
   return (
     <div className={style.wrapper}>

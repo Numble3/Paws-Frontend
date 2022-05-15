@@ -1,7 +1,7 @@
 @value cateWhole, cateDog, cateCat, cateLizard, cateBird, cateRabbit, cateHamster, cateETC from 'styles/variables.css';
 .wrap {
   background: #fbfbfb;
-  height: 100%;
+  height: fit-content;
   padding: 24px 17px;
 }
 
@@ -65,8 +65,8 @@
   position: relative;
   border-radius: 8px;
   height: 100%;
+  min-height: 120px;
   overflow: hidden;
-  min-height: 90px;
 }
 .cate:hover {
   opacity: 0.5;

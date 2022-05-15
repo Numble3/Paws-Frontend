@@ -4,28 +4,60 @@ import style from "styles/my-upload.module.css";
 import useModal from "hooks/use-modal";
 import VideoEditBox from "components/custom/video-edit-box";
 import { Loading, VideoList } from "components/custom";
-import { MouseEvent, useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "reducers";
+import {  useCallback, useEffect, useState } from "react";
 import CustomMessage from "components/custom/message";
 import useMessage from "hooks/use-message";
-import { useQuery } from "react-query";
+import {  useMutation, useQuery, useQueryClient } from "react-query";
 import { QUERY_KEY } from "lib/query-key";
-import { getUserVideosAPI } from 'apis/accounts';
+import { deleteVideoAPI } from 'apis/accounts';
+import { AxiosError } from 'axios';
+import { useDispatch } from 'react-redux';
+import modalSlice from 'reducers/modal';
+import  Router  from 'next/router';
 
 const MyUploadPage: NextPageWithLayout = () => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
+  
+  const [target, setTarget] = useState("");
+  const queryClient = useQueryClient();
 
-  const onEditHandler = useCallback((e: MouseEvent) => {
+  const onEditHandler = useCallback((e: any) => {
     e.stopPropagation();
+    setTarget(e.target.id);
     setIsOpen(true);
   }, []);
+  const dispatch = useDispatch();
   const [isOpen, onClose, setIsOpen] = useModal("edit");
 
   const { getMessage, error } = useMessage();
 
   const { isLoading,data } = useQuery(QUERY_KEY.videos.key, QUERY_KEY.videos.api);
+
+  const deleteMutation = useMutation<void, AxiosError, {id: number}>(deleteVideoAPI,{
+    onSuccess: (data) =>{
+      console.log(data);
+      queryClient.invalidateQueries('user');
+    }
+  });
+
+  const onDelete = useCallback(()=>{
+    console.log("delete mutate");
+    deleteMutation.mutate({id:parseInt(target)});
+    onClose();
+  },[deleteMutation]);
   
+  useEffect(() => {
+    const email = sessionStorage.getItem("email");
+    if (!email) {
+      Router.replace("/");
+      dispatch(modalSlice.actions.isError({ isError: true }));
+      dispatch(modalSlice.actions.open({}));
+      dispatch(modalSlice.actions.setErrorMessage({errorMessage: "로그인이 필요합니다."}));
+      setTimeout(() => {
+        dispatch(modalSlice.actions.close({}));
+      }, 3000);
+    }
+  }, []);
   if(isLoading) {
     return <Loading />
   }
@@ -36,7 +68,7 @@ const MyUploadPage: NextPageWithLayout = () => {
         <SelectBox setSelectedCategory={setSelectedCategory} />
       </div>
       <VideoList datas={data.videos} noDot={false} onEdit={onEditHandler} />
-      {isOpen && <VideoEditBox onClose={onClose} />}
+      {isOpen && <VideoEditBox onClose={onClose} onDelete={onDelete} />}
       {getMessage && <CustomMessage isError={error} />}
     </div>
   );

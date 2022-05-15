@@ -30,6 +30,9 @@ client.interceptors.response.use(
         })
         .then((response) => response.data);
       const { accessToken, refreshToken } = data;
+      console.log("access 재발급 :", accessToken);
+      console.log("refresh 재발급 :", refreshToken);
+      localStorage.setItem("access", accessToken);
       localStorage.setItem("refresh", refreshToken);
       client.defaults.headers.common.Authorization = `${accessToken}`;
       originalRequest.headers.Authorization = `${accessToken}`;

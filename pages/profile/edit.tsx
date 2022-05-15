@@ -11,10 +11,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { AxiosError } from "axios";
 import { getUserInfoAPI, logOutAPI, withDrawAPI } from "apis/auth";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import useInput from "hooks/use-input";
 import { imageResizeAPI, userUpdateAPI } from "apis/accounts";
 import { QUERY_KEY } from "lib/query-key";
+import { useDispatch } from 'react-redux';
+import modalSlice from 'reducers/modal';
 
 const ProfileEdit: NextPageWithLayout = () => {
   const [editOpen, onEditClose, setIsOpen] = useModal("edit");
@@ -24,12 +26,22 @@ const ProfileEdit: NextPageWithLayout = () => {
   const { data: user } = useQuery(QUERY_KEY.user.key, QUERY_KEY.user.api);
 
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [profile, setProfile] = useState("");
   const [email, setEmail] = useState("");
-
+  const dispatch = useDispatch();
   useEffect(() => {
+    const email = sessionStorage.getItem("email");
+    if (!email) {
+      router.replace("/");
+      dispatch(modalSlice.actions.isError({ isError: true }));
+      dispatch(modalSlice.actions.open({}));
+      dispatch(modalSlice.actions.setErrorMessage({errorMessage: "로그인이 필요합니다."}));
+      setTimeout(() => {
+        dispatch(modalSlice.actions.close({}));
+      }, 3000);
+    }
     setNickname(sessionStorage.getItem("nickname")!);
     setEmail(sessionStorage.getItem("email")!);
     setProfile(sessionStorage.getItem("profile")!);
@@ -75,6 +87,7 @@ const ProfileEdit: NextPageWithLayout = () => {
       sessionStorage.removeItem("profile");
       sessionStorage.removeItem("nickname");
       queryClient.invalidateQueries();
+      queryClient.setQueryData("user", "");
     },
     onSettled: () => {
       setLoading(false);
@@ -132,6 +145,7 @@ const ProfileEdit: NextPageWithLayout = () => {
     updateMutaion.mutate({ nickname, profile });
   }, [updateMutaion]);
   console.log("proflie", profile);
+
   return (
     <div className={style.wrapper}>
       <div className={headerStyle.complete}>

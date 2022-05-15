@@ -31,7 +31,7 @@ const ProfilePage: NextPageWithLayout = () => {
       onError: () => {
         setTimeout(() => {
           Router.replace("/login");
-        }, 1000);
+        }, 2500);
         console.error("에러발생");
       },
     }
@@ -46,7 +46,7 @@ const ProfilePage: NextPageWithLayout = () => {
     }
   });
 
-  const onEditHandler = useCallback((e: MouseEvent) => {
+  const onEditHandler = useCallback((e: any) => {
     e.stopPropagation();
     setTarget(e.target.id);
     setIsOpen(true);
@@ -54,7 +54,8 @@ const ProfilePage: NextPageWithLayout = () => {
 
   const onDelete = useCallback(()=>{
     console.log("delete mutate");
-    deleteMutation.mutate({id:parseInt(target)})
+    deleteMutation.mutate({id:parseInt(target)});
+    onClose();
   },[deleteMutation]);
 
   if (isLoading) {

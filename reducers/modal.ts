@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   messageOpen:false,
   error:false,
+  errorMessage:"",
 };
 
 const modalSlice = createSlice({
@@ -17,6 +18,9 @@ const modalSlice = createSlice({
     },
     isError(state, action){
       state.error = action.payload.isError;
+    },
+    setErrorMessage(state, action){
+      state.errorMessage = action.payload.errorMessage;
     }
   }
 })

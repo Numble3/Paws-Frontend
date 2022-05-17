@@ -11,9 +11,8 @@ import { VideoListType } from "types/video";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
-import { useDispatch } from "react-redux";
-import modalSlice from "reducers/modal";
 import { useEffect } from "react";
+import { useCheck } from "hooks/use-check";
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 type likesType = {
@@ -23,7 +22,8 @@ type likesType = {
 
 const InterestedCategory: NextPageWithLayout = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const { checkModal } = useCheck();
+
   const [{ label }] = categories.filter(
     (v) => v.value === router.query.category
   );
@@ -41,20 +41,7 @@ const InterestedCategory: NextPageWithLayout = () => {
     }
   );
   useEffect(() => {
-    const email = sessionStorage.getItem("email");
-    if (!email) {
-      router.replace("/");
-      dispatch(modalSlice.actions.isError({ isError: true }));
-      dispatch(modalSlice.actions.open({}));
-      dispatch(
-        modalSlice.actions.setErrorMessage({
-          errorMessage: "로그인이 필요합니다.",
-        })
-      );
-      setTimeout(() => {
-        dispatch(modalSlice.actions.close({}));
-      }, 3000);
-    }
+    checkModal();
   }, []);
 
   if (isLoading) return <Loading />;

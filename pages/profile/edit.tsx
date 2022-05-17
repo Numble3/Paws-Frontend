@@ -8,47 +8,34 @@ import AlertModal from "components/custom/alert-modal";
 import useModal from "hooks/use-modal";
 import EditIcon from "components/icons/edit";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { AxiosError } from "axios";
 import { logOutAPI, withDrawAPI } from "apis/auth";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 import useInput from "hooks/use-input";
 import { imageResizeAPI, userUpdateAPI } from "apis/accounts";
-import { QUERY_KEY } from "lib/query-key";
-import { useDispatch } from "react-redux";
-import modalSlice from "reducers/modal";
+import { useCheck } from "hooks/use-check";
 
 const ProfileEdit: NextPageWithLayout = () => {
   const [editOpen, onEditClose, setIsOpen] = useModal("edit");
   const [alertOpen, onAlertClose, AlertHandler, alertType] = useModal("alert");
 
   const queryClient = useQueryClient();
-  const { data: user } = useQuery(QUERY_KEY.user.key, QUERY_KEY.user.api);
+  const { checkModal } = useCheck();
 
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  // const { data: user } = useQuery(QUERY_KEY.user.key, QUERY_KEY.user.api);
+
   const [nickname, setNickname] = useState("");
   const [profile, setProfile] = useState("");
   const [email, setEmail] = useState("");
-  const dispatch = useDispatch();
+
   useEffect(() => {
-    const email = sessionStorage.getItem("email");
-    if (!email) {
-      router.replace("/");
-      dispatch(modalSlice.actions.isError({ isError: true }));
-      dispatch(modalSlice.actions.open({}));
-      dispatch(
-        modalSlice.actions.setErrorMessage({
-          errorMessage: "로그인이 필요합니다.",
-        })
-      );
-      setTimeout(() => {
-        dispatch(modalSlice.actions.close({}));
-      }, 3000);
+    const isUser = checkModal();
+    if (isUser) {
+      setNickname(sessionStorage.getItem("nickname")!);
+      setEmail(sessionStorage.getItem("email")!);
+      setProfile(sessionStorage.getItem("profile")!);
     }
-    setNickname(sessionStorage.getItem("nickname")!);
-    setEmail(sessionStorage.getItem("email")!);
-    setProfile(sessionStorage.getItem("profile")!);
   }, []);
   const [nicknameValue, onChangeNickname] = useInput("");
 
@@ -75,9 +62,6 @@ const ProfileEdit: NextPageWithLayout = () => {
   }, []);
 
   const logoutMutation = useMutation<void, AxiosError>(logOutAPI, {
-    onMutate: () => {
-      setLoading(true);
-    },
     onError: (error) => {
       alert(error.response?.data);
     },
@@ -91,15 +75,9 @@ const ProfileEdit: NextPageWithLayout = () => {
       queryClient.invalidateQueries();
       queryClient.setQueryData("user", "");
     },
-    onSettled: () => {
-      setLoading(false);
-    },
   });
 
   const withdrawMutation = useMutation<void, AxiosError>(withDrawAPI, {
-    onMutate: () => {
-      setLoading(true);
-    },
     onError: (error) => {
       alert(error.response?.data);
     },
@@ -108,9 +86,6 @@ const ProfileEdit: NextPageWithLayout = () => {
       localStorage.removeItem("refresh");
       Router.replace("/");
     },
-    onSettled: () => {
-      setLoading(false);
-    },
   });
 
   const updateMutaion = useMutation<
@@ -118,15 +93,8 @@ const ProfileEdit: NextPageWithLayout = () => {
     AxiosError,
     { nickname: string; profile: string }
   >(userUpdateAPI, {
-    onMutate: () => {
-      setLoading(true);
-    },
     onError: (error) => {
       alert(error.response?.data);
-    },
-    onSuccess: () => {},
-    onSettled: () => {
-      setLoading(false);
     },
   });
 

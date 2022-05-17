@@ -25,7 +25,7 @@ export default function LayoutContainer({
           paddingTop: layoutHeader && "56px",
           paddingBottom: !noNav ? "56px" : "0",
           // overflow: "auto",
-          height: "100%",
+          // height: "100%",
         }}
       >
         {children}

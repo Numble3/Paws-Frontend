@@ -22,6 +22,7 @@ interface Props {
   content: string;
   createdAt: string;
   videoId: string;
+  userProfilePath: string;
 }
 
 const VideoDescription = ({
@@ -33,6 +34,7 @@ const VideoDescription = ({
   content,
   like,
   videoId,
+  userProfilePath,
 }: Props) => {
   const [showDetail, setShowDetail] = useState(false);
   const dispatch = useDispatch();
@@ -54,7 +56,12 @@ const VideoDescription = ({
   return (
     <section>
       <article className={styles.header}>
-        <div className={styles.profile} />
+        <Image
+          className={styles.profile}
+          src={userProfilePath}
+          width={24}
+          height={24}
+        />
         <h4>{nickname}</h4>
       </article>
 

@@ -24,16 +24,17 @@ function InfiniteScroll({
 }: Props) {
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState<any>([]);
+  const [videoListData, setVideoListData] = useState<any>([]);
+
   let page = query.page;
   let hasNext = true;
   const getMoreItem = async () => {
-    //(query);
     setIsLoaded(true);
-    await fetchFunc({ ...query, page: page }).then((res) => {
+    await fetchFunc({ ...query, page }).then((res) => {
       hasNext = res.hasNext;
-      setData((prev: VideoListType[]) => {
+      setVideoListData((prev: VideoListType[]) => {
         const newData = prev.concat(res.contents);
+
         return newData;
       });
     });
@@ -41,7 +42,7 @@ function InfiniteScroll({
     setIsLoaded(false);
   };
   useEffect(() => {
-    setData([]);
+    setVideoListData([]);
     query = { ...query, sort: selectedCategory };
   }, [selectedCategory]);
   const onIntersect = async (
@@ -68,22 +69,20 @@ function InfiniteScroll({
     return () => observer && observer.disconnect();
   }, [target, selectedCategory]);
   return (
-    <>
-      <section style={{ display: "grid", gap: "20px" }}>
-        {data && data.length !== 0
-          ? data.map((value: VideoListType, index: any) => {
-              return <Video key={index} data={value} />;
-            })
-          : !isLoaded && <NoResult {...noResult} />}
-        <div ref={setTarget} id="loading">
-          {isLoaded && (
-            <div>
-              <Image src={ICONS.LOADING} width={25} height={25} />
-            </div>
-          )}
-        </div>
-      </section>
-    </>
+    <section style={{ display: "grid", gap: "20px" }}>
+      {videoListData && videoListData.length !== 0
+        ? videoListData.map((value: VideoListType, index: any) => {
+            return <Video key={index} data={value} />;
+          })
+        : !isLoaded && <NoResult {...noResult} />}
+      <div ref={setTarget} id="loading">
+        {isLoaded && (
+          <div>
+            <Image src={ICONS.LOADING} width={25} height={25} />
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
 

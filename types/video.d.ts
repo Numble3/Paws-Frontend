@@ -28,3 +28,16 @@ export type VideoParams = {
   sort?: string;
   title?: string;
 };
+
+export type LikeVideoList = {
+  createdAt: string;
+  like: number;
+  nickname: string;
+  thumbnailPath: string;
+  title: string;
+  videoId: number;
+  view: number;
+  thumbnailPath: string;
+  profileUrl: string;
+  videoType: string;
+}

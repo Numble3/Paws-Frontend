@@ -40,7 +40,7 @@ const ProfilePage: NextPageWithLayout = () => {
       },
     }
   );
-  const { data: videoData } = useQuery("videos", getUserVideosAPI);
+ // const { data: videoData } = useQuery("videos", getUserVideosAPI);
 
   const deleteMutation = useMutation<void, AxiosError, { id: number }>(
     deleteVideoAPI,

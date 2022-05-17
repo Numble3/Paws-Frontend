@@ -23,7 +23,7 @@ const ProfileEdit: NextPageWithLayout = () => {
   const [alertOpen, onAlertClose, AlertHandler, alertType] = useModal("alert");
 
   const queryClient = useQueryClient();
-  const { data: user } = useQuery(QUERY_KEY.user.key, QUERY_KEY.user.api);
+  //const { data: user } = useQuery(QUERY_KEY.user.key, QUERY_KEY.user.api);
 
   const [loading, setLoading] = useState(false);
   const router = useRouter();

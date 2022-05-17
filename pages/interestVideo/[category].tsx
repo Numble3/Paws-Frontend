@@ -28,11 +28,7 @@ const InterestedCategory: NextPageWithLayout = () => {
     (v) => v.value === router.query.category
   );
 
-  const {
-    data,
-    isLoading,
-    fetchNextPage,
-  } = useInfiniteQuery<LikeVideoList[]>(
+  const { data, isLoading, fetchNextPage } = useInfiniteQuery<LikeVideoList[]>(
     ["likes", CATEGORY],
     ({ pageParam = 0 }) => getLikeVideosAPI(CATEGORY, pageParam, 5),
     {
@@ -42,25 +38,25 @@ const InterestedCategory: NextPageWithLayout = () => {
     }
   );
 
-  useEffect(() => {
-    const email = sessionStorage.getItem("email");
-    if (!email) {
-      router.replace("/");
-      dispatch(modalSlice.actions.isError({ isError: true }));
-      dispatch(modalSlice.actions.open({}));
-      dispatch(
-        modalSlice.actions.setErrorMessage({
-          errorMessage: "로그인이 필요합니다.",
-        })
-      );
-      setTimeout(() => {
-        dispatch(modalSlice.actions.close({}));
-      }, 3000);
-    }
-  }, []);
+  // const { data, isLoading } = useQuery(
+  //   "test",
+  //   () => {
+  //     return getLikeVideosAPI({
+  //       category: router.query.category as string,
+  //       size: 5,
+  //     });
+  //   },
+  //   {
+  //     retry: 2,
+  //   }
+  // );
+  // useEffect(() => {
+  //   checkModal();
+  // }, []);
 
   if (isLoading) return <Loading />;
   const videoList = data?.pages.flat();
+
   return (
     <div className={style.wrapper}>
       <header className={style.header}>
@@ -74,7 +70,7 @@ const InterestedCategory: NextPageWithLayout = () => {
         </div>
       </header>
       <section className={style.contents}>
-        {videoList?.map((v: VideoListType, i: number) => (
+        {videoList?.map((v: LikeVideoList, i: number) => (
           <InterestVideo key={i} videoData={v} />
         ))}
       </section>

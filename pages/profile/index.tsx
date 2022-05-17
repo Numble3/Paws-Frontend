@@ -1,8 +1,4 @@
-import {
-  deleteVideoAPI,
-  getUsaerDetailAPI,
-  getUserVideosAPI,
-} from "apis/accounts";
+import { deleteVideoAPI, getUserVideosAPI } from "apis/accounts";
 import { AxiosError } from "axios";
 import { Loading, VideoList } from "components/custom";
 import VideoEditBox from "components/custom/video-edit-box";

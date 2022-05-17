@@ -14,10 +14,12 @@ export type VideoListType = {
   createdAt: string;
   like: number;
   nickname: string;
+  profileUrl: string;
   thumbnailPath: string;
   title: string;
   videoId: number;
   view: number;
+  category: "DOG" | "CAT" | "HAMSTER" | "LIZARD" | "BIRD" | "RABBIT" | "ETC";
 };
 
 //get video list params
@@ -41,3 +43,8 @@ export type LikeVideoList = {
   profileUrl: string;
   videoType: string;
 }
+type VideoListWithLikes = {
+  contents: VideoListType[];
+  hasNext: boolean;
+  likeVideoIds: number[];
+};

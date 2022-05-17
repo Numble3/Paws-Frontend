@@ -75,30 +75,42 @@ const Direct: NextPageWithLayout = () => {
     image.append("height", "180");
     image.append("width", "320");
     image.append("type", "thumbnail");
+
+    let checkTransform = true;
     await imageResize(image)
       .then((response) => {
         imageSrc = response.url;
       })
       .catch((e) => {
         //error message
-        setLoading(false);
-        router.replace("/");
+        checkTransform = false;
       });
+
+    if (!checkTransform) {
+      setLoading(false);
+      return;
+    }
 
     let videoSrc = "";
     let duration = 0;
     const video = new FormData();
-    video.append("file", videoFile);
+    video.append("videoFile", videoFile);
+
     await videoTransform(video)
       .then((response) => {
         videoSrc = response.url;
         duration = response.duration;
+        //    console.log(response);
       })
       .catch((e) => {
         //error message
-        setLoading(false);
-        router.replace("/");
+        checkTransform = false;
       });
+
+    if (!checkTransform) {
+      setLoading(false);
+      return;
+    }
 
     const data = {
       category: selectedCategory,
@@ -120,6 +132,7 @@ const Direct: NextPageWithLayout = () => {
       });
     setLoading(false);
   };
+
   return (
     <>
       {loading ? (

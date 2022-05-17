@@ -11,6 +11,7 @@ export const useCheck = () => {
     const email = sessionStorage.getItem("email");
     if (!email) {
       toHome && router.replace("/");
+
       dispatch(modalSlice.actions.isError({ isError: true }));
       dispatch(modalSlice.actions.open({}));
       dispatch(

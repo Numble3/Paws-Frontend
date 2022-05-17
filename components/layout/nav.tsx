@@ -51,7 +51,7 @@ const Nav = () => {
   );
 
   const handlePopupClicked = () => {
-    const isUser = checkModal();
+    const isUser = checkModal(false);
     if (isUser) {
       setVisible(true);
     }

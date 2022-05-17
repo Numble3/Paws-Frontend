@@ -28,14 +28,22 @@ export async function imageResize(image: FormData) {
 
 export async function videoTransform(video: FormData) {
   try {
-    const response = await client.post("/videos/storage", video, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
-
+    const response = await axios.post(
+      "http://3.36.157.185:8081/api/videos/storage",
+      video,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${localStorage.getItem("access")}`,
+          withCredentials: true,
+        },
+      }
+    );
+    console.log(response);
     return response.data;
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function createEmbedVideo(params: VideoType) {

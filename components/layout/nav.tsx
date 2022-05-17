@@ -11,9 +11,13 @@ import { useRouter } from "next/router";
 import { memo, useMemo, useState } from "react";
 import styles from "styles/layout.module.css";
 import NavPopUp from "components/custom/nav-popup";
+import { useCheck } from "hooks/use-check";
 
 const Nav = () => {
+  const [visible, setVisible] = useState(false);
+
   const router = useRouter();
+  const { checkModal } = useCheck();
 
   const navItems = useMemo(
     () => [
@@ -45,7 +49,14 @@ const Nav = () => {
     ],
     [router]
   );
-  const [visible, setVisible] = useState(false);
+
+  const handlePopupClicked = () => {
+    const isUser = checkModal();
+    if (isUser) {
+      setVisible(true);
+    }
+  };
+
   return (
     <nav className={styles.nav}>
       {visible && (
@@ -61,7 +72,7 @@ const Nav = () => {
             return (
               <li
                 key={i}
-                onClick={() => setVisible(true)}
+                onClick={handlePopupClicked}
                 className={styles.upload}
               >
                 {v.icon}

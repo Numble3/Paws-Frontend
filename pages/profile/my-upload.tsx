@@ -14,11 +14,13 @@ import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import modalSlice from "reducers/modal";
 import Router from "next/router";
+import { useCheck } from "hooks/use-check";
 
 const MyUploadPage: NextPageWithLayout = () => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
-
   const [target, setTarget] = useState("");
+
+  const { checkModal } = useCheck();
   const queryClient = useQueryClient();
 
   const onEditHandler = useCallback((e: any) => {
@@ -51,20 +53,7 @@ const MyUploadPage: NextPageWithLayout = () => {
   }, [deleteMutation]);
 
   useEffect(() => {
-    const email = sessionStorage.getItem("email");
-    if (!email) {
-      Router.replace("/");
-      dispatch(modalSlice.actions.isError({ isError: true }));
-      dispatch(modalSlice.actions.open({}));
-      dispatch(
-        modalSlice.actions.setErrorMessage({
-          errorMessage: "로그인이 필요합니다.",
-        })
-      );
-      setTimeout(() => {
-        dispatch(modalSlice.actions.close({}));
-      }, 3000);
-    }
+    checkModal();
   }, []);
   if (isLoading) {
     return <Loading />;

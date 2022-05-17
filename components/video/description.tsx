@@ -37,21 +37,21 @@ const VideoDescription = ({
   userProfilePath,
 }: Props) => {
   const [showDetail, setShowDetail] = useState(false);
-  const dispatch = useDispatch();
-  const { videoLike } = useSelector((state: RootState) => state.like);
-  const [heartActive, setHeartActive] = useState<boolean>(videoLike[videoId]);
+  //const dispatch = useDispatch();
+  //const { videoLike } = useSelector((state: RootState) => state.like);
+  const [heartActive, setHeartActive] = useState<boolean>(false);
 
   const onToggleHeart = useCallback(async () => {
-    setHeartActive((p) => !p);
-
+    console.log(heartActive);
     if (!heartActive) {
       await addLikeVideo(videoId, category).then((res) => {});
-      dispatch(likeSlice.actions.active(videoId));
+      // dispatch(likeSlice.actions.active(videoId));
     } else {
       await deleteLikeVideo(videoId).then((res) => {});
-      dispatch(likeSlice.actions.inactive(videoId));
+      // dispatch(likeSlice.actions.inactive(videoId));
     }
-  }, []);
+    setHeartActive((p) => !p);
+  }, [heartActive]);
 
   return (
     <section>

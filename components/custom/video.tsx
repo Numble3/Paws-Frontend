@@ -9,33 +9,47 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import { useSelector } from "react-redux";
 import { RootState } from "reducers";
-import { addLikeVideo } from "apis/interest";
+import { useCheck } from "hooks/use-check";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 interface Props {
   data: VideoListType;
+  likeVideos?: number[];
   noDot?: boolean;
   noInfo?: boolean;
   onEdit?: (e: MouseEvent) => void;
   style?: CSSProperties;
 }
 
-const Video = ({ data, noDot = true, noInfo = false, onEdit }: Props) => {
+const Video = ({
+  data,
+  likeVideos,
+  noDot = true,
+  noInfo = false,
+  onEdit,
+}: Props) => {
   const { videoLike } = useSelector((state: RootState) => state.like);
+  const { checkModal } = useCheck();
   const [heartActive, setHeartActive] = useState<boolean>(
     videoLike[data.videoId]
   );
+  console.log("likeVideos", likeVideos);
 
-  // const handleToggleLike = async () => {
-  //   if (!heartActive) {
-  //     await addLikeVideo(String(data.videoId), data.category).then((res) => {});
-  //     dispatch(likeSlice.actions.active(videoId));
-  //   } else {
-  //     await deleteLikeVideo(videoId).then((res) => {});
-  //     dispatch(likeSlice.actions.inactive(videoId));
-  //   }
-  // }
+  const handleToggleLike = async () => {
+    const authUser = checkModal(false);
+    if (!authUser) {
+      return;
+    }
+
+    // if (!heartActive) {
+    //   await addLikeVideo(String(data.videoId), data.category).then((res) => {});
+    //   dispatch(likeSlice.actions.active(videoId));
+    // } else {
+    //   await deleteLikeVideo(videoId).then((res) => {});
+    //   dispatch(likeSlice.actions.inactive(videoId));
+    // }
+  };
 
   return (
     <Link key={data.videoId} href={`/video/${data.videoId}`}>
@@ -74,6 +88,7 @@ const Video = ({ data, noDot = true, noInfo = false, onEdit }: Props) => {
               <div
                 onClick={(e) => {
                   e.stopPropagation();
+                  handleToggleLike();
                   //TODO: 좋아요 이벤트 추가하기
                 }}
               >

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
 import Video from "./video";
-import { VideoListType } from "types/video";
+import { VideoListType, VideoListWithLikes } from "types/video";
 import NoResult from "./no-result";
 
 interface Props {
   noResult: { title: string; content: string };
   videoCnt?: number;
   query?: any;
-  fetchFunc: (params: any) => Promise<any>;
+  fetchFunc: <T>(params: any) => Promise<T>;
   selectedCategory: any;
 }
 
@@ -25,13 +25,17 @@ function InfiniteScroll({
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [videoListData, setVideoListData] = useState<any>([]);
+  const [likeVideos, setLikeVideos] = useState<number[]>([]);
 
   let page = query.page;
   let hasNext = true;
+
   const getMoreItem = async () => {
     setIsLoaded(true);
-    await fetchFunc({ ...query, page }).then((res) => {
+    await fetchFunc<VideoListWithLikes>({ ...query, page }).then((res) => {
       hasNext = res.hasNext;
+      setLikeVideos(res.likeVideoIds);
+
       setVideoListData((prev: VideoListType[]) => {
         const newData = prev.concat(res.contents);
 
@@ -41,10 +45,7 @@ function InfiniteScroll({
     page++;
     setIsLoaded(false);
   };
-  useEffect(() => {
-    setVideoListData([]);
-    query = { ...query, sort: selectedCategory };
-  }, [selectedCategory]);
+
   const onIntersect = async (
     [entry]: any,
     observer: { unobserve: (arg0: any) => void; observe: (arg0: any) => void }
@@ -58,6 +59,12 @@ function InfiniteScroll({
       observer.observe(entry.target);
     }
   };
+
+  useEffect(() => {
+    setVideoListData([]);
+    query = { ...query, sort: selectedCategory };
+  }, [selectedCategory]);
+
   useEffect(() => {
     let observer: IntersectionObserver;
     if (target) {
@@ -68,11 +75,12 @@ function InfiniteScroll({
     }
     return () => observer && observer.disconnect();
   }, [target, selectedCategory]);
+
   return (
     <section style={{ display: "grid", gap: "20px" }}>
       {videoListData && videoListData.length !== 0
         ? videoListData.map((value: VideoListType, index: any) => {
-            return <Video key={index} data={value} />;
+            return <Video key={index} data={value} likeVideos={likeVideos} />;
           })
         : !isLoaded && <NoResult {...noResult} />}
       <div ref={setTarget} id="loading">

@@ -18,8 +18,11 @@ const HlsPlayer = ({ videoSrc }: Props) => {
     if (video && video.current) {
       video.current.src = videoSrc;
 
+      // hls.loadSource("https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8");
       hls.loadSource(videoSrc);
       hls.attachMedia(video.current);
+      // console.log("video", video);
+      // video?.current?.play();
       hls.on(Hls.Events.MANIFEST_PARSED, async () => {
         await video?.current?.play();
       });
@@ -32,14 +35,14 @@ const HlsPlayer = ({ videoSrc }: Props) => {
     videoPlay();
   }, [videoSrc]);
 
-  // useEffect(() => {
-  //   play ? video?.current?.play() : video?.current?.pause();
-  // }, [play]);
+  useEffect(() => {
+    play ? video?.current?.play() : video?.current?.pause();
+  }, [play]);
 
   return (
     <div className={styles["hls-player"]} onClick={handleVideo}>
-      <video ref={video} width={"100%"} height={"100%"} />
-      {play && <button className={styles.pause} />}
+      <video ref={video} width={"100%"} height={"100%"} muted={true} autoPlay />
+      {!play && <button className={styles.pause} />}
     </div>
   );
 };

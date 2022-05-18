@@ -4,23 +4,24 @@ import style from "styles/interest/category.module.css";
 import Istyle from "styles/interest/interested.module.css";
 import { categories } from "lib/variables";
 import InterestVideo from "components/custom/interset-video";
-import { useInfiniteQuery, useQuery, useQueryClient } from "react-query";
+import { InView, useInView } from "react-intersection-observer";
+import { useInfiniteQuery } from "react-query";
 import { getLikeVideosAPI } from "apis/like";
 import { Loading } from "components/custom";
-import { LikeVideoList, VideoListType } from "types/video";
+import { LikeVideoList } from "types/video";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
-import { useDispatch } from "react-redux";
-import modalSlice from "reducers/modal";
 import { useEffect } from "react";
-import { get } from "immer/dist/internal";
+import { useCheck } from "hooks/use-check";
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 const InterestedCategory: NextPageWithLayout = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const { checkModal } = useCheck();
+
+  const [ref, inView] = useInView();
 
   const CATEGORY = router.query.category as string;
 
@@ -30,32 +31,40 @@ const InterestedCategory: NextPageWithLayout = () => {
 
   const { data, isLoading, fetchNextPage } = useInfiniteQuery<LikeVideoList[]>(
     ["likes", CATEGORY],
-    ({ pageParam = 0 }) => getLikeVideosAPI(CATEGORY, pageParam, 5),
+    ({ pageParam = 0 }) => getLikeVideosAPI(CATEGORY, pageParam, 6),
     {
       getNextPageParam: (lastPage) => {
-        return lastPage?.[lastPage.length - 1]?.videoId;
+        if (!!lastPage?.[lastPage.length - 1])
+          return lastPage?.[lastPage.length - 1];
+        return undefined;
       },
     }
   );
 
-  // const { data, isLoading } = useQuery(
-  //   "test",
-  //   () => {
-  //     return getLikeVideosAPI({
-  //       category: router.query.category as string,
-  //       size: 5,
-  //     });
-  //   },
-  //   {
-  //     retry: 2,
-  //   }
-  // );
-  // useEffect(() => {
-  //   checkModal();
-  // }, []);
+  useEffect(() => {
+    checkModal();
+  }, []);
+
+  const LoadMoreHndler = () => {
+    fetchNextPage();
+  };
+  useEffect(() => {
+    if (inView) {
+      console.log("inView가 true");
+      fetchNextPage();
+    }
+  }, [inView]);
 
   if (isLoading) return <Loading />;
-  const videoList = data?.pages.flat();
+
+  const videoList = data?.pages
+    .flat()
+    .filter((v) => v && typeof v !== "number");
+  const isLastData = data && data.pages[data.pages.length - 1]?.length <= 6;
+  const readToLoad = !isLastData && !isLoading;
+
+  console.log("isLastData", isLastData);
+  console.log("reaToLoad : ", readToLoad);
 
   return (
     <div className={style.wrapper}>
@@ -73,6 +82,11 @@ const InterestedCategory: NextPageWithLayout = () => {
         {videoList?.map((v: LikeVideoList, i: number) => (
           <InterestVideo key={i} videoData={v} />
         ))}
+
+        <div
+          ref={readToLoad ? ref : undefined}
+          style={{ height: 10, backgroundColor: "transparent" }}
+        />
       </section>
     </div>
   );

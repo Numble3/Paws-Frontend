@@ -20,7 +20,7 @@ const InterestVideo = ({videoData}:Props) => {
     <Link href={`/video/${videoData.videoId}`}>
       <article className={style.box}>
         <div className={style.img}>
-          <Image src={`/images/temp.png`} layout="fill" objectFit="cover" />
+          <Image src={videoData.thumbnailPath} layout="fill" objectFit="cover" />
         </div>
         <section className={style["text-container"]}>
           <div className={style["sub-title"]}>{videoData.title}</div>

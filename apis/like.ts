@@ -15,11 +15,12 @@ export async function getLikeVideosAPI(
       },
     })
     .then((response) => {
-      return response.data;
+      const result = response.data.likes.map((v: any) => v.getVideoDto);
+      result.push(response.data.lastLikeId);
+      return result;
     });
 }
 
 export function getAllLikeVideosAPI() {
   return client.get("/likes/all").then((response) => response.data);
 }
-

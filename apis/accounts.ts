@@ -25,8 +25,16 @@ export async function getUsaerDetailAPI() {
   return await client.get("/accounts/detail").then((response) => response.data);
 }
 
-export async function getUserVideosAPI() {
-  return await client.get("/accounts/videos").then((response) => response.data);
+export async function getUserVideosAPI(id?:number) {
+  return await client.get("/accounts/videos",{
+    params:{
+      id,
+    }
+  }).then((response) => {
+    const result = response.data.videos;
+    result.push(response.data.lastVideoId);
+    return result;
+  });
 }
 
 

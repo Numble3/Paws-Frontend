@@ -43,6 +43,9 @@ export type LikeVideoList = {
   profileUrl: string;
   videoType: string;
 }
+
+
+
 type VideoListWithLikes = {
   contents: VideoListType[];
   hasNext: boolean;

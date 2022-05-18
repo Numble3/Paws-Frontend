@@ -33,9 +33,9 @@ const ProfileEdit: NextPageWithLayout = () => {
   useEffect(() => {
     const isUser = checkModal();
     if (isUser) {
-      setNickname(sessionStorage.getItem("nickname")!);
-      setEmail(sessionStorage.getItem("email")!);
-      setProfile(sessionStorage.getItem("profile")!);
+      setNickname(localStorage.getItem("nickname")!);
+      setEmail(localStorage.getItem("email")!);
+      setProfile(localStorage.getItem("profile")!);
     }
   }, []);
   const [nicknameValue, onChangeNickname] = useInput("");
@@ -70,9 +70,9 @@ const ProfileEdit: NextPageWithLayout = () => {
       Router.replace("/");
       localStorage.removeItem("refresh");
       localStorage.removeItem("access");
-      sessionStorage.removeItem("email");
-      sessionStorage.removeItem("profile");
-      sessionStorage.removeItem("nickname");
+      localStorage.removeItem("email");
+      localStorage.removeItem("profile");
+      localStorage.removeItem("nickname");
       queryClient.invalidateQueries();
       queryClient.setQueryData("user", "");
     },

@@ -10,15 +10,10 @@ import useMessage from "hooks/use-message";
 import {
   useInfiniteQuery,
   useMutation,
-  useQuery,
   useQueryClient,
 } from "react-query";
-import { QUERY_KEY } from "lib/query-key";
 import { deleteVideoAPI, getUserVideosAPI } from "apis/accounts";
 import { AxiosError } from "axios";
-import { useDispatch } from "react-redux";
-import modalSlice from "reducers/modal";
-import Router from "next/router";
 import { useCheck } from "hooks/use-check";
 import { VideoListType } from "types/video";
 import Video from "components/custom/video";
@@ -37,6 +32,7 @@ const MyUploadPage: NextPageWithLayout = () => {
     setTarget(e.target.id);
     setIsOpen(true);
   }, []);
+  
   const [isOpen, onClose, setIsOpen] = useModal("edit");
 
   const { getMessage, error } = useMessage();
@@ -71,12 +67,12 @@ const MyUploadPage: NextPageWithLayout = () => {
     checkModal();
   }, []);
 
-  // useEffect(() => {
-  //   if (inView) {
-  //     console.log("inView가 true");
-  //     fetchNextPage();
-  //   }
-  // }, [inView]);
+  useEffect(() => {
+    if (inView) {
+      console.log("inView가 true");
+      fetchNextPage();
+    }
+  }, [inView]);
 
   const videoList = data?.pages
     .flat()

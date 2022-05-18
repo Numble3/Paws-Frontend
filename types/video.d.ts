@@ -54,9 +54,7 @@ export type LikeVideoList = {
   thumbnailPath: string;
   profileUrl: string;
   videoType: string;
-}
-
-
+};
 
 type VideoListWithLikes = {
   contents: VideoListType[];

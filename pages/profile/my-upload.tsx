@@ -71,12 +71,12 @@ const MyUploadPage: NextPageWithLayout = () => {
     checkModal();
   }, []);
 
-  // useEffect(() => {
-  //   if (inView) {
-  //     console.log("inView가 true");
-  //     fetchNextPage();
-  //   }
-  // }, [inView]);
+  useEffect(() => {
+    if (inView) {
+      console.log("inView가 true");
+      fetchNextPage();
+    }
+  }, [inView]);
 
   const videoList = data?.pages
     .flat()

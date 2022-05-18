@@ -29,8 +29,8 @@ const Nav = () => {
       },
       {
         path: "/search",
-        isActive: router.pathname === "/search",
-        icon: <CategoryIcon isActive={router.pathname === "/search"} />,
+        isActive: /search/.test(router.pathname),
+        icon: <CategoryIcon isActive={/search/.test(router.pathname)} />,
       },
       {
         path: "/upload",
@@ -39,8 +39,8 @@ const Nav = () => {
       },
       {
         path: "/interestVideo",
-        isActive: router.pathname === "/interestVideo",
-        icon: <LikeIcon isActive={router.pathname === "/interestVideo"} />,
+        isActive: /interestVideo/.test(router.pathname),
+        icon: <LikeIcon isActive={/interestVideo/.test(router.pathname)} />,
       },
       {
         path: "/profile",

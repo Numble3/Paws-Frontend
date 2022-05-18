@@ -11,6 +11,7 @@ const nextConfig = {
       "d2yok33re0ydfm.cloudfront.net",
       "i.pinimg.com",
       "d2yok33re0ydfm.cloudfront.net",
+      "numble-image.s3.ap-northeast-2.amazonaws.com",
     ],
   },
 };

@@ -37,9 +37,7 @@ const VideoPage = ({ pid }: { pid: string }) => {
             {data.type === "임베딩 영상" ? (
               <EmbedPlayer videoSrc={data.videoUrl} />
             ) : (
-              // <div style={{ height: "211px", background: "green" }}>
               <HlsPlayer videoSrc={data.videoUrl} />
-              // </div>
             )}
             <VideoDescription {...data} />
             <VideoCommentsList

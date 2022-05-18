@@ -5,18 +5,31 @@ import VideoCategory from "components/upload/videoCategory";
 import { CustomInput, Loading } from "components/custom";
 import { useState } from "react";
 import CustomTextArea from "components/custom/textarea";
-import { NextPageWithLayout } from "types/common";
 import { useRouter } from "next/router";
-import { createEmbedVideo, imageResize, videoTransform } from "apis/upload";
+import {
+  createVideo,
+  imageResize,
+  updateVideo,
+  videoTransform,
+} from "apis/upload";
+import { VideoType } from "types/video";
 
 const initialData = {
   title: "",
-  videoFile: "",
-  imageFile: "",
-  selectedCategory: "",
+  videoUrl: "",
+  thumbnailUrl: "",
+  type: "직접 업로드",
+  videoDuration: 0,
+  category: "",
   content: "",
 };
-const Direct: NextPageWithLayout = ({ data = initialData }: any) => {
+const Direct = ({
+  data = initialData,
+  videoId = "-1",
+}: {
+  data: VideoType;
+  videoId: string;
+}) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -32,9 +45,7 @@ const Direct: NextPageWithLayout = ({ data = initialData }: any) => {
   const [imageFile, setImageFile] = useState<Blob | string>("");
   const [imageError, setImageError] = useState(false);
   //category
-  const [selectedCategory, setSelectedCategory] = useState(
-    data.category.toLowerCase()
-  );
+  const [selectedCategory, setSelectedCategory] = useState(data.category);
   const [categoryError, setCategoryError] = useState(false);
   const [descriptionInfo, setDescriptionInfo] = useState({
     descriptionError: { isError: false, message: "설명을 입력해주세요." },
@@ -131,14 +142,23 @@ const Direct: NextPageWithLayout = ({ data = initialData }: any) => {
       videoUrl: videoSrc,
     };
 
-    await createEmbedVideo(data)
-      .then((res) => {
-        router.replace("/profile/my-upload");
-        //To Do: 성공 메세지 훅
-      })
-      .catch(() => {
-        //To Do: 실패 메세지 훅
-      });
+    if (videoId !== "-1") {
+      await createVideo(data)
+        .then((res) => {
+          router.replace("/profile/my-upload");
+        })
+        .catch(() => {
+          //To Do: 실패 메세지 훅
+        });
+    } else {
+      await updateVideo(data, videoId)
+        .then((res) => {
+          router.replace("/profile/my-upload");
+        })
+        .catch(() => {
+          //To Do: 실패 메세지 훅
+        });
+    }
     setLoading(false);
   };
 
@@ -151,9 +171,17 @@ const Direct: NextPageWithLayout = ({ data = initialData }: any) => {
           <header className={`${styles.complete} ${styles.complete__orange}`}>
             <span onClick={postDirect}>완료</span>
           </header>
-          <PreviewVideo isError={videoError} setVideoFile={setVideoFile} />
+          <PreviewVideo
+            isError={videoError}
+            setVideoFile={setVideoFile}
+            value={data.videoUrl}
+          />
           <div className="border-gray"></div>
-          <PreviewImage isError={imageError} setImageFile={setImageFile} />
+          <PreviewImage
+            isError={imageError}
+            setImageFile={setImageFile}
+            value={data.thumbnailUrl}
+          />
           <div className="border-gray"></div>
           <div className={styles.video_name}>
             <p className={styles.title}>영상 제목</p>

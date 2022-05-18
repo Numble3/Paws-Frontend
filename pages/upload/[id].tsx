@@ -21,7 +21,11 @@ const Upload: NextPageWithLayout = () => {
   console.log(data);
   return (
     <>
-      {data && data.type === "직접 업로드" ? <Direct data={data} /> : <Embed />}
+      {data && data.type === "직접 업로드" ? (
+        <Direct data={data} videoId={data.id} />
+      ) : (
+        <Embed data={data} videoId={data.id} />
+      )}
     </>
   );
 };

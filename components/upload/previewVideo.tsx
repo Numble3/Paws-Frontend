@@ -7,9 +7,10 @@ import { CautionIcon } from "components/icons";
 interface VideoType {
   setVideoFile: Dispatch<SetStateAction<Blob | string>>;
   isError?: boolean;
+  value?: string;
 }
-const PreviewVideo = ({ setVideoFile, isError = false }: VideoType) => {
-  const [videoSrc, setVideoSrc] = useState<string | null>("");
+const PreviewVideo = ({ setVideoFile, isError = false, value }: VideoType) => {
+  const [videoSrc, setVideoSrc] = useState<string | undefined>(value);
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: Blob) => {

@@ -46,9 +46,18 @@ export async function videoTransform(video: FormData) {
   }
 }
 
-export async function createEmbedVideo(params: VideoType) {
+export async function createVideo(params: VideoType) {
   try {
     const response = await client.post("/videos", params);
+    return response.data;
+  } catch (e) {}
+}
+
+export async function updateVideo(params: VideoType, videoId: string) {
+  console.log(params);
+
+  try {
+    const response = await client.put(`/videos/${videoId}`, params);
     return response.data;
   } catch (e) {}
 }

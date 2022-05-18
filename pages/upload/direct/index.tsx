@@ -9,14 +9,21 @@ import { NextPageWithLayout } from "types/common";
 import { useRouter } from "next/router";
 import { createEmbedVideo, imageResize, videoTransform } from "apis/upload";
 
-const Direct: NextPageWithLayout = () => {
+const initialData = {
+  title: "",
+  videoFile: "",
+  imageFile: "",
+  selectedCategory: "",
+  content: "",
+};
+const Direct: NextPageWithLayout = ({ data = initialData }: any) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   //title
   const [titleInfo, setTitleInfo] = useState({
     titleError: { isError: false, message: "제목을 입력해주세요." },
-    title: "",
+    title: data.title,
   });
   //video
   const [videoFile, setVideoFile] = useState<Blob | string>("");
@@ -25,11 +32,13 @@ const Direct: NextPageWithLayout = () => {
   const [imageFile, setImageFile] = useState<Blob | string>("");
   const [imageError, setImageError] = useState(false);
   //category
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(
+    data.category.toLowerCase()
+  );
   const [categoryError, setCategoryError] = useState(false);
   const [descriptionInfo, setDescriptionInfo] = useState({
     descriptionError: { isError: false, message: "설명을 입력해주세요." },
-    description: "",
+    description: data.content,
   });
 
   const postDirect = async () => {
@@ -156,6 +165,7 @@ const Direct: NextPageWithLayout = () => {
                 const newTitle = e.target.value;
                 setTitleInfo({ ...titleInfo, title: newTitle });
               }}
+              value={titleInfo.title}
             />
           </div>
           <div className="border-gray"></div>
@@ -174,6 +184,7 @@ const Direct: NextPageWithLayout = () => {
                   };
                 })
               }
+              value={data.content}
             />
           </div>
           <div className="border-gray"></div>

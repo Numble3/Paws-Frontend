@@ -26,32 +26,32 @@
   text-align: center;
   font-size: 12px;
 }
-.category__dog {
+.category__DOG {
   background-color: cateDog;
   color: white;
 }
-.category__cat {
+.category__CAT {
   background-color: cateCat;
   color: white;
 }
-.category__rabbit {
+.category__RABBIT {
   background-color: cateRabbit;
   color: white;
 }
-.category__hamster {
+.category__HAMSTER {
   background-color: cateHamster;
   color: white;
 }
-.category__bird {
+.category__BIRD {
   background-color: cateBird;
   color: white;
 }
-.category__lizard {
+.category__LIZARD {
   background-color: cateLizard;
   color: white;
 }
 
-.category__etc {
+.category__OTHERS {
   background-color: cateETC;
   color: white;
 }

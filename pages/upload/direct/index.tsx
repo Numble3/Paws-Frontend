@@ -5,18 +5,33 @@ import VideoCategory from "components/upload/videoCategory";
 import { CustomInput, Loading } from "components/custom";
 import { useState } from "react";
 import CustomTextArea from "components/custom/textarea";
-import { NextPageWithLayout } from "types/common";
 import { useRouter } from "next/router";
-import { createEmbedVideo, imageResize, videoTransform } from "apis/upload";
+import {
+  createVideo,
+  imageResize,
+  updateVideo,
+  videoTransform,
+} from "apis/upload";
+import { VideoType } from "types/video";
 
-const Direct: NextPageWithLayout = () => {
+const initialData = {
+  videoId: "",
+  title: "",
+  videoUrl: "",
+  thumbnailUrl: "",
+  type: "직접 업로드",
+  videoDuration: 0,
+  category: "",
+  content: "",
+};
+const Direct = ({ data = initialData }: { data: VideoType }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   //title
   const [titleInfo, setTitleInfo] = useState({
     titleError: { isError: false, message: "제목을 입력해주세요." },
-    title: "",
+    title: data.title,
   });
   //video
   const [videoFile, setVideoFile] = useState<Blob | string>("");
@@ -25,11 +40,11 @@ const Direct: NextPageWithLayout = () => {
   const [imageFile, setImageFile] = useState<Blob | string>("");
   const [imageError, setImageError] = useState(false);
   //category
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(data.category);
   const [categoryError, setCategoryError] = useState(false);
   const [descriptionInfo, setDescriptionInfo] = useState({
     descriptionError: { isError: false, message: "설명을 입력해주세요." },
-    description: "",
+    description: data.content,
   });
 
   const postDirect = async () => {
@@ -70,49 +85,60 @@ const Direct: NextPageWithLayout = () => {
     setLoading(true);
 
     let imageSrc = "";
-    const image = new FormData();
-    image.append("file", imageFile);
-    image.append("height", "180");
-    image.append("width", "320");
-    image.append("type", "thumbnail");
-
     let checkTransform = true;
-    await imageResize(image)
-      .then((response) => {
-        imageSrc = response.url;
-      })
-      .catch((e) => {
-        //error message
-        checkTransform = false;
-      });
 
-    if (!checkTransform) {
-      setLoading(false);
-      return;
+    if (data.thumbnailUrl !== "" && imageFile === "") {
+      imageSrc = data.thumbnailUrl;
+    } else {
+      const image = new FormData();
+      image.append("file", imageFile);
+      image.append("height", "180");
+      image.append("width", "320");
+      image.append("type", "thumbnail");
+
+      await imageResize(image)
+        .then((response) => {
+          imageSrc = response.url;
+        })
+        .catch((e) => {
+          //error message
+          checkTransform = false;
+        });
+
+      if (!checkTransform) {
+        setLoading(false);
+        return;
+      }
     }
 
     let videoSrc = "";
     let duration = 0;
-    const video = new FormData();
-    video.append("videoFile", videoFile);
+    if (data.videoUrl !== "" && videoFile === "") {
+      videoSrc = data.videoUrl;
+    } else {
+      console.log("here");
 
-    await videoTransform(video)
-      .then((response) => {
-        videoSrc = response.url;
-        duration = response.duration;
-        //    console.log(response);
-      })
-      .catch((e) => {
-        //error message
-        checkTransform = false;
-      });
+      const video = new FormData();
+      video.append("videoFile", videoFile);
 
-    if (!checkTransform) {
-      setLoading(false);
-      return;
+      await videoTransform(video)
+        .then((response) => {
+          videoSrc = response.url;
+          duration = response.duration;
+          //    console.log(response);
+        })
+        .catch((e) => {
+          //error message
+          checkTransform = false;
+        });
+
+      if (!checkTransform) {
+        setLoading(false);
+        return;
+      }
     }
 
-    const data = {
+    const postData = {
       category: selectedCategory,
       content: descriptionInfo.description,
       thumbnailUrl: imageSrc,
@@ -122,14 +148,23 @@ const Direct: NextPageWithLayout = () => {
       videoUrl: videoSrc,
     };
 
-    await createEmbedVideo(data)
-      .then((res) => {
-        router.replace("/profile/my-upload");
-        //To Do: 성공 메세지 훅
-      })
-      .catch(() => {
-        //To Do: 실패 메세지 훅
-      });
+    if (data.videoId === "") {
+      await createVideo(postData)
+        .then((res) => {
+          router.replace("/profile/my-upload");
+        })
+        .catch(() => {
+          //To Do: 실패 메세지 훅
+        });
+    } else {
+      await updateVideo(data, data.videoId)
+        .then((res) => {
+          router.replace("/profile/my-upload");
+        })
+        .catch(() => {
+          //To Do: 실패 메세지 훅
+        });
+    }
     setLoading(false);
   };
 
@@ -142,9 +177,17 @@ const Direct: NextPageWithLayout = () => {
           <header className={`${styles.complete} ${styles.complete__orange}`}>
             <span onClick={postDirect}>완료</span>
           </header>
-          <PreviewVideo isError={videoError} setVideoFile={setVideoFile} />
+          <PreviewVideo
+            isError={videoError}
+            setVideoFile={setVideoFile}
+            value={data.videoUrl}
+          />
           <div className="border-gray"></div>
-          <PreviewImage isError={imageError} setImageFile={setImageFile} />
+          <PreviewImage
+            isError={imageError}
+            setImageFile={setImageFile}
+            value={data.thumbnailUrl}
+          />
           <div className="border-gray"></div>
           <div className={styles.video_name}>
             <p className={styles.title}>영상 제목</p>
@@ -156,6 +199,7 @@ const Direct: NextPageWithLayout = () => {
                 const newTitle = e.target.value;
                 setTitleInfo({ ...titleInfo, title: newTitle });
               }}
+              value={titleInfo.title}
             />
           </div>
           <div className="border-gray"></div>
@@ -174,6 +218,7 @@ const Direct: NextPageWithLayout = () => {
                   };
                 })
               }
+              value={descriptionInfo.description}
             />
           </div>
           <div className="border-gray"></div>

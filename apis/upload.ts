@@ -1,4 +1,4 @@
-import { VideoType } from "types/video";
+import { VideoParamType, VideoType } from "types/video";
 import axios from "axios";
 import client from "apis/client";
 
@@ -29,7 +29,7 @@ export async function imageResize(image: FormData) {
 export async function videoTransform(video: FormData) {
   try {
     const response = await axios.post(
-      "http://3.36.157.185:8081/api/videos/storage",
+      "http://3.36.157.185:8082/api/videos/storage",
       video,
       {
         headers: {
@@ -46,9 +46,18 @@ export async function videoTransform(video: FormData) {
   }
 }
 
-export async function createEmbedVideo(params: VideoType) {
+export async function createVideo(params: VideoParamType) {
   try {
     const response = await client.post("/videos", params);
+    return response.data;
+  } catch (e) {}
+}
+
+export async function updateVideo(params: VideoParamType, videoId: string) {
+  console.log(params);
+
+  try {
+    const response = await client.put(`/videos/${videoId}`, params);
     return response.data;
   } catch (e) {}
 }

@@ -77,7 +77,7 @@ const VideoCommentsList = ({ videoId, category }: Props) => {
     <section className={styles["comments-list"]}>
       <article className={styles["comments-header"]}>
         <h2>댓글</h2>
-        <span>1.4만</span>
+        <span>{data.length}</span>
       </article>
       <article className={styles["comments-filter"]}>
         <CustomSelectBox setSelectedCategory={setSelectedCategory} />

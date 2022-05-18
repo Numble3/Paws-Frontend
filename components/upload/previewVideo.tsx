@@ -1,4 +1,4 @@
-import { useState, useRef, Dispatch, SetStateAction } from "react";
+import { useState, useRef, Dispatch, SetStateAction, memo } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
@@ -7,9 +7,10 @@ import { CautionIcon } from "components/icons";
 interface VideoType {
   setVideoFile: Dispatch<SetStateAction<Blob | string>>;
   isError?: boolean;
+  value?: string;
 }
-const PreviewVideo = ({ setVideoFile, isError = false }: VideoType) => {
-  const [videoSrc, setVideoSrc] = useState<string | null>("");
+const PreviewVideo = ({ setVideoFile, isError = false, value }: VideoType) => {
+  const [videoSrc, setVideoSrc] = useState<string | undefined>(value);
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: Blob) => {
@@ -20,6 +21,7 @@ const PreviewVideo = ({ setVideoFile, isError = false }: VideoType) => {
     } else {
       setCanUpload(true);
     }
+    console.log(fileBlob);
     setVideoFile(fileBlob);
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
@@ -134,4 +136,4 @@ const PreviewVideo = ({ setVideoFile, isError = false }: VideoType) => {
   );
 };
 
-export default PreviewVideo;
+export default memo(PreviewVideo);

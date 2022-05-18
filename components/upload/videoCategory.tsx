@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, memo, SetStateAction } from "react";
 import styles from "styles/upload/videoCategory.module.css";
 
 interface Props {
@@ -13,13 +13,13 @@ const VideoCategory = ({
   isError = false,
 }: Props) => {
   const category = [
-    { name: "강아지", val: "dog" },
-    { name: "고양이", val: "cat" },
-    { name: "토끼", val: "rabbit" },
-    { name: "햄스터", val: "hamster" },
-    { name: "새", val: "bird" },
-    { name: "도마뱀", val: "lizard" },
-    { name: "기타", val: "others" },
+    { name: "강아지", val: "DOG" },
+    { name: "고양이", val: "CAT" },
+    { name: "토끼", val: "RABBIT" },
+    { name: "햄스터", val: "HAMSTER" },
+    { name: "새", val: "BIRD" },
+    { name: "도마뱀", val: "LIZARD" },
+    { name: "기타", val: "OTHERS" },
   ];
   return (
     <div className={styles.category}>
@@ -46,4 +46,4 @@ const VideoCategory = ({
   );
 };
 
-export default VideoCategory;
+export default memo(VideoCategory);

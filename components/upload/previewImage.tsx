@@ -1,4 +1,4 @@
-import { useState, useRef, Dispatch, SetStateAction } from "react";
+import { useState, useRef, Dispatch, SetStateAction, memo } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
@@ -7,9 +7,10 @@ import { CautionIcon } from "components/icons";
 interface ImageType {
   setImageFile: Dispatch<SetStateAction<Blob | string>>;
   isError?: boolean;
+  value?: string;
 }
-const PreviewImage = ({ setImageFile, isError = false }: ImageType) => {
-  const [imageSrc, setImageSrc] = useState<string | null>();
+const PreviewImage = ({ setImageFile, isError = false, value }: ImageType) => {
+  const [imageSrc, setImageSrc] = useState<string | undefined>(value);
   const [canUpload, setCanUpload] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const encodeFileToBase64 = (fileBlob: Blob) => {
@@ -127,4 +128,4 @@ const PreviewImage = ({ setImageFile, isError = false }: ImageType) => {
   );
 };
 
-export default PreviewImage;
+export default memo(PreviewImage);

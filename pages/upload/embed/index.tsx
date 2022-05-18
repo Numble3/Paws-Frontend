@@ -3,37 +3,46 @@ import PreviewImage from "components/upload/previewImage";
 import VideoCategory from "components/upload/videoCategory";
 import { ChangeEvent, useState, useEffect } from "react";
 import { CustomInput, Loading } from "components/custom";
-import { createEmbedVideo, imageResize } from "apis/upload";
+import { updateVideo, createVideo, imageResize } from "apis/upload";
 import CustomTextArea from "components/custom/textarea";
-import { NextPageWithLayout } from "types/common";
 import { useRouter } from "next/router";
+import { VideoType } from "types/video";
 
-const Embed: NextPageWithLayout = () => {
+const initialData = {
+  videoId: "",
+  title: "",
+  videoUrl: "",
+  thumbnailUrl: "",
+  type: "임베딩 영상",
+  videoDuration: 0,
+  category: "",
+  content: "",
+};
+
+const Embed = ({ data = initialData }: { data: VideoType }) => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  //link
-  const [linkLoading, setLinkLoading] = useState(false);
   const [linkInfo, setLinkInfo] = useState({
     linkError: { isError: false, message: "임베드 불가능한 링크 주소입니다." },
     isSuccess: false,
-    link: "",
+    link: data.videoUrl,
   });
   useEffect(() => {}, [linkInfo.link]);
   //title
   const [titleInfo, setTitleInfo] = useState({
     titleError: { isError: false, message: "제목을 입력해주세요." },
-    title: "",
+    title: data.title,
   });
   //image
   const [imageFile, setImageFile] = useState<Blob | string>("");
   const [imageError, setImageError] = useState(false);
   //category
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(data.category);
   const [categoryError, setCategoryError] = useState(false);
   const [descriptionInfo, setDescriptionInfo] = useState({
     descriptionError: { isError: false, message: "설명을 입력해주세요." },
-    description: "",
+    description: data.content,
   });
   const checkURL = async (e: ChangeEvent<HTMLInputElement>) => {
     const link = e.target.value;
@@ -48,44 +57,17 @@ const Embed: NextPageWithLayout = () => {
       return;
     }
 
-    //CORS 해결될때까지 무조건 성공.
     newLinkInfo = {
       link,
       isSuccess: true,
       linkError: { ...linkInfo.linkError, isError: false },
     };
     setLinkInfo(newLinkInfo);
-
-    // setLinkLoading(true);
-    // setLinkInfo({
-    //   link,
-    //   isSuccess: false,
-    //   linkError: { isError: true, message: "링크를 확인하는 중입니다..." },
-    // });
-    // const result = await checkEmbedLink(link);
-    // if (result) {
-    //   newLinkInfo = {
-    //     link,
-    //     isSuccess: true,
-    //     linkError: { ...linkInfo.linkError, isError: false },
-    //   };
-    // } else {
-    //   newLinkInfo = {
-    //     link,
-    //     isSuccess: false,
-    //     linkError: {
-    //       isError: true,
-    //       message: "임베드 불가능한 링크 주소입니다.",
-    //     },
-    //   };
-    // }
-    // setLinkInfo(newLinkInfo);
-    // setLinkLoading(false);
   };
 
   const postEmbed = async () => {
     //입력 체크
-    if (linkLoading) return;
+    //if (linkLoading) return;
     if (linkInfo.link === "") {
       setLinkInfo((prev) => {
         return {
@@ -128,21 +110,33 @@ const Embed: NextPageWithLayout = () => {
 
     setLoading(true);
     let imageSrc = "";
-    const image = new FormData();
-    image.append("file", imageFile);
-    image.append("height", "180");
-    image.append("width", "320");
-    image.append("type", "thumbnail");
-    await imageResize(image)
-      .then((response) => {
-        imageSrc = response.url;
-      })
-      .catch((e) => {
-        //error message
+    if (data.thumbnailUrl !== "" && imageFile === "") {
+      imageSrc = data.thumbnailUrl;
+    } else {
+      const image = new FormData();
+      image.append("file", imageFile);
+      image.append("height", "180");
+      image.append("width", "320");
+      image.append("type", "thumbnail");
+
+      let checkTransform = true;
+
+      await imageResize(image)
+        .then((response) => {
+          imageSrc = response.url;
+        })
+        .catch((e) => {
+          //error message
+          checkTransform = false;
+        });
+
+      if (!checkTransform) {
         setLoading(false);
-        router.replace("/");
-      });
-    const data = {
+        return;
+      }
+    }
+
+    const postData = {
       category: selectedCategory,
       content: descriptionInfo.description,
       thumbnailUrl: imageSrc,
@@ -152,13 +146,23 @@ const Embed: NextPageWithLayout = () => {
       videoUrl: linkInfo.link,
     };
 
-    await createEmbedVideo(data)
-      .then((res) => {
-        router.replace("/profile/my-upload");
-      })
-      .catch(() => {
-        //To Do: 실패 메세지 훅
-      });
+    if (data.videoId === "") {
+      await createVideo(postData)
+        .then((res) => {
+          router.replace("/profile/my-upload");
+        })
+        .catch(() => {
+          //To Do: 실패 메세지 훅
+        });
+    } else {
+      await updateVideo(postData, data.videoId)
+        .then((res) => {
+          router.replace("/profile/my-upload");
+        })
+        .catch(() => {
+          //To Do: 실패 메세지 훅
+        });
+    }
     setLoading(false);
   };
 
@@ -179,10 +183,15 @@ const Embed: NextPageWithLayout = () => {
               inputType={"text"}
               placeHolderMessage={"유튜브 영상 주소를 입력해주세요"}
               onChange={checkURL}
+              value={linkInfo.link}
             />
           </div>
           <div className="border-gray"></div>
-          <PreviewImage isError={imageError} setImageFile={setImageFile} />
+          <PreviewImage
+            isError={imageError}
+            setImageFile={setImageFile}
+            value={data.thumbnailUrl}
+          />
           <div className="border-gray"></div>
           <div className={styles.video_name}>
             <p className={styles.title}>영상 제목</p>
@@ -194,6 +203,7 @@ const Embed: NextPageWithLayout = () => {
                 const newTitle = e.target.value;
                 setTitleInfo({ ...titleInfo, title: newTitle });
               }}
+              value={titleInfo.title}
             />
           </div>
           <div className="border-gray"></div>
@@ -212,6 +222,7 @@ const Embed: NextPageWithLayout = () => {
                   };
                 })
               }
+              value={descriptionInfo.description}
             />
           </div>
           <div className="border-gray"></div>

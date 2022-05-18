@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import Header from "components/search/header";
+import Header from "components/search/result-header";
 import ResultList from "components/search/result-list";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

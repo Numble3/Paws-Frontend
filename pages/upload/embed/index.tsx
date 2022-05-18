@@ -133,15 +133,23 @@ const Embed: NextPageWithLayout = () => {
     image.append("height", "180");
     image.append("width", "320");
     image.append("type", "thumbnail");
+
+    let checkTransform = true;
+
     await imageResize(image)
       .then((response) => {
         imageSrc = response.url;
       })
       .catch((e) => {
         //error message
-        setLoading(false);
-        router.replace("/");
+        checkTransform = false;
       });
+
+    if (!checkTransform) {
+      setLoading(false);
+      return;
+    }
+
     const data = {
       category: selectedCategory,
       content: descriptionInfo.description,

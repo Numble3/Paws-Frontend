@@ -23,8 +23,6 @@ const Embed = ({ data = initialData }: { data: VideoType }) => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  //link
-  //const [linkLoading, setLinkLoading] = useState(false);
   const [linkInfo, setLinkInfo] = useState({
     linkError: { isError: false, message: "임베드 불가능한 링크 주소입니다." },
     isSuccess: false,

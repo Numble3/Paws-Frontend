@@ -29,7 +29,7 @@ export async function imageResize(image: FormData) {
 export async function videoTransform(video: FormData) {
   try {
     const response = await axios.post(
-      "http://3.36.157.185:8081/api/videos/storage",
+      "http://3.36.157.185:8082/api/videos/storage",
       video,
       {
         headers: {

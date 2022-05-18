@@ -5,7 +5,6 @@ import { useQuery } from "react-query";
 import Direct from "./direct";
 import Embed from "./embed";
 import { NextPageWithLayout } from "types/common";
-import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -28,7 +27,6 @@ const Upload: NextPageWithLayout = ({ id }: { id: string }) => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(data);
   return (
     <>
       {data && data.type === "직접 업로드" ? (

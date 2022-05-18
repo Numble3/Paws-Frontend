@@ -9,16 +9,27 @@ import BackIcon from "components/icons/back";
 import { getVideos } from "apis/get-video";
 import InfiniteScroll from "components/custom/infinite-scroll";
 import { VideoParams } from "types/video";
+import { GetServerSideProps } from "next";
 
 const noSearchResult = {
   title: "검색 결과 없음",
   content:
     "해당 키워드와 관련된 검색결과가 없어요.\n다른 검색어로 다시 시도해보세요!",
 };
-const Result: NextPageWithLayout = () => {
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { query } = context;
+  const { query: search } = query;
+  return {
+    props: {
+      search,
+    },
+  };
+};
+
+const Result = ({ search }: { search: string }) => {
   const [selectedCategory, setSelectedCategory] = useState("LATEST");
   const router = useRouter();
-  const { query: search } = router.query;
   const query: VideoParams = {
     page: 0,
     size: 10,

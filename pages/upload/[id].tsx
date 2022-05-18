@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const Upload: NextPageWithLayout = ({ id }: { id: string }) => {
+const Upload = ({ id }: { id: string }) => {
   const router = useRouter();
   const { isLoading, data } = useQuery(["videoDetail", id], () =>
     getVideoDetail(id as string).catch(() => {

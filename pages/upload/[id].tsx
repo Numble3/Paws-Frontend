@@ -4,7 +4,6 @@ import { Loading } from "components/custom";
 import { useQuery } from "react-query";
 import Direct from "./direct";
 import Embed from "./embed";
-import { NextPageWithLayout } from "types/common";
 import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -17,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const Upload: NextPageWithLayout = ({ id }: { id: string }) => {
+const Upload = ({ id }: { id: string }) => {
   const router = useRouter();
   const { isLoading, data } = useQuery(["videoDetail", id], () =>
     getVideoDetail(id as string).catch(() => {

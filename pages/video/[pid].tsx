@@ -7,22 +7,28 @@ import {
   VideoDescription,
   VideoMyComment,
 } from "components/video";
-import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 import { useQuery } from "react-query";
 import styles from "styles/video.module.css";
-import { NextPageWithLayout } from "types/common";
 
-const VideoPage: NextPageWithLayout = () => {
-  const router = useRouter();
-  const { pid } = router.query;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { query } = context;
+  const { pid } = query;
+  return {
+    props: {
+      pid,
+    },
+  };
+};
 
+const VideoPage = ({ pid }: { pid: string }) => {
   const { isLoading, data } = useQuery(["videoDetail", pid], () =>
     getVideoDetail(pid as string)
   );
   if (isLoading) {
     return <Loading />;
   }
-
+  console.log(data);
   return (
     <>
       {data ? (

@@ -100,27 +100,3 @@
   bottom: -4px;
   overflow: hidden;
 }
-/*select box*/
-.select_container {
-  max-width: 480px;
-  z-index: 1000;
-  position: fixed;
-  display: flex;
-  width: 100%;
-  background-color: #fbfbfb;
-  top: 100px;
-  padding: 0 16px;
-  flex-direction: row-reverse;
-}
-
-/*thumbnail*/
-.thumbnail_container {
-  padding: 0 16px;
-}
-
-.thumbnail_row {
-  margin: 0;
-  padding: 0;
-  margin-top: 156px;
-  overflow: auto;
-}

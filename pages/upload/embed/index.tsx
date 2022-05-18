@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { VideoType } from "types/video";
 
 const initialData = {
+  videoId: "",
   title: "",
   videoUrl: "",
   thumbnailUrl: "",
@@ -18,13 +19,7 @@ const initialData = {
   content: "",
 };
 
-const Embed = ({
-  data = initialData,
-  videoId = "-1",
-}: {
-  data: VideoType;
-  videoId: string;
-}) => {
+const Embed = ({ data = initialData }: { data: VideoType }) => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -117,30 +112,33 @@ const Embed = ({
 
     setLoading(true);
     let imageSrc = "";
-    //To Do: thumbnailUrl이 있고 formdata가 없다면 기존 url을 보내도록. 이건 서버에서 썸네일 주소 받게 수정 후 작성.
-    const image = new FormData();
-    image.append("file", imageFile);
-    image.append("height", "180");
-    image.append("width", "320");
-    image.append("type", "thumbnail");
+    if (data.thumbnailUrl !== "" && imageFile === "") {
+      imageSrc = data.thumbnailUrl;
+    } else {
+      const image = new FormData();
+      image.append("file", imageFile);
+      image.append("height", "180");
+      image.append("width", "320");
+      image.append("type", "thumbnail");
 
-    let checkTransform = true;
+      let checkTransform = true;
 
-    await imageResize(image)
-      .then((response) => {
-        imageSrc = response.url;
-      })
-      .catch((e) => {
-        //error message
-        checkTransform = false;
-      });
+      await imageResize(image)
+        .then((response) => {
+          imageSrc = response.url;
+        })
+        .catch((e) => {
+          //error message
+          checkTransform = false;
+        });
 
-    if (!checkTransform) {
-      setLoading(false);
-      return;
+      if (!checkTransform) {
+        setLoading(false);
+        return;
+      }
     }
 
-    const data = {
+    const postData = {
       category: selectedCategory,
       content: descriptionInfo.description,
       thumbnailUrl: imageSrc,
@@ -150,8 +148,8 @@ const Embed = ({
       videoUrl: linkInfo.link,
     };
 
-    if (videoId !== "-1") {
-      await createVideo(data)
+    if (data.videoId === "") {
+      await createVideo(postData)
         .then((res) => {
           router.replace("/profile/my-upload");
         })
@@ -159,7 +157,7 @@ const Embed = ({
           //To Do: 실패 메세지 훅
         });
     } else {
-      await updateVideo(data, videoId)
+      await updateVideo(postData, data.videoId)
         .then((res) => {
           router.replace("/profile/my-upload");
         })

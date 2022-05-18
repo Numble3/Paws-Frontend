@@ -1,5 +1,17 @@
 //video detail
 export type VideoType = {
+  videoId: string;
+  category: string;
+  content: string;
+  thumbnailUrl: string;
+  title: string;
+  type: string;
+  videoDuration: number;
+  videoUrl: string;
+};
+
+//video detail
+export type VideoParamType = {
   category: string;
   content: string;
   thumbnailUrl: string;

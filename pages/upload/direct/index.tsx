@@ -15,6 +15,7 @@ import {
 import { VideoType } from "types/video";
 
 const initialData = {
+  videoId: "",
   title: "",
   videoUrl: "",
   thumbnailUrl: "",
@@ -23,13 +24,7 @@ const initialData = {
   category: "",
   content: "",
 };
-const Direct = ({
-  data = initialData,
-  videoId = "-1",
-}: {
-  data: VideoType;
-  videoId: string;
-}) => {
+const Direct = ({ data = initialData }: { data: VideoType }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -90,49 +85,58 @@ const Direct = ({
     setLoading(true);
 
     let imageSrc = "";
-    const image = new FormData();
-    image.append("file", imageFile);
-    image.append("height", "180");
-    image.append("width", "320");
-    image.append("type", "thumbnail");
-
     let checkTransform = true;
-    await imageResize(image)
-      .then((response) => {
-        imageSrc = response.url;
-      })
-      .catch((e) => {
-        //error message
-        checkTransform = false;
-      });
 
-    if (!checkTransform) {
-      setLoading(false);
-      return;
+    if (data.thumbnailUrl !== "" && imageFile === "") {
+      imageSrc = data.thumbnailUrl;
+    } else {
+      const image = new FormData();
+      image.append("file", imageFile);
+      image.append("height", "180");
+      image.append("width", "320");
+      image.append("type", "thumbnail");
+
+      await imageResize(image)
+        .then((response) => {
+          imageSrc = response.url;
+        })
+        .catch((e) => {
+          //error message
+          checkTransform = false;
+        });
+
+      if (!checkTransform) {
+        setLoading(false);
+        return;
+      }
     }
 
     let videoSrc = "";
     let duration = 0;
-    const video = new FormData();
-    video.append("videoFile", videoFile);
+    if (data.videoUrl !== "" && videoFile === "") {
+      videoSrc = data.videoUrl;
+    } else {
+      const video = new FormData();
+      video.append("videoFile", videoFile);
 
-    await videoTransform(video)
-      .then((response) => {
-        videoSrc = response.url;
-        duration = response.duration;
-        //    console.log(response);
-      })
-      .catch((e) => {
-        //error message
-        checkTransform = false;
-      });
+      await videoTransform(video)
+        .then((response) => {
+          videoSrc = response.url;
+          duration = response.duration;
+          //    console.log(response);
+        })
+        .catch((e) => {
+          //error message
+          checkTransform = false;
+        });
 
-    if (!checkTransform) {
-      setLoading(false);
-      return;
+      if (!checkTransform) {
+        setLoading(false);
+        return;
+      }
     }
 
-    const data = {
+    const postData = {
       category: selectedCategory,
       content: descriptionInfo.description,
       thumbnailUrl: imageSrc,
@@ -142,8 +146,8 @@ const Direct = ({
       videoUrl: videoSrc,
     };
 
-    if (videoId !== "-1") {
-      await createVideo(data)
+    if (data.videoId === "") {
+      await createVideo(postData)
         .then((res) => {
           router.replace("/profile/my-upload");
         })
@@ -151,7 +155,7 @@ const Direct = ({
           //To Do: 실패 메세지 훅
         });
     } else {
-      await updateVideo(data, videoId)
+      await updateVideo(data, data.videoId)
         .then((res) => {
           router.replace("/profile/my-upload");
         })

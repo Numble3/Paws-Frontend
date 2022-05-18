@@ -1,4 +1,4 @@
-import { VideoType } from "types/video";
+import { VideoParamType, VideoType } from "types/video";
 import axios from "axios";
 import client from "apis/client";
 
@@ -46,14 +46,14 @@ export async function videoTransform(video: FormData) {
   }
 }
 
-export async function createVideo(params: VideoType) {
+export async function createVideo(params: VideoParamType) {
   try {
     const response = await client.post("/videos", params);
     return response.data;
   } catch (e) {}
 }
 
-export async function updateVideo(params: VideoType, videoId: string) {
+export async function updateVideo(params: VideoParamType, videoId: string) {
   console.log(params);
 
   try {

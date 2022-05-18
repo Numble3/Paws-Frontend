@@ -116,6 +116,8 @@ const Direct = ({ data = initialData }: { data: VideoType }) => {
     if (data.videoUrl !== "" && videoFile === "") {
       videoSrc = data.videoUrl;
     } else {
+      console.log("here");
+
       const video = new FormData();
       video.append("videoFile", videoFile);
 
@@ -216,7 +218,7 @@ const Direct = ({ data = initialData }: { data: VideoType }) => {
                   };
                 })
               }
-              value={data.content}
+              value={descriptionInfo.description}
             />
           </div>
           <div className="border-gray"></div>

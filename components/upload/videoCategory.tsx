@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, memo, SetStateAction } from "react";
 import styles from "styles/upload/videoCategory.module.css";
 
 interface Props {
@@ -46,4 +46,4 @@ const VideoCategory = ({
   );
 };
 
-export default VideoCategory;
+export default memo(VideoCategory);

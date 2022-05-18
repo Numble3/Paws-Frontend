@@ -1,4 +1,4 @@
-import { useState, useRef, Dispatch, SetStateAction } from "react";
+import { useState, useRef, Dispatch, SetStateAction, memo } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
@@ -128,4 +128,4 @@ const PreviewImage = ({ setImageFile, isError = false, value }: ImageType) => {
   );
 };
 
-export default PreviewImage;
+export default memo(PreviewImage);

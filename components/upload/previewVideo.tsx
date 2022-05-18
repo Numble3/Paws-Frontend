@@ -1,4 +1,4 @@
-import { useState, useRef, Dispatch, SetStateAction } from "react";
+import { useState, useRef, Dispatch, SetStateAction, memo } from "react";
 import styles from "styles/upload/preview.module.css";
 import Image from "next/image";
 import { ICONS } from "lib/assets";
@@ -21,6 +21,7 @@ const PreviewVideo = ({ setVideoFile, isError = false, value }: VideoType) => {
     } else {
       setCanUpload(true);
     }
+    console.log(fileBlob);
     setVideoFile(fileBlob);
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
@@ -135,4 +136,4 @@ const PreviewVideo = ({ setVideoFile, isError = false, value }: VideoType) => {
   );
 };
 
-export default PreviewVideo;
+export default memo(PreviewVideo);

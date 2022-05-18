@@ -83,6 +83,8 @@ const MyUploadPage: NextPageWithLayout = () => {
     .filter((v) => v && typeof v !== "number");
   const isLastData = data && data.pages[data.pages.length - 1]?.length <= 5;
   const readToLoad = !isLastData && !isLoading;
+  console.log("isLastData", isLastData);
+  console.log("reaToLoad : ", readToLoad);
   if (isLoading) {
     return <Loading />;
   }

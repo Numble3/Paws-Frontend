@@ -45,9 +45,6 @@ const InterestedCategory: NextPageWithLayout = () => {
     checkModal();
   }, []);
 
-  const LoadMoreHndler = () => {
-    fetchNextPage();
-  };
   useEffect(() => {
     if (inView) {
       console.log("inView가 true");
@@ -63,8 +60,8 @@ const InterestedCategory: NextPageWithLayout = () => {
   const isLastData = data && data.pages[data.pages.length - 1]?.length <= 6;
   const readToLoad = !isLastData && !isLoading;
 
-  console.log("isLastData", isLastData);
-  console.log("reaToLoad : ", readToLoad);
+  // console.log("isLastData", isLastData);
+  // console.log("reaToLoad : ", readToLoad);
 
   return (
     <div className={style.wrapper}>

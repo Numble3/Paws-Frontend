@@ -1,10 +1,10 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://3.36.157.185:8082/api";
+axios.defaults.baseURL = "http://3.36.157.185:80/api";
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: "http://3.36.157.185:8082/api",
+  baseURL: "http://3.36.157.185:80/api",
   withCredentials: true,
 });
 
@@ -26,9 +26,9 @@ client.interceptors.response.use(
           },
         })
         .then((response) => response.data);
-      const { accessToken, refreshToken } = data;
+        console.log("로그인 갱신 : ", data);
+      const { accessToken } = data;
       localStorage.setItem("access", accessToken);
-      localStorage.setItem("refresh", refreshToken);
       client.defaults.headers.common.Authorization = `${accessToken}`;
       originalRequest.headers.Authorization = `${accessToken}`;
       return client(originalRequest);

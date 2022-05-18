@@ -53,9 +53,9 @@ const LoginForm = () => {
 
       getUserInfoAPI()
         .then((data) => {
-          sessionStorage.setItem("email", data.email);
-          sessionStorage.setItem("profile", data.profile);
-          sessionStorage.setItem("nickname", data.nickname);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("profile", data.profile);
+          localStorage.setItem("nickname", data.nickname);
           queryClient.setQueryData("user", data);
         })
         .catch((error) => {

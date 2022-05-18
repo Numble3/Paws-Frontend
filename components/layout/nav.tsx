@@ -8,13 +8,14 @@ import { ICONS } from "lib/assets";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { memo, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import styles from "styles/layout.module.css";
 import NavPopUp from "components/custom/nav-popup";
 import { useCheck } from "hooks/use-check";
 
 const Nav = () => {
   const [visible, setVisible] = useState(false);
+  const li = useRef<HTMLLIElement>(null);
 
   const router = useRouter();
   const { checkModal } = useCheck();
@@ -56,7 +57,19 @@ const Nav = () => {
       setVisible(true);
     }
   };
+  const handleCloseModal = (e: any) => {
+    if (li.current && !li.current.contains(e.target)) {
+      setVisible(false);
+      return;
+    }
+  };
 
+  useEffect(() => {
+    window.addEventListener("click", handleCloseModal);
+    return () => {
+      window.removeEventListener("click", handleCloseModal);
+    };
+  }, []);
   return (
     <nav className={styles.nav}>
       {visible && (
@@ -71,6 +84,7 @@ const Nav = () => {
           if (i === 2) {
             return (
               <li
+                ref={li}
                 key={i}
                 onClick={handlePopupClicked}
                 className={styles.upload}

@@ -23,6 +23,7 @@ interface Props {
   createdAt: string;
   videoId: string;
   userProfilePath: string;
+  userLikeVideo: boolean;
 }
 
 const VideoDescription = ({
@@ -35,11 +36,12 @@ const VideoDescription = ({
   like,
   videoId,
   userProfilePath,
+  userLikeVideo,
 }: Props) => {
   const [showDetail, setShowDetail] = useState(false);
   //const dispatch = useDispatch();
   //const { videoLike } = useSelector((state: RootState) => state.like);
-  const [heartActive, setHeartActive] = useState<boolean>(false);
+  const [heartActive, setHeartActive] = useState<boolean>(userLikeVideo);
 
   const onToggleHeart = useCallback(async () => {
     console.log(heartActive);

@@ -1,6 +1,6 @@
 
 .wrapper {
-  padding: 140px 16px;
+  padding: 140px  16px 100px 16px;
   background-color: #ffffff;
   height: 93vh
 }
@@ -59,7 +59,7 @@
 }
 
 .contents{
-  padding: 16px 0px;
+  padding: 16px 0px 70px 0px;
 }
 
 .icon {

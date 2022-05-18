@@ -10,6 +10,7 @@ const nextConfig = {
       "i.pinimg.com",
       "d2yok33re0ydfm.cloudfront.net",
       "i.pinimg.com",
+      "d2yok33re0ydfm.cloudfront.net",
     ],
   },
 };

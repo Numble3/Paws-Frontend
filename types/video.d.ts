@@ -43,6 +43,21 @@ export type VideoParams = {
   title?: string;
 };
 
+export type LikeVideoList = {
+  createdAt: string;
+  like: number;
+  nickname: string;
+  thumbnailPath: string;
+  title: string;
+  videoId: number;
+  view: number;
+  thumbnailPath: string;
+  profileUrl: string;
+  videoType: string;
+}
+
+
+
 type VideoListWithLikes = {
   contents: VideoListType[];
   hasNext: boolean;

@@ -5,74 +5,28 @@ import Image from "next/image";
 import { CSSProperties, MouseEvent } from "react";
 import { VideoListType } from "types/video";
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/ko';
-dayjs.locale('ko');
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
-interface Props {
-  datas: VideoListType[];
+interface Props<T> {
+  datas: T[];
   noDot?: boolean;
   noInfo?: boolean;
   onEdit?: (e: MouseEvent) => void;
   style?: CSSProperties;
 }
-const dummy: VideoListType[] = [
-  {
-    createdAt: "2022-11-11 16-50-10",
-    like: 0,
-    nickname: "다희네 우당탕탕 3묘",
-    thumbnailPath: "/images/temp.png",
-    title: "발로 꼬리 밟아서 화난 고양이 장수",
-    videoId: 1,
-    view: 380,
-  },
-  {
-    createdAt: "2022-11-11 16-50-10",
-    like: 0,
-    nickname: "다희네 우당탕탕 3묘",
-    thumbnailPath: "/images/temp.png",
-    title: "발로 꼬리 밟아서 화난 고양이 장수",
-    videoId: 2,
-    view: 380,
-  },
-  {
-    createdAt: "2022-11-11 16-50-10",
-    like: 0,
-    nickname: "다희네 우당탕탕 3묘",
-    thumbnailPath: "/images/temp.png",
-    title: "발로 꼬리 밟아서 화난 고양이 장수",
-    videoId: 3,
-    view: 380,
-  },
-  {
-    createdAt: "2022-11-11 16-50-10",
-    like: 0,
-    nickname: "다희네 우당탕탕 3묘",
-    thumbnailPath: "/images/temp.png",
-    title: "발로 꼬리 밟아서 화난 고양이 장수",
-    videoId: 4,
-    view: 380,
-  },
-  {
-    createdAt: "2022-11-11 16-50-10",
-    like: 0,
-    nickname: "다희네 우당탕탕 3묘",
-    thumbnailPath: "/images/temp.png",
-    title: "발로 꼬리 밟아서 화난 고양이 장수",
-    videoId: 5,
-    view: 380,
-  },
-];
 
-const VideoList = ({
-  datas = dummy,
+//TODO: Check Backend type
+const VideoList = <T extends VideoListType>({
+  datas,
   noDot = true,
   noInfo = false,
   onEdit,
   style,
-}: Props) => {
+}: Props<T>) => {
   return (
     <section className={styles.videos} style={style}>
       {datas.map((video) => (
@@ -80,14 +34,18 @@ const VideoList = ({
           <div className={styles["video-container"]}>
             <div>
               <Image
-                src={`${video.thumbnailPath}`}
+                src={`/${video.thumbnailPath}`}
                 layout="fill"
                 objectFit="cover"
               />
             </div>
             {!noDot && (
-              <div id={video.videoId+""}  onClick={onEdit} className={styles["dot-icon"]}>
-                <DotIcon id={video.videoId+""}/>
+              <div
+                id={String(video.videoId)}
+                onClick={onEdit}
+                className={styles["dot-icon"]}
+              >
+                <DotIcon id={String(video.videoId)} />
               </div>
             )}
             {!noInfo && (

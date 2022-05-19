@@ -17,17 +17,18 @@ const InterestVideo: NextPageWithLayout = () => {
 
   const { checkModal } = useCheck();
 
-  const { isLoading, data } = useQuery(
+  const { isLoading, data, isFetching } = useQuery(
     QUERY_KEY.likesAll.key,
     QUERY_KEY.likesAll.api,
     {
-      retry: 2,
+      retry: false,
       onSuccess: (data) => {
         Object.keys(data.likes).map((v) => {
           if (data.likes[v].getLikeVideoDtos.length !== 0) {
             setNoResult(false);
             return;
           }
+          
         });
       },
       onError: () => {
@@ -36,7 +37,10 @@ const InterestVideo: NextPageWithLayout = () => {
     }
   );
 
-  if (isLoading) return <Loading />;
+  console.log("test : ", data);
+
+  if (isLoading || isFetching) return <Loading />;
+  if(!data) return <div>no data</div>;
   return noResult ? (
     <NoResult title={TITLE} content={CONTENTS} />
   ) : (

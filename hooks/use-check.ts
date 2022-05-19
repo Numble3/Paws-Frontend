@@ -8,7 +8,7 @@ export const useCheck = () => {
   const dispatch = useDispatch();
 
   const checkModal = (toHome = true) => {
-    const email = sessionStorage.getItem("email");
+    const email = localStorage.getItem("email");
     if (!email) {
       toHome && router.replace("/");
 

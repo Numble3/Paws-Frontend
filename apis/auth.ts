@@ -13,6 +13,7 @@ export async function signUpAPI(data: {
 export async function logInAPI(data: { email: string; password: string }) {
   return await client.post("/sign-in", data).then((response) => {
     const { accessToken } = response.data;
+    console.log(accessToken);
     client.defaults.headers.common.Authorization = `${accessToken}`;
     return response.data;
   });

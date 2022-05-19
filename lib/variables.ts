@@ -23,4 +23,12 @@ export const categories = [
     label: "기타",
     value: "etc",
   },
+  {
+    label: "도마뱀",
+    value: "lizard",
+  },
+  {
+    label: "새",
+    value: "bird"
+  }
 ];

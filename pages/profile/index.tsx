@@ -8,35 +8,32 @@ import { QUERY_KEY } from "lib/query-key";
 import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import style from "styles/profile.module.css";
 import { NextPageWithLayout } from "types/common";
 
 const ProfilePage: NextPageWithLayout = () => {
   const [isOpen, onClose, setIsOpen] = useModal("edit");
-  const [isLoading, setIsLoading] = useState(true);
+  //const [isLoading, setIsLoading] = useState(true);
   const [target, setTarget] = useState("");
 
   const queryClient = useQueryClient();
 
-  const { data } = useQuery(
+  const { isLoading, data, isError } = useQuery(
     QUERY_KEY.userDetail.key,
     QUERY_KEY.userDetail.api,
     {
       retry: false,
-      onSuccess: () => {
-        setIsLoading(false);
-      },
+      staleTime: 300000,
       onError: () => {
         setTimeout(() => {
           Router.replace("/login");
-        }, 2500);
-        console.error("에러발생");
+        }, 2000);
       },
     }
   );
- // const { data: videoData } = useQuery("videos", getUserVideosAPI);
+  // const { data: videoData } = useQuery("videos", getUserVideosAPI);
 
   const deleteMutation = useMutation<void, AxiosError, { id: number }>(
     deleteVideoAPI,
@@ -58,7 +55,13 @@ const ProfilePage: NextPageWithLayout = () => {
     onClose();
   }, [deleteMutation]);
 
-  if (isLoading) {
+  // useEffect(() =>{
+  //   if(!localStorage.getItem("email")){
+  //     Router.replace("/login");
+  //   }
+  // },[]);
+
+  if (isLoading || isError) {
     return (
       <div>
         <Loading />
@@ -66,13 +69,13 @@ const ProfilePage: NextPageWithLayout = () => {
     );
   }
 
-  const user = data.accountDto;
-  const videoList = data.videoDtos;
+  const user = data?.accountDto;
+  const videoList = data?.videoDtos;
 
   return (
     <div className={style.wrapper}>
       <section className={style["profile-section"]}>
-        {user.profile ? (
+        {!!user.profile && user.profile !== "null" ? (
           <img src={user.profile} style={{ width: "72px", height: "72px" }} />
         ) : (
           <Image src={ICONS.PAW} width={72} height={72} />

@@ -1,6 +1,6 @@
 import { VideoParams } from "./../types/video.d";
 import axios from "axios";
-axios.defaults.baseURL = "http://3.36.157.185:80/api";
+axios.defaults.baseURL = "https://paws-api.ga/api";
 
 export async function getVideos(params: VideoParams) {
   let { category, page, size, sort, title } = params;

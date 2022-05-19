@@ -26,7 +26,7 @@ client.interceptors.response.use(
           },
         })
         .then((response) => response.data);
-        console.log("로그인 갱신 : ", data);
+      console.log("로그인 갱신 : ", data);
       const { accessToken } = data;
       localStorage.setItem("access", accessToken);
       client.defaults.headers.common.Authorization = `${accessToken}`;

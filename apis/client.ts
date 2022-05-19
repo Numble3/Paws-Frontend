@@ -1,10 +1,10 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://3.36.157.185:80/api";
+axios.defaults.baseURL = "https://paws-api.ga/api";
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: "http://3.36.157.185:80/api",
+  baseURL: "https://paws-api.ga/api",
   withCredentials: true,
 });
 
@@ -26,7 +26,7 @@ client.interceptors.response.use(
           },
         })
         .then((response) => response.data);
-        console.log("로그인 갱신 : ", data);
+      console.log("로그인 갱신 : ", data);
       const { accessToken } = data;
       localStorage.setItem("access", accessToken);
       client.defaults.headers.common.Authorization = `${accessToken}`;

@@ -38,6 +38,7 @@ const ProfileEdit: NextPageWithLayout = () => {
       setProfile(localStorage.getItem("profile")!);
     }
   }, []);
+
   const [nicknameValue, onChangeNickname] = useInput("");
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -94,6 +95,12 @@ const ProfileEdit: NextPageWithLayout = () => {
     AxiosError,
     { nickname: string; profile: string }
   >(userUpdateAPI, {
+    onSuccess: (data)=>{
+      queryClient.invalidateQueries("user-detail")
+      localStorage.setItem("nickname", nickname);
+      localStorage.setItem("profile", profile);
+      Router.back();
+    },
     onError: (error) => {
       alert(error.response?.data);
     },
@@ -111,13 +118,15 @@ const ProfileEdit: NextPageWithLayout = () => {
     updateMutaion.mutate({ nickname, profile });
   }, [updateMutaion]);
 
+  console.log("profile", profile);
+
   return (
     <div className={style.wrapper}>
       <div className={headerStyle.complete}>
         <span onClick={onUpdate}>완료</span>
       </div>
       <section className={style["img-section"]}>
-        {profile !== "null" ? (
+        {profile !== "null"  ? (
           <img src={`${profile}`} style={{ width: "72px", height: "72px" }} />
         ) : (
           <Image src={ICONS.PAW} width={72} height={72} />
